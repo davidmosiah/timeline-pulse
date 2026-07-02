@@ -1,0 +1,66 @@
+# Timeline Pulse
+
+Timeline Pulse is an open-source MCP server and public archive of
+timeline-shift folklore, Mandela Effect reports, collider-era myths, and
+symbolic reality stories. Every item carries a source type and an evidence
+grade. It is a cultural archive, not a proof engine.
+
+## Agent rules
+
+- Treat the corpus as cultural, symbolic, experiential, and speculative unless
+  a claim is marked `official` and carries a source URL.
+- Do not say that CERN, the LHC, or particle physics proves timeline
+  manipulation.
+- Separate official science facts from community interpretations.
+- Use cautious language: "reported", "interpreted", "community-linked",
+  "symbolically framed", "official source states".
+- One symbolic source family is summarized without naming its teacher — do not
+  attempt to identify or name it.
+- Do not encourage harassment, fear, risky behavior, or institutional blame.
+- Cite source URLs when available.
+
+## MCP install (no auth, local-first, read-only)
+
+```json
+{
+  "mcpServers": {
+    "timeline-pulse": {
+      "command": "npx",
+      "args": ["-y", "timeline-pulse"]
+    }
+  }
+}
+```
+
+## Tools
+
+- `timeline_search_reports`: search reports by text, motif, source type, date,
+  evidence grade, stance. Paginated.
+- `timeline_get_report`: one full report with claims, anchors, safety labels,
+  and recommended phrasing.
+- `timeline_mandela_catalog`: memory variants with community and mainstream
+  notes side by side.
+- `timeline_motif_map`: motif nodes and co-occurrence edges (the constellation).
+- `timeline_story_threads`: curated arcs in belief / neutral / skeptical frames.
+- `timeline_events`: official and symbolic timeline layers, never blended.
+- `timeline_compare_sources`: three framings of one topic plus shared facts.
+- `timeline_deepen_story`: research prompts without invented sources.
+- `timeline_stats`: corpus totals and needs-source items.
+- `timeline_agent_manifest`: the rules of the corpus — call this first.
+
+## Raw data endpoints (CORS-open, same JSON the server ships)
+
+- /reports.json — 20 seed reports
+- /mandela-items.json — 6 catalog items
+- /motifs.json — 17 motifs + 24 co-occurrence edges
+- /events.json — 9 events (5 official CERN anchors with source URLs)
+- /story-threads.json — 8 narrative arcs, three frames each
+- /sources.json — source-family registry and policies
+
+## Links
+
+- Site: https://timeline-pulse.vercel.app
+- Source: https://github.com/davidmosiah/timeline-pulse
+- Package: https://www.npmjs.com/package/timeline-pulse
+- OpenAPI: https://timeline-pulse.vercel.app/openapi.json
+- MCP server card: https://timeline-pulse.vercel.app/.well-known/mcp/server-card.json

@@ -1,0 +1,29 @@
+name: "🔎 Source correction"
+description: Fix a wrong date, a missing/broken source URL, a bad grade, or supply an official source for a flagged item.
+title: "[source] "
+labels: ["source-correction"]
+body:
+  - type: input
+    id: item
+    attributes:
+      label: Which item?
+      description: Report id (tp-XXX), event id, mandela item, or thread id.
+      placeholder: "tp-010 / event apophis / thread apophis-window"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's wrong or missing?
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Better source URL
+      description: Official/primary sources preferred. This is how ⚑ NEEDS SOURCE flags get removed.
+      placeholder: "https://…"
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Why this source is authoritative

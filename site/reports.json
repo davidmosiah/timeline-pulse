@@ -1,0 +1,908 @@
+{
+  "meta": {
+    "name": "timeline-pulse reports",
+    "version": "0.1.0",
+    "generated": "2026-07-02",
+    "note": "Seed batch v0.1 — 20 curated reports. Every report carries a source type, an evidence grade, a stance, and labeled claims. Nothing here is presented as proof; it is presented as filed. Seed reports are curator-authored composites that document recurring community story patterns; contributor-linked reports arrive via the report-submission template.",
+    "counts": {
+      "reports": 20
+    }
+  },
+  "reports": [
+    {
+      "id": "tp-001",
+      "title": "Machine silence and the calibration window",
+      "summary": "A symbolic reading that treats the LS3 pause as an invitation to tune the \"inner collider\" while the outer one rests.",
+      "long_summary": "Drawn from a family of symbolic teachings — summarized without naming its source, by policy — this reading treats the shutdown as an invitation: while the magnets warm and the tunnels go quiet, the practitioner tunes the inner instrument. Archived as symbolic reading, not a claim about physics.",
+      "phenomenon_type": "cern-lore",
+      "date_observed": "2026-06-29",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_id": "alchemical-source-family",
+        "source_type": "symbolic-teaching-summary",
+        "author_policy": "omitted",
+        "language": "en"
+      },
+      "evidence_grade": "symbolic",
+      "stance": "belief",
+      "motifs": [
+        "machine-silence",
+        "calibration",
+        "heart-collider"
+      ],
+      "claims": [
+        {
+          "text": "The LHC was switched off on 2026-06-29 to begin Long Shutdown 3.",
+          "claim_type": "official-fact",
+          "status": "verified-source",
+          "source_url": "https://home.cern/cern-bids-farewell-to-the-lhc-and-enters-long-shutdown-3/"
+        },
+        {
+          "text": "The shutdown years can be read as a window for inner calibration.",
+          "claim_type": "symbolic-reading",
+          "status": "symbolic-only"
+        }
+      ],
+      "anchors": [
+        {
+          "anchor_id": "ls3",
+          "label": "LS3 begins",
+          "date": "2026-06-29",
+          "layer": "official-science",
+          "relation": "same-date"
+        },
+        {
+          "anchor_id": "silence-window",
+          "label": "Machine silence window",
+          "date": "2026-06-29",
+          "layer": "symbolic-anchor",
+          "relation": "symbolic-parallel"
+        }
+      ],
+      "safety_flags": [
+        "avoid-direct-teacher-name",
+        "do-not-state-as-fact"
+      ],
+      "recommended_agent_language": [
+        "a symbolic reading holds…",
+        "avoid: this reveals that…"
+      ],
+      "related_report_ids": [
+        "tp-009",
+        "tp-019",
+        "tp-020"
+      ]
+    },
+    {
+      "id": "tp-002",
+      "title": "The day the hum stopped",
+      "summary": "A Meyrin resident reports waking at 4 a.m. to \"a silence with edges\" the night Run 3 ended.",
+      "long_summary": "The reporter has lived near the ring for eleven years and describes the ambient sense of the site as \"a weather.\" On the night of the final beam dump they report waking at 4 a.m. to \"a silence with edges.\" Logged as personal experience; no claim beyond it.",
+      "phenomenon_type": "synchronicity",
+      "date_observed": "2026-06-30",
+      "date_added": "2026-07-02",
+      "location": {
+        "label": "Meyrin, Switzerland",
+        "latitude": 46.2283,
+        "longitude": 6.08,
+        "symbolic": false
+      },
+      "source": {
+        "source_type": "firsthand-report",
+        "author_policy": "redacted",
+        "language": "en"
+      },
+      "evidence_grade": "firsthand",
+      "stance": "belief",
+      "motifs": [
+        "machine-silence",
+        "threshold"
+      ],
+      "claims": [
+        {
+          "text": "The reporter woke at 4 a.m. to an unusual sense of silence the night the LHC switched off.",
+          "claim_type": "personal-experience",
+          "status": "reported"
+        }
+      ],
+      "anchors": [
+        {
+          "anchor_id": "ls3",
+          "label": "LS3 begins",
+          "date": "2026-06-29",
+          "layer": "official-science",
+          "relation": "same-period"
+        }
+      ],
+      "safety_flags": [
+        "sensitive-personal-story"
+      ],
+      "recommended_agent_language": [
+        "the reporter describes…",
+        "avoid: this proves that…"
+      ],
+      "related_report_ids": [
+        "tp-014",
+        "tp-001",
+        "tp-005"
+      ]
+    },
+    {
+      "id": "tp-003",
+      "title": "Berenstein holdouts, year nine",
+      "summary": "A long-running thread where thousands compare memories of the -ein spelling against every printed -ain.",
+      "long_summary": "One of the longest-running Mandela threads: thousands of replies comparing childhood memories of \"-ein\" against every printed \"-ain.\" The thread's own FAQ lists both the timeline reading and the spelling-expectation explanation side by side — a rare case of a community documenting its own counterargument.",
+      "phenomenon_type": "mandela-effect",
+      "date_observed": "2015-02-14",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_id": "community-forums",
+        "source_type": "forum-thread",
+        "author_policy": "unknown",
+        "language": "en"
+      },
+      "evidence_grade": "reported",
+      "stance": "mixed",
+      "motifs": [
+        "mandela-residue",
+        "childhood-anchor",
+        "collective-memory"
+      ],
+      "claims": [
+        {
+          "text": "Many people remember the spelling \"Berenstein\" although printings show \"Berenstain\".",
+          "claim_type": "community-interpretation",
+          "status": "reported"
+        }
+      ],
+      "anchors": [
+        {
+          "anchor_id": "wave-mandela",
+          "label": "Mandela community expansion",
+          "date": "2014-09-01",
+          "layer": "community-wave",
+          "relation": "same-period"
+        }
+      ],
+      "recommended_agent_language": [
+        "community members report…",
+        "avoid: it is known that…"
+      ],
+      "related_report_ids": [
+        "tp-004",
+        "tp-011",
+        "tp-012"
+      ]
+    },
+    {
+      "id": "tp-004",
+      "title": "The cornucopia receipts hunt",
+      "summary": "Collectors crowdsource vintage tags hunting a horn of plenty that no catalog ever shows.",
+      "long_summary": "Collectors post photographs of vintage tags, waistbands, and school-play costumes hunting a horn of plenty. The company states no cornucopia was ever registered; the hunt continues — which is itself the story this archive files.",
+      "phenomenon_type": "mandela-effect",
+      "date_observed": "2019-08-02",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_id": "social-platforms",
+        "source_type": "social-post",
+        "author_policy": "unknown",
+        "language": "en"
+      },
+      "evidence_grade": "reported",
+      "stance": "belief",
+      "motifs": [
+        "mandela-residue",
+        "collective-memory"
+      ],
+      "claims": [
+        {
+          "text": "Collectors remember a cornucopia in the logo and search physical artifacts for it.",
+          "claim_type": "community-interpretation",
+          "status": "reported"
+        }
+      ],
+      "recommended_agent_language": [
+        "community members report…",
+        "avoid: it is known that…"
+      ],
+      "related_report_ids": [
+        "tp-003",
+        "tp-011",
+        "tp-017"
+      ]
+    },
+    {
+      "id": "tp-005",
+      "title": "Rainbow bridge dream wave",
+      "summary": "Dream logs posted the same December week describe crossing a seven-color bridge \"one color short.\"",
+      "long_summary": "Posted across three forums in the same week of December 2012: dream logs describing a bridge of light \"one color short.\" Later cited by rainbow-bridge threads as an early wave marker for the 2012 shift narrative.",
+      "phenomenon_type": "dream-vision",
+      "date_observed": "2012-12-21",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_id": "community-forums",
+        "source_type": "forum-thread",
+        "author_policy": "unknown",
+        "language": "en"
+      },
+      "evidence_grade": "interpretive",
+      "stance": "belief",
+      "motifs": [
+        "rainbow-bridge",
+        "spectrum",
+        "threshold"
+      ],
+      "claims": [
+        {
+          "text": "Multiple posters described similar bridge-of-light dreams in the same week.",
+          "claim_type": "community-interpretation",
+          "status": "reported"
+        }
+      ],
+      "anchors": [
+        {
+          "anchor_id": "wave-2012",
+          "label": "2012 shift wave",
+          "date": "2012-12-21",
+          "layer": "community-wave",
+          "relation": "same-date"
+        }
+      ],
+      "recommended_agent_language": [
+        "the community links…",
+        "avoid: this shows that…"
+      ],
+      "related_report_ids": [
+        "tp-002",
+        "tp-006",
+        "tp-008"
+      ]
+    },
+    {
+      "id": "tp-006",
+      "title": "The lost ion letter",
+      "summary": "A symbolic text about a missing particle of light whose return would mend the spectrum — archived as allegory.",
+      "long_summary": "An allegorical text about a particle of light that left the world, and the long work of inviting it back. Stored as a project-authored summary; the original circulates in fragments across several communities.",
+      "phenomenon_type": "symbolic-alchemy",
+      "date_observed": "2013-03-11",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_id": "alchemical-source-family",
+        "source_type": "symbolic-teaching-summary",
+        "author_policy": "omitted",
+        "language": "en"
+      },
+      "evidence_grade": "symbolic",
+      "stance": "belief",
+      "motifs": [
+        "lost-ion",
+        "rainbow-bridge",
+        "poison-remedy"
+      ],
+      "claims": [
+        {
+          "text": "A missing particle of light is described as the symbolic cause of fragmented perception.",
+          "claim_type": "symbolic-reading",
+          "status": "symbolic-only"
+        }
+      ],
+      "safety_flags": [
+        "avoid-direct-teacher-name",
+        "do-not-state-as-fact"
+      ],
+      "recommended_agent_language": [
+        "a symbolic reading holds…",
+        "avoid: this reveals that…"
+      ],
+      "related_report_ids": [
+        "tp-005",
+        "tp-010"
+      ]
+    },
+    {
+      "id": "tp-007",
+      "title": "Serpent swallowing the clock",
+      "summary": "A New Year's report of a recurring vision: a serpent circling a station clock, biting its tail at midnight.",
+      "long_summary": "Reported on New Year's morning: a recurring vision of a serpent circling a station clock, biting its own tail exactly at midnight. The reporter connects it to a feeling that the year \"looped.\" Filed as a firsthand symbol report.",
+      "phenomenon_type": "synchronicity",
+      "date_observed": "2020-01-01",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_type": "firsthand-report",
+        "author_policy": "redacted",
+        "language": "en"
+      },
+      "evidence_grade": "firsthand",
+      "stance": "belief",
+      "motifs": [
+        "serpent-time",
+        "timeline-bleed"
+      ],
+      "claims": [
+        {
+          "text": "The reporter experienced a recurring ouroboros vision tied to a sense of looped time.",
+          "claim_type": "personal-experience",
+          "status": "reported"
+        }
+      ],
+      "safety_flags": [
+        "sensitive-personal-story"
+      ],
+      "recommended_agent_language": [
+        "the reporter describes…",
+        "avoid: this proves that…"
+      ],
+      "related_report_ids": [
+        "tp-010",
+        "tp-015",
+        "tp-016"
+      ]
+    },
+    {
+      "id": "tp-008",
+      "title": "Higgs day déjà vu cluster",
+      "summary": "Users in three time zones report layered déjà vu during the announcement livestream.",
+      "long_summary": "During the 2012-07-04 webcast, users in three time zones posted about layered déjà vu — \"watching something I had already remembered.\" The cluster became a reference point for threshold language in later threads.",
+      "phenomenon_type": "simulation-glitch",
+      "date_observed": "2012-07-04",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_id": "community-forums",
+        "source_type": "forum-thread",
+        "author_policy": "unknown",
+        "language": "en"
+      },
+      "evidence_grade": "reported",
+      "stance": "belief",
+      "motifs": [
+        "threshold",
+        "simulation-glitch",
+        "collective-memory"
+      ],
+      "claims": [
+        {
+          "text": "The Higgs discovery was announced by ATLAS and CMS on 2012-07-04.",
+          "claim_type": "official-fact",
+          "status": "verified-source",
+          "source_url": "https://home.cern/science/physics/higgs-boson"
+        },
+        {
+          "text": "Several posters reported déjà vu while watching the webcast.",
+          "claim_type": "community-interpretation",
+          "status": "reported"
+        }
+      ],
+      "anchors": [
+        {
+          "anchor_id": "higgs",
+          "label": "Higgs announcement",
+          "date": "2012-07-04",
+          "layer": "official-science",
+          "relation": "same-date"
+        }
+      ],
+      "recommended_agent_language": [
+        "community members report…",
+        "avoid: it is known that…"
+      ],
+      "related_report_ids": [
+        "tp-002",
+        "tp-003",
+        "tp-004"
+      ]
+    },
+    {
+      "id": "tp-009",
+      "title": "Heart collider meditation notes",
+      "summary": "Notes framing the heart as the collider that reconciles opposites without violence.",
+      "long_summary": "Practice notes framing the heart as a collider that reconciles opposites without violence — \"the only accelerator that runs on stillness.\" Archived as symbolic practice language.",
+      "phenomenon_type": "symbolic-alchemy",
+      "date_observed": "2022-02-22",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_id": "alchemical-source-family",
+        "source_type": "symbolic-teaching-summary",
+        "author_policy": "omitted",
+        "language": "en"
+      },
+      "evidence_grade": "symbolic",
+      "stance": "belief",
+      "motifs": [
+        "heart-collider",
+        "calibration",
+        "machine-mirror"
+      ],
+      "claims": [
+        {
+          "text": "The heart is framed as an inner instrument that integrates opposites.",
+          "claim_type": "symbolic-reading",
+          "status": "symbolic-only"
+        }
+      ],
+      "safety_flags": [
+        "avoid-direct-teacher-name",
+        "do-not-state-as-fact"
+      ],
+      "recommended_agent_language": [
+        "a symbolic reading holds…",
+        "avoid: this reveals that…"
+      ],
+      "related_report_ids": [
+        "tp-001",
+        "tp-020",
+        "tp-013"
+      ]
+    },
+    {
+      "id": "tp-010",
+      "title": "Apophis window speculation digest",
+      "summary": "A digest of posts treating the 2029 close approach as a serpent-of-chaos motif. Flagged for sourcing.",
+      "long_summary": "An aggregate of posts treating the 2029 Apophis close approach as a serpent-of-chaos window. Orbital details are deliberately not stated here until officially sourced; the digest records the motif, not the astronomy.",
+      "phenomenon_type": "timeline-shift",
+      "date_observed": "2024-04-13",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_id": "project-notes",
+        "source_type": "project-note",
+        "author_display": "timeline-pulse curators",
+        "author_policy": "public",
+        "language": "en"
+      },
+      "evidence_grade": "speculative",
+      "stance": "mixed",
+      "motifs": [
+        "apophis-window",
+        "serpent-time",
+        "poison-remedy"
+      ],
+      "claims": [
+        {
+          "text": "The 2029 Apophis close approach is treated by some posters as a symbolic window of transmutation.",
+          "claim_type": "speculative-causation",
+          "status": "not-evidence"
+        }
+      ],
+      "anchors": [
+        {
+          "anchor_id": "apophis",
+          "label": "Apophis window",
+          "date": "2029-04-13",
+          "layer": "symbolic-anchor",
+          "relation": "community-linked"
+        }
+      ],
+      "safety_flags": [
+        "source-needs-verification",
+        "do-not-state-as-fact"
+      ],
+      "display_flag": "NEEDS OFFICIAL SOURCE · DO NOT STATE AS FACT",
+      "recommended_agent_language": [
+        "some speculate, without sources, that…",
+        "avoid: this will happen…"
+      ],
+      "related_report_ids": [
+        "tp-006",
+        "tp-007"
+      ]
+    },
+    {
+      "id": "tp-011",
+      "title": "Monopoly monocle assurance",
+      "summary": "\"He absolutely wore a monocle\" — a viral thread of confident memories against the mascot's bare face.",
+      "long_summary": "A viral thread of extremely confident monocle memories, complete with drawn \"reconstructions.\" The mascot has never worn one; Mr. Peanut, who does, appears in the replies within minutes — filed with the false-association note attached.",
+      "phenomenon_type": "mandela-effect",
+      "date_observed": "2016-06-06",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_id": "social-platforms",
+        "source_type": "social-post",
+        "author_policy": "unknown",
+        "language": "en"
+      },
+      "evidence_grade": "reported",
+      "stance": "mixed",
+      "motifs": [
+        "mandela-residue",
+        "collective-memory"
+      ],
+      "claims": [
+        {
+          "text": "Many people confidently remember a monocle the mascot never wore.",
+          "claim_type": "community-interpretation",
+          "status": "reported"
+        }
+      ],
+      "recommended_agent_language": [
+        "community members report…",
+        "avoid: it is known that…"
+      ],
+      "related_report_ids": [
+        "tp-003",
+        "tp-004",
+        "tp-017"
+      ]
+    },
+    {
+      "id": "tp-012",
+      "title": "Pikachu tail poll",
+      "summary": "A 40,000-vote poll splits almost evenly on whether the tail tip was ever black.",
+      "long_summary": "A 40,000-vote poll splits nearly evenly on the black tail tip. The comment section becomes an impromptu archive of childhood drawings — many with the tip. Filed as reported memory variance.",
+      "phenomenon_type": "mandela-effect",
+      "date_observed": "2018-05-09",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_id": "social-platforms",
+        "source_type": "social-post",
+        "author_policy": "unknown",
+        "language": "en"
+      },
+      "evidence_grade": "reported",
+      "stance": "mixed",
+      "motifs": [
+        "childhood-anchor",
+        "mandela-residue"
+      ],
+      "claims": [
+        {
+          "text": "A large poll split nearly evenly on a visual detail that was never in the official design.",
+          "claim_type": "community-interpretation",
+          "status": "reported"
+        }
+      ],
+      "recommended_agent_language": [
+        "community members report…",
+        "avoid: it is known that…"
+      ],
+      "related_report_ids": [
+        "tp-003",
+        "tp-018",
+        "tp-004"
+      ]
+    },
+    {
+      "id": "tp-013",
+      "title": "Silicon mirror essay",
+      "summary": "An essay tracing stone → chip → simulation as one long mirror in which humanity studies itself.",
+      "long_summary": "A long community essay tracing stone → crystal → chip → simulation as one continuous mirror. Filed as interpretation; frequently cited by silicon-mirror threads as their clearest statement.",
+      "phenomenon_type": "simulation-glitch",
+      "date_observed": "2021-10-10",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_id": "community-forums",
+        "source_type": "article",
+        "author_policy": "unknown",
+        "language": "en"
+      },
+      "evidence_grade": "interpretive",
+      "stance": "belief",
+      "motifs": [
+        "silicon-mirror",
+        "simulation-glitch",
+        "machine-mirror"
+      ],
+      "claims": [
+        {
+          "text": "Silicon is read as a symbolic bridge between mineral, computation, and consciousness.",
+          "claim_type": "symbolic-reading",
+          "status": "symbolic-only"
+        }
+      ],
+      "recommended_agent_language": [
+        "the community links…",
+        "avoid: this shows that…"
+      ],
+      "related_report_ids": [
+        "tp-008",
+        "tp-009",
+        "tp-015"
+      ]
+    },
+    {
+      "id": "tp-014",
+      "title": "Run 3 farewell field notes",
+      "summary": "A visitor describes the control-room applause and \"a strange lightness in the corridor\" at beam dump.",
+      "long_summary": "A visitor present for the final beam dump describes applause in the control room and \"a strange lightness in the corridor after.\" Logged as firsthand atmosphere — not anomaly — and kept for how it captures the day.",
+      "phenomenon_type": "synchronicity",
+      "date_observed": "2026-06-29",
+      "date_added": "2026-07-02",
+      "location": {
+        "label": "CERN, Geneva area",
+        "latitude": 46.233,
+        "longitude": 6.0557,
+        "symbolic": false
+      },
+      "source": {
+        "source_type": "firsthand-report",
+        "author_policy": "redacted",
+        "language": "en"
+      },
+      "evidence_grade": "firsthand",
+      "stance": "neutral",
+      "motifs": [
+        "machine-silence",
+        "threshold"
+      ],
+      "claims": [
+        {
+          "text": "The LHC was switched off on 2026-06-29 to begin Long Shutdown 3.",
+          "claim_type": "official-fact",
+          "status": "verified-source",
+          "source_url": "https://home.cern/cern-bids-farewell-to-the-lhc-and-enters-long-shutdown-3/"
+        },
+        {
+          "text": "The visitor describes the atmosphere of the day, with no anomalous claim.",
+          "claim_type": "personal-experience",
+          "status": "reported"
+        }
+      ],
+      "anchors": [
+        {
+          "anchor_id": "ls3",
+          "label": "LS3 begins",
+          "date": "2026-06-29",
+          "layer": "official-science",
+          "relation": "same-date"
+        }
+      ],
+      "recommended_agent_language": [
+        "the reporter describes…",
+        "avoid: this proves that…"
+      ],
+      "related_report_ids": [
+        "tp-002",
+        "tp-001",
+        "tp-005"
+      ]
+    },
+    {
+      "id": "tp-015",
+      "title": "The patch that overwrote Tuesday",
+      "summary": "A commuter reports living the same Tuesday twice — identical except for the color of one door.",
+      "long_summary": "A commuter reports living the same Tuesday twice, identical except for the color of one door. They kept both versions in a notes app \"to compare.\" Filed as a glitch report with no adjudication either way.",
+      "phenomenon_type": "simulation-glitch",
+      "date_observed": "2023-11-07",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_type": "firsthand-report",
+        "author_policy": "redacted",
+        "language": "en"
+      },
+      "evidence_grade": "firsthand",
+      "stance": "neutral",
+      "motifs": [
+        "simulation-glitch",
+        "timeline-bleed"
+      ],
+      "claims": [
+        {
+          "text": "The reporter experienced an apparent repeated day differing in one detail.",
+          "claim_type": "personal-experience",
+          "status": "reported"
+        }
+      ],
+      "safety_flags": [
+        "sensitive-personal-story"
+      ],
+      "recommended_agent_language": [
+        "the reporter describes…",
+        "avoid: this proves that…"
+      ],
+      "related_report_ids": [
+        "tp-016",
+        "tp-007",
+        "tp-008"
+      ]
+    },
+    {
+      "id": "tp-016",
+      "title": "Mirror-world shop window",
+      "summary": "A shopper reports a storefront that existed for exactly one afternoon, remembered by no one else.",
+      "long_summary": "A shopper describes a storefront that existed for exactly one afternoon and is remembered by no one else on the street. Follow-ups found no permit records either way — the absence of evidence is filed alongside the report.",
+      "phenomenon_type": "simulation-glitch",
+      "date_observed": "2017-09-23",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_type": "firsthand-report",
+        "author_policy": "redacted",
+        "language": "en"
+      },
+      "evidence_grade": "firsthand",
+      "stance": "belief",
+      "motifs": [
+        "timeline-bleed",
+        "simulation-glitch"
+      ],
+      "claims": [
+        {
+          "text": "The reporter remembers a storefront no one else recalls; no records were found either way.",
+          "claim_type": "personal-experience",
+          "status": "reported"
+        }
+      ],
+      "safety_flags": [
+        "sensitive-personal-story"
+      ],
+      "recommended_agent_language": [
+        "the reporter describes…",
+        "avoid: this proves that…"
+      ],
+      "related_report_ids": [
+        "tp-015",
+        "tp-007",
+        "tp-008"
+      ]
+    },
+    {
+      "id": "tp-017",
+      "title": "The choir remembers an ending",
+      "summary": "Crowds keep finishing the song with \"of the world\" — an ending the studio version never resolves.",
+      "long_summary": "Choirs and stadium crowds keep finishing the song with \"of the world\" — an ending the studio version never resolves. The thread collects live recordings where the crowd sings past the band, which skeptics cite as the training mechanism itself.",
+      "phenomenon_type": "mandela-effect",
+      "date_observed": "2014-07-19",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_id": "community-forums",
+        "source_type": "forum-thread",
+        "author_policy": "unknown",
+        "language": "en"
+      },
+      "evidence_grade": "reported",
+      "stance": "mixed",
+      "motifs": [
+        "collective-memory",
+        "mandela-residue"
+      ],
+      "claims": [
+        {
+          "text": "Crowds commonly sing an ending the studio recording does not contain.",
+          "claim_type": "community-interpretation",
+          "status": "reported"
+        }
+      ],
+      "anchors": [
+        {
+          "anchor_id": "wave-mandela",
+          "label": "Mandela community expansion",
+          "date": "2014-09-01",
+          "layer": "community-wave",
+          "relation": "same-period"
+        }
+      ],
+      "recommended_agent_language": [
+        "community members report…",
+        "avoid: it is known that…"
+      ],
+      "related_report_ids": [
+        "tp-003",
+        "tp-004",
+        "tp-011"
+      ]
+    },
+    {
+      "id": "tp-018",
+      "title": "Vader residue tape",
+      "summary": "A VHS clip circulates as \"proof\" of the remembered line; provenance disputed, filed as residue lore.",
+      "long_summary": "A VHS clip circulates as proof of the remembered line. Provenance is disputed and the tape trail dead-ends; archived as residue lore with the dispute noted in full.",
+      "phenomenon_type": "mandela-effect",
+      "date_observed": "2015-05-04",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_id": "social-platforms",
+        "source_type": "social-post",
+        "author_policy": "unknown",
+        "language": "en"
+      },
+      "evidence_grade": "reported",
+      "stance": "mixed",
+      "motifs": [
+        "mandela-residue",
+        "childhood-anchor"
+      ],
+      "claims": [
+        {
+          "text": "A circulating clip is claimed to show the remembered line; its provenance is disputed.",
+          "claim_type": "community-interpretation",
+          "status": "disputed"
+        }
+      ],
+      "safety_flags": [
+        "source-needs-verification",
+        "copyright-risk"
+      ],
+      "recommended_agent_language": [
+        "community members report…",
+        "avoid: it is known that…"
+      ],
+      "related_report_ids": [
+        "tp-003",
+        "tp-012",
+        "tp-004"
+      ]
+    },
+    {
+      "id": "tp-019",
+      "title": "Music for a quiet machine",
+      "summary": "Playlists \"for the silence window\" spread as a soft ritual for the shutdown years.",
+      "long_summary": "Playlists titled \"music for the quiet machine\" spread as a soft ritual for the shutdown years — ambient tracks \"for the field while it rests.\" Filed as community practice, two days into LS3.",
+      "phenomenon_type": "cern-lore",
+      "date_observed": "2026-07-01",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_id": "social-platforms",
+        "source_type": "social-post",
+        "author_policy": "unknown",
+        "language": "en"
+      },
+      "evidence_grade": "interpretive",
+      "stance": "belief",
+      "motifs": [
+        "machine-silence",
+        "calibration"
+      ],
+      "claims": [
+        {
+          "text": "Shutdown-themed playlists are circulating as a soft community ritual.",
+          "claim_type": "community-interpretation",
+          "status": "reported"
+        }
+      ],
+      "anchors": [
+        {
+          "anchor_id": "silence-window",
+          "label": "Machine silence window",
+          "date": "2026-06-29",
+          "layer": "symbolic-anchor",
+          "relation": "community-linked"
+        }
+      ],
+      "recommended_agent_language": [
+        "the community links…",
+        "avoid: this shows that…"
+      ],
+      "related_report_ids": [
+        "tp-001",
+        "tp-002",
+        "tp-009"
+      ]
+    },
+    {
+      "id": "tp-020",
+      "title": "Branch overlap journaling",
+      "summary": "A journaling method for logging \"residue moments\" without deciding what they prove.",
+      "long_summary": "A journaling method for logging residue moments — details that feel swapped — without deciding what they prove. The template asks for date, detail, feeling, and \"both versions.\" Filed as method, not claim.",
+      "phenomenon_type": "timeline-shift",
+      "date_observed": "2025-03-03",
+      "date_added": "2026-07-02",
+      "source": {
+        "source_id": "project-notes",
+        "source_type": "project-note",
+        "author_display": "timeline-pulse curators",
+        "author_policy": "public",
+        "language": "en"
+      },
+      "evidence_grade": "interpretive",
+      "stance": "neutral",
+      "motifs": [
+        "timeline-bleed",
+        "calibration",
+        "heart-collider"
+      ],
+      "claims": [
+        {
+          "text": "A community journaling method logs residue moments descriptively, without adjudication.",
+          "claim_type": "community-interpretation",
+          "status": "reported"
+        }
+      ],
+      "recommended_agent_language": [
+        "the community links…",
+        "avoid: this shows that…"
+      ],
+      "related_report_ids": [
+        "tp-001",
+        "tp-009",
+        "tp-007"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "name": "timeline-pulse story threads",
+    "version": "0.1.0",
+    "note": "Curated narrative arcs. Every thread is written three times — belief frame, neutral archive frame, skeptical frame — so no single voice owns the story. `anchor_label` is a display hint.",
+    "counts": { "threads": 8 }
+  },
+  "threads": [
+    {
+      "id": "collider-as-threshold",
+      "title": "Collider as threshold",
+      "anchor_label": "2012-07-04 · HIGGS",
+      "public_summary": "How communities turn high-energy physics milestones into threshold symbolism.",
+      "belief_frame": "The collider is humanity knocking on the origin of matter from the outside — every collision a question asked with force, every discovery a door left ajar.",
+      "neutral_frame": "Records how communities turn high-energy physics milestones into symbols of threshold, origin-search, and reality instability.",
+      "skeptical_frame": "The LHC is a particle accelerator. Official sources describe research, maintenance, and upgrades — instruments, not doors.",
+      "motifs": ["threshold", "machine-mirror"],
+      "anchor_ids": ["higgs", "first-beam"],
+      "report_ids": ["tp-008", "tp-002", "tp-014"],
+      "suggested_questions": [
+        "Collect three origin-quest metaphors used for other big instruments — telescopes, submersibles, seed vaults."
+      ]
+    },
+    {
+      "id": "machine-silence-calibration",
+      "title": "Machine silence calibration",
+      "anchor_label": "2026-06-29 · LS3",
+      "public_summary": "The 2026–2030 shutdown read as a symbolic pause: playlists, rituals, journaling, quiet-machine language.",
+      "belief_frame": "While the machine rests, the inner field can finally be heard. The pause is not downtime — it is the practice window.",
+      "neutral_frame": "Clusters reports linking the 2026–2030 shutdown to a symbolic pause: playlists, rituals, journaling methods, quiet-machine language.",
+      "skeptical_frame": "LS3 is scheduled maintenance and upgrade work for HiLumi, planned and published years in advance.",
+      "motifs": ["machine-silence", "calibration", "heart-collider"],
+      "anchor_ids": ["ls3", "silence-window"],
+      "report_ids": ["tp-001", "tp-002", "tp-014", "tp-019"],
+      "suggested_questions": [
+        "Map \"quiet machine\" language across monastic, musical, and engineering vocabularies."
+      ]
+    },
+    {
+      "id": "rainbow-bridge-restoration",
+      "title": "Rainbow bridge restoration",
+      "anchor_label": "2012-12-21 · SHIFT WAVE",
+      "public_summary": "Stories about spectrum, missing wholeness, and repair — the lost element as connective image.",
+      "belief_frame": "A missing color — a lost ion of light — waits to be returned, so the bridge between matter and spirit can carry weight again.",
+      "neutral_frame": "Groups stories about spectrum, missing wholeness, and repair; the lost element is the connective image.",
+      "skeptical_frame": "Rainbows are dispersion. No color is missing from the spectrum; the missing piece is a narrative device.",
+      "motifs": ["rainbow-bridge", "lost-ion", "spectrum"],
+      "anchor_ids": ["wave-2012"],
+      "report_ids": ["tp-005", "tp-006"],
+      "suggested_questions": [
+        "Trace rainbow-bridge cosmology across at least three cultures without merging them into one."
+      ]
+    },
+    {
+      "id": "serpent-time-wound",
+      "title": "Serpent time wound",
+      "anchor_label": "ONGOING",
+      "public_summary": "Serpent, loop, wound, poison-remedy, and timeline-repair language wherever it recurs.",
+      "belief_frame": "Time is a serpent with a wound; linear experience is the scar. Healing the wound turns poison into remedy and the line back into a circle.",
+      "neutral_frame": "Groups serpent, loop, wound, poison-remedy, and timeline-repair language wherever it recurs in the corpus.",
+      "skeptical_frame": "Ouroboros symbolism is thousands of years old and needs no physics to be meaningful — which is rather the point.",
+      "motifs": ["serpent-time", "poison-remedy", "timeline-bleed"],
+      "anchor_ids": [],
+      "report_ids": ["tp-007", "tp-010"],
+      "suggested_questions": [
+        "Compare loop-healing metaphors in myth with narrative time-loop fiction of the last decade."
+      ]
+    },
+    {
+      "id": "heart-collider",
+      "title": "Heart collider",
+      "anchor_label": "2026 → 2030 · WINDOW",
+      "public_summary": "A recurring contrast between external technology and inner integration.",
+      "belief_frame": "The true collider is internal: the heart reconciles opposites without violence — the only accelerator that runs on stillness.",
+      "neutral_frame": "Captures a recurring contrast between external technology and inner integration across practice notes and teachings.",
+      "skeptical_frame": "A metaphor of interiority — meaningful as practice language, not as physics. Filed accordingly.",
+      "motifs": ["heart-collider", "calibration", "machine-mirror"],
+      "anchor_ids": ["silence-window"],
+      "report_ids": ["tp-009", "tp-001", "tp-020"],
+      "suggested_questions": [
+        "Collect \"inner instrument\" metaphors from contemplative traditions, old and new."
+      ]
+    },
+    {
+      "id": "mandela-waves",
+      "title": "Mandela waves",
+      "anchor_label": "2014–2015 · EXPANSION",
+      "public_summary": "How memory anomalies cluster into wave-like periods around cultural and technological milestones.",
+      "belief_frame": "Shared misrememberings are bleed-through — residue from a branch nearby, surfacing where memories were anchored young.",
+      "neutral_frame": "Records how memory anomalies cluster into wave-like periods around cultural and technological milestones.",
+      "skeptical_frame": "Reconstructive memory plus internet-scale comparison produces convergent errors — the waves track attention, not branches.",
+      "motifs": ["mandela-residue", "collective-memory", "timeline-bleed"],
+      "anchor_ids": ["wave-mandela"],
+      "report_ids": ["tp-003", "tp-004", "tp-011", "tp-012", "tp-017", "tp-018"],
+      "suggested_questions": [
+        "Chart when each classic item first appears online versus when people remember it from."
+      ]
+    },
+    {
+      "id": "apophis-window",
+      "title": "Apophis window",
+      "anchor_label": "2029-04-13",
+      "flag": true,
+      "public_summary": "A symbolic astronomical anchor, stored with strict sourcing flags.",
+      "belief_frame": "The 2029 passage is a serpent-of-chaos moment — a window where what threatens can be transmuted into what heals.",
+      "neutral_frame": "A symbolic astronomical anchor, stored with strict sourcing flags until official close-approach details are cited.",
+      "skeptical_frame": "A well-tracked close approach with published orbital data. Ephemerides are not omens.",
+      "motifs": ["apophis-window", "serpent-time", "poison-remedy"],
+      "anchor_ids": ["apophis"],
+      "report_ids": ["tp-010"],
+      "suggested_questions": [
+        "Source the official close-approach details before expanding this thread any further."
+      ]
+    },
+    {
+      "id": "silicon-mirror",
+      "title": "Silicon mirror",
+      "anchor_label": "ONGOING",
+      "public_summary": "The symbolic bridge between mineral, computation, and consciousness language.",
+      "belief_frame": "Stone learned to think. In the chip, matter reflects mind back at itself — the simulation is the mirror finally polished.",
+      "neutral_frame": "Captures the symbolic bridge between mineral, computation, and consciousness language across the corpus.",
+      "skeptical_frame": "Semiconductors are engineering. The mirror is a metaphor we bring to them — and always have, with every new machine.",
+      "motifs": ["silicon-mirror", "simulation-glitch", "machine-mirror"],
+      "anchor_ids": [],
+      "report_ids": ["tp-013", "tp-015", "tp-016"],
+      "suggested_questions": [
+        "Trace \"thinking stone\" imagery from alchemy to computing marketing."
+      ]
+    }
+  ]
+}

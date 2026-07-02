@@ -1,0 +1,20 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://timeline-pulse.vercel.app/reports.json",
+      "service-desc": [
+        { "href": "https://timeline-pulse.vercel.app/openapi.json", "type": "application/json", "title": "OpenAPI description of the Timeline Pulse data endpoints" }
+      ],
+      "service-doc": [
+        { "href": "https://github.com/davidmosiah/timeline-pulse", "type": "text/html", "title": "timeline-pulse documentation" },
+        { "href": "https://timeline-pulse.vercel.app/llms.txt", "type": "text/plain", "title": "LLM-readable summary" }
+      ],
+      "service-meta": [
+        { "href": "https://timeline-pulse.vercel.app/.well-known/mcp/server-card.json", "type": "application/json", "title": "MCP Server Card" }
+      ],
+      "status": [
+        { "href": "https://timeline-pulse.vercel.app/reports.json" }
+      ]
+    }
+  ]
+}

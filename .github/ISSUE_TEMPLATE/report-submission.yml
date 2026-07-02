@@ -1,0 +1,61 @@
+name: "📡 Report submission"
+description: Submit a timeline-shift, Mandela Effect, synchronicity, or reality-glitch report to the archive.
+title: "[report] "
+labels: ["report-submission", "needs-curation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing to the archive. A curator will grade this, tag motifs, and file it.
+        **Nothing you submit will be presented as proof** — it will be filed with a source type and an evidence grade, per the [source policy](https://github.com/davidmosiah/timeline-pulse/blob/main/docs/SOURCE_POLICY.md).
+  - type: textarea
+    id: what
+    attributes:
+      label: What did you experience or notice?
+      description: Describe it in your own words. Emotional truth welcome; no diagnosis, no debate here.
+    validations:
+      required: true
+  - type: input
+    id: when
+    attributes:
+      label: When did it happen (or when was it posted)?
+      placeholder: "2026-06-29, or 'around 2015'"
+    validations:
+      required: true
+  - type: dropdown
+    id: firsthand
+    attributes:
+      label: Is this firsthand or something you saw online?
+      options:
+        - Firsthand — it happened to me
+        - Seen online — I'm relaying a post/thread/video
+        - Symbolic/teaching material — an idea, not an event
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Link (if it exists)
+      placeholder: "https://…"
+  - type: dropdown
+    id: identity
+    attributes:
+      label: How should you be credited?
+      options:
+        - Omit me entirely (default)
+        - Anonymous ("a contributor")
+        - Public — use my handle (say which, below)
+    validations:
+      required: true
+  - type: textarea
+    id: motifs
+    attributes:
+      label: Which motifs does it feel connected to?
+      description: "e.g. machine-silence, rainbow-bridge, mandela-residue, timeline-bleed — see the [motif index](https://timeline-pulse.vercel.app/#motifs). Guessing is fine."
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Permission
+      options:
+        - label: The project may publish a summary of this report under its source policy.
+          required: true

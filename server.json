@@ -1,0 +1,22 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.davidmosiah/timeline-pulse",
+  "description": "Search and explore timeline-shift folklore, Mandela Effect reports, collider-era myths, and symbolic reality stories as a source-aware cultural archive.",
+  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/davidmosiah/timeline-pulse",
+    "source": "github"
+  },
+  "websiteUrl": "https://timeline-pulse.vercel.app",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "timeline-pulse",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Live site
+    url: https://timeline-pulse.vercel.app
+    about: The public archive — Archive, Timeline, Motifs, Mandela Catalog, Story Threads.
+  - name: Source & content policy
+    url: https://github.com/davidmosiah/timeline-pulse/blob/main/docs/SOURCE_POLICY.md
+    about: Read this before submitting reports — it explains grading, labels, and the omitted-teacher rule.

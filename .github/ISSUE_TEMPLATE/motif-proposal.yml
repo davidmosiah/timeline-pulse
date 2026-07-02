@@ -1,0 +1,34 @@
+name: "✦ Motif proposal"
+description: Propose a new recurring symbol for the constellation, or a change to an existing one.
+title: "[motif] "
+labels: ["motif-proposal"]
+body:
+  - type: input
+    id: motif-id
+    attributes:
+      label: Proposed motif id
+      description: kebab-case, like the existing ones.
+      placeholder: "glass-ocean"
+    validations:
+      required: true
+  - type: dropdown
+    id: family
+    attributes:
+      label: Family
+      options: [machine, time, light, serpent, memory, simulation, alchemy, astronomy, body]
+    validations:
+      required: true
+  - type: textarea
+    id: definition
+    attributes:
+      label: Short definition
+      description: One sentence, written as description of a symbol — not as a claim about physics.
+    validations:
+      required: true
+  - type: textarea
+    id: recurrence
+    attributes:
+      label: Where does it recur?
+      description: At least two independent places (reports, threads, communities) where this symbol shows up. Links welcome.
+    validations:
+      required: true

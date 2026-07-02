@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #12110e; color: #ece6d8; font-family: 'IBM Plex Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+    ::selection { background: #e6b153; color: #12110e; }
+    @keyframes tpPulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.9); opacity: 0.35; } 100% { transform: scale(1); opacity: 1; } }
+    @keyframes tpBlink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+    @keyframes tpGlitch { 0% { text-shadow: 2px 0 #5fd0e4, -2px 0 #dd8fc0; transform: skewX(0deg); } 25% { text-shadow: -2px 0 #5fd0e4, 2px 0 #dd8fc0; transform: skewX(1.5deg); } 50% { text-shadow: 1px 0 #a58fe8, -1px 0 #e6b153; transform: skewX(-1deg); } 75% { text-shadow: -1px 0 #e6b153, 1px 0 #5fd0e4; } 100% { text-shadow: 2px 0 #5fd0e4, -2px 0 #dd8fc0; } }
+    @keyframes tpFlash { 0% { opacity: 0; } 12% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes tpShimmer { 0% { background-position: 0% 0; } 100% { background-position: 200% 0; } }
+    @keyframes tpBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+  </style>
+</helmet>
+<div style="min-height: 100vh; background: #12110e;">
+
+  <!-- ============ HEADER ============ -->
+  <header data-screen-label="Header" style="position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px); background: rgba(18,17,14,0.86); border-bottom: 1px solid #2c2820;">
+    <div style="max-width: 1320px; margin: 0 auto; padding: 8px clamp(16px,3vw,40px); min-height: 58px; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px;">
+      <a href="#top" style="display: flex; align-items: center; gap: 9px; text-decoration: none; color: #ece6d8; flex-shrink: 0;">
+        <button onClick="{{ onGlyph }}" title="send a pulse through the constellation" style="background: none; border: none; cursor: pointer; padding: 0; font-size: 15px; color: #e6b153; line-height: 1; animation: tpPulse 3.6s ease-in-out infinite;">{{ mGlyph }}</button>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; letter-spacing: 0.18em;">TIMELINE PULSE</span>
+      </a>
+      <nav style="display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; flex: 1 1 auto; min-width: min(320px, 100%); padding-right: 26px; mask-image: linear-gradient(90deg, #000 88%, transparent); -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent);">
+        <a href="#archive" style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #a89f8d; text-decoration: none; padding: 8px 7px; white-space: nowrap;" style-hover="color: #e6b153;">ARCHIVE</a>
+        <a href="#timeline" style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #a89f8d; text-decoration: none; padding: 8px 7px; white-space: nowrap;" style-hover="color: #e6b153;">TIMELINE</a>
+        <a href="#motifs" style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #a89f8d; text-decoration: none; padding: 8px 7px; white-space: nowrap;" style-hover="color: #e6b153;">{{ mMotifsNav }}</a>
+        <a href="#mandela" style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #a89f8d; text-decoration: none; padding: 8px 7px; white-space: nowrap;" style-hover="color: #e6b153;">MANDELA</a>
+        <a href="#threads" style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #a89f8d; text-decoration: none; padding: 8px 7px; white-space: nowrap;" style-hover="color: #e6b153;">THREADS</a>
+        <a href="#agents" style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #a89f8d; text-decoration: none; padding: 8px 7px; white-space: nowrap;" style-hover="color: #e6b153;">AGENTS</a>
+        <a href="#sources" style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #a89f8d; text-decoration: none; padding: 8px 7px; white-space: nowrap;" style-hover="color: #e6b153;">SOURCES</a>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-left: auto;">
+        <div style="display: flex; border: 1px solid #2c2820; border-radius: 999px; padding: 3px; gap: 2px;" title="Lens: how framings are shown across the site">
+          <sc-for list="{{ lensBtns }}" as="b" hint-placeholder-count="3">
+            <button onClick="{{ b.on }}" style="{{ b.style }}">{{ b.label }}</button>
+          </sc-for>
+        </div>
+        <button onClick="{{ toggleMandela }}" title="Mandela mode: subtly alters details of this site (press M)" style="{{ mandelaBtnStyle }}">🜛 {{ mandelaBtnLabel }}</button>
+        <button onClick="{{ copyInstall }}" style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; font-weight: 600; color: #12110e; background: #e6b153; border: none; border-radius: 999px; padding: 8px 14px; cursor: pointer; white-space: nowrap;" style-hover="background: #f0c26e;">{{ installLabel }}</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="top" data-screen-label="Hero" style="position: relative; min-height: min(93vh, 940px); display: flex; align-items: center; overflow: hidden; border-bottom: 1px solid #2c2820;">
+    <canvas ref="{{ cvRef }}" onMouseMove="{{ cvMove }}" onMouseLeave="{{ cvLeave }}" onClick="{{ cvClick }}" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></canvas>
+    <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 18% 45%, rgba(18,17,14,0.88), rgba(18,17,14,0.25) 60%, transparent 100%); pointer-events: none;"></div>
+    <div style="position: relative; z-index: 2; max-width: 1320px; margin: 0 auto; padding: 90px clamp(16px,3vw,40px); width: 100%; pointer-events: none;">
+      <div style="max-width: 660px; display: flex; flex-direction: column; align-items: flex-start; gap: 22px;">
+        <div style="pointer-events: auto; display: inline-flex; align-items: center; gap: 10px; border: 1px solid #2c2820; background: rgba(23,21,17,0.85); border-radius: 999px; padding: 8px 16px 8px 12px;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: #e6b153; animation: tpPulse 2.2s ease-in-out infinite; display: inline-block;"></span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #e6b153;">LIVE · LS3</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #a89f8d;">the LHC has been silent for {{ silenceDays }} days</span>
+        </div>
+        <h1 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(44px, 7.2vw, 96px); line-height: 0.98; letter-spacing: -0.015em; margin: 0; color: #ece6d8;">
+          The machine went <em style="font-style: italic; color: #e6b153; cursor: default; pointer-events: auto;" style-hover="{{ glitchHover }}">{{ mQuiet }}</em>.<br>
+          The stories didn't.
+        </h1>
+        <p style="font-size: 16.5px; line-height: 1.65; color: #a89f8d; margin: 0; max-width: 560px; text-wrap: pretty;">
+          <strong style="color: #ece6d8; font-weight: 500;">Timeline Pulse</strong> is an open-source atlas of timeline-shift folklore, Mandela Effect reports, and collider-era myth — every claim labeled, every source graded. A structured corpus for humans <em style="font-family: 'Instrument Serif', serif; color: #5fd0e4;">and</em> AI agents.
+        </p>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: {{ lensColor }}; display: inline-block;"></span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.05em; color: #6f6858;">{{ lensLine }}</span>
+        </div>
+        <div style="pointer-events: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 6px;">
+          <div style="display: flex; align-items: center; gap: 12px; background: #1a1814; border: 1px solid #3a3428; border-radius: 12px; padding: 13px 18px;">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; color: #6f6858;">$</span>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; color: #ece6d8;">npx -y timeline-pulse</span>
+            <button onClick="{{ copyInstall }}" style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #e6b153; background: transparent; border: 1px solid #e6b15344; border-radius: 7px; padding: 5px 9px; cursor: pointer;" style-hover="background: #e6b15318;">{{ copyMini }}</button>
+          </div>
+          <a href="https://github.com/davidmosiah/timeline-pulse" target="_blank" rel="noopener" style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #a89f8d; text-decoration: none; border: 1px solid #2c2820; border-radius: 12px; padding: 13px 18px;" style-hover="color: #ece6d8; border-color: #3a3428;">GITHUB ↗</a>
+          <a href="https://www.npmjs.com/package/timeline-pulse" target="_blank" rel="noopener" style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #a89f8d; text-decoration: none; border: 1px solid #2c2820; border-radius: 12px; padding: 13px 18px;" style-hover="color: #ece6d8; border-color: #3a3428;">NPM ↗</a>
+        </div>
+        <div style="height: 2px; width: 130px; border-radius: 2px; background: linear-gradient(90deg, #e0795f, #e6b153, #d9d06e, #83cf9e, #5fd0e4, #a58fe8, #dd8fc0, #e0795f); background-size: 200% 100%; animation: tpShimmer 6s linear infinite;"></div>
+        <sc-if value="{{ heroMotifHint }}" hint-placeholder-val="{{ false }}">
+          <a href="#archive" style="pointer-events: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #5fd0e4; text-decoration: none; border: 1px dashed #5fd0e455; border-radius: 999px; padding: 7px 14px;">✦ filtering archive by {{ activeMotifName }} — jump to reports ↓</a>
+        </sc-if>
+      </div>
+    </div>
+    <div style="position: absolute; right: clamp(16px,3vw,40px); bottom: 20px; z-index: 2; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; pointer-events: none;">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #6f6858;">THE MOTIF CONSTELLATION — CLICK A STAR TO FILTER THE ARCHIVE</span>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end;">
+        <sc-for list="{{ famLegend }}" as="f" hint-placeholder-count="6">
+          <span style="display: inline-flex; align-items: center; gap: 5px; font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.08em; color: #6f6858;"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{ f.c }}; display: inline-block;"></span>{{ f.n }}</span>
+        </sc-for>
+      </div>
+    </div>
+    <a href="#stats" style="position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 2; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: #6f6858; text-decoration: none; animation: tpBob 2.6s ease-in-out infinite;">▾</a>
+  </section>
+
+  <!-- ============ STATS BAND ============ -->
+  <section id="stats" data-screen-label="Corpus Snapshot" style="scroll-margin-top: 78px; border-bottom: 1px solid #2c2820; background: #171511;">
+    <div style="max-width: 1320px; margin: 0 auto; padding: 30px clamp(16px,3vw,40px); display: flex; flex-wrap: wrap; align-items: center; gap: clamp(24px,4vw,56px);">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="5">
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 500; color: {{ s.c }};">{{ s.val }}</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.16em; color: #6f6858;">{{ s.label }}</span>
+        </div>
+      </sc-for>
+      <div style="flex: 1;"></div>
+      <div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-end;">
+        <div style="display: flex; align-items: flex-end; gap: 3px; height: 40px;">
+          <sc-for list="{{ yearBars }}" as="y" hint-placeholder-count="15">
+            <div title="{{ y.tip }}" style="width: 9px; height: {{ y.h }}%; background: {{ y.c }}; border-radius: 2px 2px 0 0; min-height: 2px;"></div>
+          </sc-for>
+        </div>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: #6f6858;">REPORTS / YEAR · 2012 — 2026 · SEED BATCH v0.1</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ARCHIVE ============ -->
+  <section id="archive" data-screen-label="Archive" style="scroll-margin-top: 78px; padding: clamp(70px,9vw,110px) 0 90px;">
+    <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(16px,3vw,40px);">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.22em; color: #6f6858;"><span style="color: #e6b153;">01</span> · ARCHIVE</div>
+      <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(34px,4.2vw,54px); line-height: 1.04; margin: 14px 0 8px; color: #ece6d8;">Twenty ways reality <em style="font-style: italic; color: #5fd0e4;">wobbled</em></h2>
+      <p style="color: #a89f8d; font-size: 15px; max-width: 620px; margin: 0 0 30px; line-height: 1.6; text-wrap: pretty;">Every report carries a source type and an evidence grade. Nothing here is presented as proof — it is presented as <em style="font-family: 'Instrument Serif', serif;">filed</em>.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px;">
+        <input value="{{ q }}" onChange="{{ onQ }}" placeholder="Search reports, motifs, phrases…" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ece6d8; background: #1a1814; border: 1px solid #2c2820; border-radius: 10px; padding: 12px 16px; width: min(340px, 100%); outline: none;" style-focus="border-color: #e6b15366;">
+        <div style="display: flex; flex-wrap: wrap; gap: 7px;">
+          <sc-for list="{{ gradeChips }}" as="g" hint-placeholder-count="7">
+            <button onClick="{{ g.on }}" title="{{ g.tip }}" style="{{ g.style }}">{{ g.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px; min-height: 28px; flex-wrap: wrap;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; color: #6f6858;">{{ resultCount }}</span>
+        <sc-if value="{{ hasFilters }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ clearFilters }}" style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: #e0795f; background: transparent; border: 1px solid #e0795f44; border-radius: 999px; padding: 5px 12px; cursor: pointer;" style-hover="background: #e0795f18;">✕ CLEAR FILTERS</button>
+        </sc-if>
+        <sc-if value="{{ heroMotifHint }}" hint-placeholder-val="{{ false }}">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #5fd0e4;">✦ motif: {{ activeMotifName }}</span>
+        </sc-if>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(310px, 100%), 1fr)); gap: 14px;">
+        <sc-for list="{{ reports }}" as="r" hint-placeholder-count="6">
+          <article onClick="{{ r.open }}" style="background: #171511; border: 1px solid #2c2820; border-radius: 14px; padding: 20px; cursor: pointer; display: flex; flex-direction: column; gap: 10px; transition: border-color .15s, transform .15s;" style-hover="border-color: #e6b15355; transform: translateY(-2px);">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #6f6858;">{{ r.d }}</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: #a89f8d; border: 1px solid #2c2820; border-radius: 999px; padding: 3px 8px;">{{ r.ph }}</span>
+            </div>
+            <h3 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 21px; line-height: 1.15; margin: 0; color: #ece6d8;">{{ r.t }}</h3>
+            <p style="font-size: 13.5px; line-height: 1.55; color: #a89f8d; margin: 0; flex: 1;">{{ r.s }}</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+              <sc-for list="{{ r.chips }}" as="mo" hint-placeholder-count="3">
+                <button onClick="{{ mo.on }}" style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.04em; color: {{ mo.c }}; background: transparent; border: 1px solid {{ mo.c }}33; border-radius: 999px; padding: 3px 9px; cursor: pointer; white-space: nowrap;" style-hover="border-color: {{ mo.c }};">✦ {{ mo.n }}</button>
+              </sc-for>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #2c2820; padding-top: 11px; gap: 8px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; color: #6f6858;">{{ r.src }}</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.08em; font-weight: 600; color: {{ r.gc }}; border: 1px solid {{ r.gc }}55; border-radius: 999px; padding: 3px 9px;">{{ r.gr }}</span>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+      <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align: center; padding: 60px 20px; border: 1px dashed #2c2820; border-radius: 14px;">
+          <div style="font-family: 'Instrument Serif', serif; font-size: 26px; color: #a89f8d; font-style: italic;">No reports match.</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #6f6858; margin-top: 8px;">Perhaps they exist in a nearby branch.</div>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <!-- ============ TIMELINE ============ -->
+  <section id="timeline" data-screen-label="Timeline" style="scroll-margin-top: 78px; padding: clamp(70px,9vw,110px) 0; background: #171511; border-top: 1px solid #2c2820; border-bottom: 1px solid #2c2820;">
+    <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(16px,3vw,40px);">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.22em; color: #6f6858;"><span style="color: #e6b153;">02</span> · TIMELINE</div>
+      <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(34px,4.2vw,54px); line-height: 1.04; margin: 14px 0 8px; color: #ece6d8;">Two chronologies, <em style="font-style: italic; color: #e6b153;">one axis</em></h2>
+      <p style="color: #a89f8d; font-size: 15px; max-width: 620px; margin: 0 0 26px; line-height: 1.6; text-wrap: pretty;">Official science above the line. Community waves and symbolic anchors below it. They share a calendar — never a claim.</p>
+      <div style="display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 20px;">
+        <span style="display: inline-flex; align-items: center; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #a89f8d;"><span style="width: 9px; height: 9px; border-radius: 50%; background: #5fd0e4; display: inline-block;"></span>OFFICIAL SCIENCE</span>
+        <span style="display: inline-flex; align-items: center; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #a89f8d;"><span style="width: 9px; height: 9px; border-radius: 50%; background: #e6b153; display: inline-block;"></span>COMMUNITY WAVE</span>
+        <span style="display: inline-flex; align-items: center; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #a89f8d;"><span style="width: 9px; height: 9px; border-radius: 50%; border: 1.5px dashed #a58fe8; display: inline-block; box-sizing: border-box;"></span>SYMBOLIC ANCHOR</span>
+      </div>
+      <div style="{{ tlOpacityStyle }}">
+        <div style="position: relative; height: 240px; border: 1px solid #2c2820; border-radius: 16px; background: #12110e; overflow: hidden; padding: 0;">
+          <sc-for list="{{ gridYears }}" as="gy" hint-placeholder-count="12">
+            <div style="position: absolute; top: 0; bottom: 0; left: {{ gy.left }}%; width: 1px; background: #1e1c16;"></div>
+            <span style="position: absolute; bottom: 8px; left: {{ gy.left }}%; transform: translateX(-50%); font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: #504a3e;">{{ gy.label }}</span>
+          </sc-for>
+          <div style="position: absolute; left: 3%; right: 3%; top: 50%; height: 1px; background: #3a3428;"></div>
+          <div style="position: absolute; top: 62%; height: 22px; left: {{ silenceSpan.left }}%; width: {{ silenceSpan.width }}%; background: linear-gradient(90deg, #a58fe833, #5fd0e433); border: 1px dashed #a58fe855; border-radius: 6px;"></div>
+          <span style="position: absolute; top: 63%; left: {{ silenceSpan.labelLeft }}%; transform: translateY(2px); font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; letter-spacing: 0.08em; color: #a58fe8; white-space: nowrap;">SILENCE WINDOW</span>
+          <div style="position: absolute; top: 12%; bottom: 26%; left: {{ nowLeft }}%; width: 1px; background: linear-gradient(180deg, transparent, #e6b153, transparent);"></div>
+          <span style="position: absolute; top: 4%; left: {{ nowLeft }}%; transform: translateX(-50%); font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; letter-spacing: 0.12em; color: #e6b153; white-space: nowrap;">YOU ARE HERE</span>
+          <sc-for list="{{ evOfficial }}" as="e" hint-placeholder-count="5">
+            <button onClick="{{ e.on }}" title="{{ e.title }}" style="position: absolute; top: 50%; left: {{ e.left }}%; transform: translate(-50%, -50%); width: {{ e.size }}px; height: {{ e.size }}px; border-radius: 50%; background: {{ e.bg }}; border: {{ e.border }}; cursor: pointer; padding: 0; z-index: 3; transition: transform .15s;" style-hover="transform: translate(-50%, -50%) scale(1.4);"></button>
+            <span style="position: absolute; top: 33%; left: {{ e.left }}%; transform: translateX(-50%); font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; letter-spacing: 0.06em; color: #5fd0e4; white-space: nowrap; opacity: 0.85;">{{ e.short }}</span>
+          </sc-for>
+          <sc-for list="{{ evLore }}" as="e" hint-placeholder-count="4">
+            <button onClick="{{ e.on }}" title="{{ e.title }}" style="position: absolute; top: {{ e.top }}%; left: {{ e.left }}%; transform: translate(-50%, -50%); width: {{ e.size }}px; height: {{ e.size }}px; border-radius: 50%; background: {{ e.bg }}; border: {{ e.border }}; cursor: pointer; padding: 0; z-index: 3; transition: transform .15s;" style-hover="transform: translate(-50%, -50%) scale(1.4);"></button>
+          </sc-for>
+        </div>
+        <div style="margin-top: 16px; border: 1px solid #2c2820; border-radius: 14px; background: #1a1814; padding: 20px 22px; display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; font-weight: 600; color: {{ selEv.lc }}; border: 1px solid {{ selEv.lc }}55; border-radius: 999px; padding: 3px 10px;">{{ selEv.layer }}</span>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #6f6858;">{{ selEv.date }}</span>
+            <sc-if value="{{ selEv.flag }}" hint-placeholder-val="{{ false }}">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; color: #e0795f; border: 1px dashed #e0795f55; border-radius: 999px; padding: 3px 10px;">⚑ NEEDS OFFICIAL SOURCE</span>
+            </sc-if>
+          </div>
+          <div style="font-family: 'Instrument Serif', serif; font-size: 24px; color: #ece6d8;">{{ selEv.title }}</div>
+          <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #a89f8d; max-width: 720px;">{{ selEv.desc }}</p>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #6f6858;">{{ selEv.src }}</span>
+        </div>
+      </div>
+      <p style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #6f6858; margin: 18px 0 0; letter-spacing: 0.04em;">Official events cite CERN's public pages. Community and symbolic layers are interpretation — never causation.</p>
+    </div>
+  </section>
+
+  <!-- ============ MOTIFS ============ -->
+  <section id="motifs" data-screen-label="Motif Index" style="scroll-margin-top: 78px; padding: clamp(70px,9vw,110px) 0;">
+    <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(16px,3vw,40px);">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.22em; color: #6f6858;"><span style="color: #e6b153;">03</span> · {{ mMotifsNav }}</div>
+      <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(34px,4.2vw,54px); line-height: 1.04; margin: 14px 0 8px; color: #ece6d8;">The symbols that keep <em style="font-style: italic; color: #a58fe8;">returning</em></h2>
+      <p style="color: #a89f8d; font-size: 15px; max-width: 620px; margin: 0 0 30px; line-height: 1.6; text-wrap: pretty;">Seventeen recurring symbols, sized by frequency, linked by co-occurrence. The same constellation you saw above — laid flat for reading.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr)); gap: 12px;">
+        <sc-for list="{{ motifCards }}" as="m" hint-placeholder-count="9">
+          <button onClick="{{ m.on }}" style="{{ m.style }}" style-hover="border-color: {{ m.c }}88; transform: translateY(-2px);">
+            <span style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: {{ m.c }};">✦ {{ m.n }}</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: #6f6858;">×{{ m.freq }}</span>
+            </span>
+            <span style="display: block; height: 3px; border-radius: 2px; background: #2c2820; overflow: hidden;"><span style="display: block; height: 100%; width: {{ m.pct }}%; background: {{ m.c }}; opacity: 0.7;"></span></span>
+            <span style="display: block; font-size: 12.5px; line-height: 1.5; color: #a89f8d; text-align: left;">{{ m.def }}</span>
+            <span style="display: block; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.04em; color: #6f6858; text-align: left;">WITH: {{ m.co }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MANDELA CATALOG ============ -->
+  <section id="mandela" data-screen-label="Mandela Catalog" style="scroll-margin-top: 78px; padding: clamp(70px,9vw,110px) 0; background: #171511; border-top: 1px solid #2c2820; border-bottom: 1px solid #2c2820;">
+    <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(16px,3vw,40px);">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.22em; color: #6f6858;"><span style="color: #e6b153;">04</span> · {{ mMandelaKicker }}</div>
+      <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(34px,4.2vw,54px); line-height: 1.04; margin: 14px 0 8px; color: #ece6d8;">You remember it <em style="font-style: italic; color: #dd8fc0;">differently</em></h2>
+      <p style="color: #a89f8d; font-size: 15px; max-width: 620px; margin: 0 0 30px; line-height: 1.6; text-wrap: pretty;">Six classic memory variants: what people swear they remember, what the record shows, and what mainstream memory science says about the gap.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr)); gap: 14px;">
+        <sc-for list="{{ mandelaCards }}" as="mc" hint-placeholder-count="6">
+          <div style="background: #12110e; border: 1px solid #2c2820; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 13px;" style-hover="border-color: #dd8fc055;">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; color: #a89f8d; border: 1px solid #2c2820; border-radius: 999px; padding: 3px 9px;">{{ mc.cat }}</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: #e6b153; border: 1px solid #e6b15344; border-radius: 999px; padding: 3px 9px;">{{ mc.status }}</span>
+            </div>
+            <div style="font-family: 'Instrument Serif', serif; font-size: 22px; color: #ece6d8; line-height: 1.1;">{{ mc.name }}</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="border: 1px solid #dd8fc033; background: #dd8fc00d; border-radius: 10px; padding: 10px 14px;">
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; letter-spacing: 0.16em; color: #dd8fc0; margin-bottom: 4px;">REMEMBERED</div>
+                <div style="font-size: 14px; color: #ece6d8; text-shadow: 0.6px 0 rgba(221,143,192,0.5), -0.6px 0 rgba(95,208,228,0.5);" style-hover="{{ glitchHover }}">{{ mc.rem }}</div>
+              </div>
+              <div style="border: 1px solid #5fd0e433; background: #5fd0e40d; border-radius: 10px; padding: 10px 14px;">
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; letter-spacing: 0.16em; color: #5fd0e4; margin-bottom: 4px;">ON RECORD</div>
+                <div style="font-size: 14px; color: #ece6d8;">{{ mc.cur }}</div>
+              </div>
+            </div>
+            <div style="border-top: 1px solid #2c2820; padding-top: 11px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; letter-spacing: 0.14em; color: #6f6858;">MAINSTREAM NOTE — </span>
+              <span style="font-size: 12.5px; color: #a89f8d; line-height: 1.5;">{{ mc.note }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STORY THREADS ============ -->
+  <section id="threads" data-screen-label="Story Threads" style="scroll-margin-top: 78px; padding: clamp(70px,9vw,110px) 0;">
+    <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(16px,3vw,40px);">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.22em; color: #6f6858;"><span style="color: #e6b153;">05</span> · STORY THREADS</div>
+      <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(34px,4.2vw,54px); line-height: 1.04; margin: 14px 0 8px; color: #ece6d8;">Eight arcs, three <em style="font-style: italic; color: #e6b153;">lenses</em></h2>
+      <p style="color: #a89f8d; font-size: 15px; max-width: 640px; margin: 0 0 12px; line-height: 1.6; text-wrap: pretty;">Every thread is written three times — as belief, as neutral archive, as skepticism. You are currently reading through the <strong style="color: {{ lensColor }}; font-weight: 600;">{{ lensName }}</strong> lens. Switch it in the header, or right here:</p>
+      <div style="display: inline-flex; border: 1px solid #2c2820; border-radius: 999px; padding: 3px; gap: 2px; margin-bottom: 30px;">
+        <sc-for list="{{ lensBtns }}" as="b2" hint-placeholder-count="3">
+          <button onClick="{{ b2.on }}" style="{{ b2.style }}">{{ b2.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr)); gap: 14px;">
+        <sc-for list="{{ threadCards }}" as="th" hint-placeholder-count="4">
+          <div style="background: #171511; border: 1px solid #2c2820; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 12px;" style-hover="border-color: #3a3428;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap;">
+              <div style="font-family: 'Instrument Serif', serif; font-size: 25px; color: #ece6d8;">{{ th.title }}</div>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.08em; color: #6f6858;">{{ th.anchor }}</span>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+              <sc-for list="{{ th.chips }}" as="tc" hint-placeholder-count="3">
+                <button onClick="{{ tc.on }}" style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: {{ tc.c }}; background: transparent; border: 1px solid {{ tc.c }}33; border-radius: 999px; padding: 3px 9px; cursor: pointer; white-space: nowrap;" style-hover="border-color: {{ tc.c }};">✦ {{ tc.n }}</button>
+              </sc-for>
+              <sc-if value="{{ th.flag }}" hint-placeholder-val="{{ false }}">
+                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: #e0795f; border: 1px dashed #e0795f55; border-radius: 999px; padding: 3px 9px;">⚑ NEEDS SOURCE</span>
+              </sc-if>
+            </div>
+            <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #cfc8b8; border-left: 2px solid {{ lensColor }}; padding-left: 14px; min-height: 72px; text-wrap: pretty;">{{ th.text }}</p>
+            <div style="border-top: 1px solid #2c2820; padding-top: 11px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; letter-spacing: 0.14em; color: #e6b153;">RESEARCH PROMPT ▸ </span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #a89f8d; line-height: 1.5;">{{ th.prompt }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AGENTS ============ -->
+  <section id="agents" data-screen-label="For Agents" style="scroll-margin-top: 78px; padding: clamp(70px,9vw,110px) 0; background: #171511; border-top: 1px solid #2c2820; border-bottom: 1px solid #2c2820;">
+    <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(16px,3vw,40px);">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.22em; color: #6f6858;"><span style="color: #e6b153;">06</span> · FOR AGENTS</div>
+      <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(34px,4.2vw,54px); line-height: 1.04; margin: 14px 0 8px; color: #ece6d8;">Built for hands <em style="font-style: italic; color: #83cf9e;">without bodies</em></h2>
+      <p style="color: #a89f8d; font-size: 15px; max-width: 640px; margin: 0 0 34px; line-height: 1.6; text-wrap: pretty;">Ten read-only MCP tools, a bundled corpus, zero auth. The whole archive is also served as raw JSON — agents get the same shelf humans do.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 22px; align-items: start;">
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <div style="background: #12110e; border: 1px solid #2c2820; border-radius: 14px; overflow: hidden;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; border-bottom: 1px solid #2c2820;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; color: #6f6858;">CLAUDE / CURSOR / ANY MCP CLIENT</span>
+              <button onClick="{{ copyConfig }}" style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.08em; color: #e6b153; background: transparent; border: 1px solid #e6b15344; border-radius: 7px; padding: 4px 9px; cursor: pointer;" style-hover="background: #e6b15318;">{{ copyCfgLabel }}</button>
+            </div>
+            <pre style="margin: 0; padding: 18px; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; line-height: 1.6; color: #a89f8d; overflow-x: auto;">{
+  <span style="color: #e6b153;">"mcpServers"</span>: {
+    <span style="color: #e6b153;">"timeline-pulse"</span>: {
+      <span style="color: #e6b153;">"command"</span>: <span style="color: #5fd0e4;">"npx"</span>,
+      <span style="color: #e6b153;">"args"</span>: [<span style="color: #5fd0e4;">"-y"</span>, <span style="color: #5fd0e4;">"timeline-pulse"</span>]
+    }
+  }
+}</pre>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr; gap: 1px; background: #2c2820; border: 1px solid #2c2820; border-radius: 14px; overflow: hidden;">
+            <sc-for list="{{ tools }}" as="tool" hint-placeholder-count="10">
+              <div style="display: flex; gap: 14px; align-items: baseline; background: #171511; padding: 11px 18px;" style-hover="background: #1a1814;">
+                <code style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 600; color: #e6b153; white-space: nowrap;">{{ tool.n }}</code>
+                <span style="font-size: 12px; color: #a89f8d; line-height: 1.5;">{{ tool.d }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 7px; align-items: center;">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; color: #6f6858;">RAW ENDPOINTS:</span>
+            <sc-for list="{{ endpoints }}" as="ep" hint-placeholder-count="6">
+              <code style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #83cf9e; border: 1px solid #83cf9e33; border-radius: 7px; padding: 4px 9px;">{{ ep }}</code>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <div style="background: #0d0c0a; border: 1px solid #2c2820; border-radius: 14px; overflow: hidden;">
+            <div style="display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid #2c2820;">
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: #e0795f; display: inline-block;"></span>
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: #e6b153; display: inline-block;"></span>
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: #83cf9e; display: inline-block;"></span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; color: #6f6858; margin-left: 8px;">AGENT SESSION — LIVE</span>
+            </div>
+            <div style="padding: 16px 18px; min-height: 380px;">
+              <sc-for list="{{ termLines }}" as="tl" hint-placeholder-count="8">
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; line-height: 1.6; color: {{ tl.c }}; white-space: pre-wrap; word-break: break-word;">{{ tl.t }}</div>
+              </sc-for>
+              <span style="display: inline-block; width: 8px; height: 14px; background: #83cf9e; animation: tpBlink 1s step-end infinite; vertical-align: text-bottom;"></span>
+            </div>
+          </div>
+          <div style="border: 1px solid #2c2820; border-radius: 14px; padding: 18px 20px; background: #12110e;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; color: #6f6858; margin-bottom: 10px;">AGENT LANGUAGE RULES — FROM timeline_agent_manifest</div>
+            <sc-for list="{{ agentRules }}" as="rule" hint-placeholder-count="4">
+              <div style="display: flex; gap: 10px; align-items: baseline; padding: 4px 0;">
+                <span style="color: #83cf9e; font-family: 'IBM Plex Mono', monospace; font-size: 11px;">▸</span>
+                <span style="font-size: 12.5px; color: #a89f8d; line-height: 1.55;">{{ rule }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section id="sources" data-screen-label="Sources & Stance" style="scroll-margin-top: 78px; padding: clamp(70px,9vw,110px) 0 60px;">
+    <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(16px,3vw,40px);">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.22em; color: #6f6858;"><span style="color: #e6b153;">07</span> · SOURCES &amp; STANCE</div>
+      <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(38px,5vw,64px); line-height: 1.06; margin: 18px 0 40px; color: #ece6d8; max-width: 900px;">A cultural archive, <em style="font-style: italic; color: #5fd0e4;">not a proof engine</em>.</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr)); gap: 22px;">
+        <div style="border: 1px solid #2c2820; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: #e6b153;">WHAT THIS IS</div>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.65; color: #a89f8d;">A structured record of how communities tell timeline-shift stories: who reported what, when, in what kind of source, and with what confidence. Official science facts sit on their own shelf, always cited.</p>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: #e0795f; margin-top: 8px;">WHAT IT NEVER CLAIMS</div>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.65; color: #a89f8d;">That CERN, the LHC, or particle physics proves timeline manipulation. No scientific, medical, or prophetic claims. No harassment of researchers, believers, or skeptics. One source family is summarized without naming its teacher — by design.</p>
+        </div>
+        <div style="border: 1px solid #2c2820; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: #e6b153; margin-bottom: 4px;">EVIDENCE GRADES</div>
+          <sc-for list="{{ gradeLegend }}" as="gl" hint-placeholder-count="6">
+            <div style="display: flex; gap: 10px; align-items: baseline;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; color: {{ gl.c }}; min-width: 96px;">● {{ gl.n }}</span>
+              <span style="font-size: 12px; color: #a89f8d; line-height: 1.5;">{{ gl.d }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="border: 1px solid #2c2820; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: #e6b153;">CONTRIBUTE A REPORT</div>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.65; color: #a89f8d;">Open an issue with the report template: what you experienced or found, when, where it was posted, and a link if one exists. Curators grade it, tag motifs, and file it. Excerpts stay short; summaries and URLs are preferred over copies.</p>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.65; color: #a89f8d;">Corrections welcome — especially official sources for anything flagged <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #e0795f;">⚑ needs source</span>.</p>
+          <a href="https://github.com/davidmosiah/timeline-pulse" target="_blank" rel="noopener" style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #12110e; background: #ece6d8; border-radius: 999px; padding: 10px 18px; text-decoration: none; align-self: flex-start; font-weight: 600;" style-hover="background: #fff;">OPEN AN ISSUE ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer data-screen-label="Footer" style="border-top: 1px solid #2c2820;">
+    <div style="height: 2px; background: linear-gradient(90deg, #e0795f, #e6b153, #d9d06e, #83cf9e, #5fd0e4, #a58fe8, #dd8fc0); opacity: 0.55;"></div>
+    <div style="max-width: 1320px; margin: 0 auto; padding: 44px clamp(16px,3vw,40px) 54px; display: flex; flex-wrap: wrap; gap: 30px; align-items: flex-start; justify-content: space-between;">
+      <div style="display: flex; flex-direction: column; gap: 10px; max-width: 420px;">
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <span style="font-size: 15px; color: #e6b153;">{{ mGlyph }}</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; letter-spacing: 0.18em; color: #ece6d8;">TIMELINE PULSE</span>
+        </div>
+        <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #6f6858;">Built like uap-pulse: small, public, source-aware, agent-friendly. Code MIT. Data respects its sources.</p>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #504a3e;">EST. {{ mEstYear }} · SEED CORPUS v0.1 · {{ mFooterSign }}</span>
+      </div>
+      <div style="display: flex; gap: clamp(30px,5vw,70px); flex-wrap: wrap;">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.16em; color: #6f6858;">PROJECT</span>
+          <a href="https://github.com/davidmosiah/timeline-pulse" target="_blank" rel="noopener" style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #a89f8d; text-decoration: none;" style-hover="color: #e6b153;">GitHub ↗</a>
+          <a href="https://www.npmjs.com/package/timeline-pulse" target="_blank" rel="noopener" style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #a89f8d; text-decoration: none;" style-hover="color: #e6b153;">npm ↗</a>
+          <a href="#agents" style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #a89f8d; text-decoration: none;" style-hover="color: #e6b153;">MCP install</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.16em; color: #6f6858;">FOR AGENTS</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #a89f8d;">/llms.txt</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #a89f8d;">/reports.json</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #a89f8d;">/motifs.json</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.16em; color: #6f6858;">EXPLORE</span>
+          <a href="#archive" style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #a89f8d; text-decoration: none;" style-hover="color: #e6b153;">Archive</a>
+          <a href="#timeline" style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #a89f8d; text-decoration: none;" style-hover="color: #e6b153;">Timeline</a>
+          <a href="#threads" style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #a89f8d; text-decoration: none;" style-hover="color: #e6b153;">Story threads</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ REPORT DRAWER ============ -->
+  <sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeDrawer }}" style="position: fixed; inset: 0; background: rgba(10,9,7,0.6); backdrop-filter: blur(3px); z-index: 90;"></div>
+    <aside data-screen-label="Report Drawer" style="position: fixed; top: 0; right: 0; bottom: 0; width: min(460px, 94vw); background: #1a1814; border-left: 1px solid #3a3428; z-index: 91; overflow-y: auto; padding: 26px 28px 40px; display: flex; flex-direction: column; gap: 16px; box-shadow: -30px 0 60px rgba(0,0,0,0.5);">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #6f6858;">{{ sel.id }} · FULL RECORD</span>
+        <button onClick="{{ closeDrawer }}" style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #a89f8d; background: transparent; border: 1px solid #2c2820; border-radius: 8px; padding: 6px 10px; cursor: pointer;" style-hover="color: #ece6d8; border-color: #3a3428;">ESC ✕</button>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.08em; font-weight: 600; color: {{ sel.gc }}; border: 1px solid {{ sel.gc }}55; border-radius: 999px; padding: 4px 10px;">{{ sel.gr }}</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.08em; color: #a89f8d; border: 1px solid #2c2820; border-radius: 999px; padding: 4px 10px;">{{ sel.src }}</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.08em; color: #a89f8d; border: 1px solid #2c2820; border-radius: 999px; padding: 4px 10px;">{{ sel.ph }}</span>
+      </div>
+      <h3 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 30px; line-height: 1.1; margin: 0; color: #ece6d8;">{{ sel.t }}</h3>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #6f6858;">observed / posted · {{ sel.d }}</span>
+      <sc-if value="{{ sel.flagged }}" hint-placeholder-val="{{ false }}">
+        <div style="border: 1px dashed #e0795f66; background: #e0795f0d; border-radius: 10px; padding: 10px 14px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #e0795f; letter-spacing: 0.04em;">⚑ {{ sel.flagText }}</div>
+      </sc-if>
+      <p style="margin: 0; font-size: 14.5px; line-height: 1.7; color: #cfc8b8; text-wrap: pretty;">{{ sel.x }}</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <sc-for list="{{ sel.chips }}" as="sm" hint-placeholder-count="3">
+          <button onClick="{{ sm.on }}" style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: {{ sm.c }}; background: transparent; border: 1px solid {{ sm.c }}33; border-radius: 999px; padding: 4px 10px; cursor: pointer; white-space: nowrap;" style-hover="border-color: {{ sm.c }};">✦ {{ sm.n }}</button>
+        </sc-for>
+      </div>
+      <div style="border: 1px solid #2c2820; border-radius: 12px; overflow: hidden;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.16em; color: #6f6858; padding: 10px 16px; border-bottom: 1px solid #2c2820;">THREE FRAMES — ACTIVE LENS HIGHLIGHTED</div>
+        <sc-for list="{{ sel.frames }}" as="fr" hint-placeholder-count="3">
+          <div style="{{ fr.style }}">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; font-weight: 600; color: {{ fr.c }}; min-width: 64px; display: inline-block;">{{ fr.n }}</span>
+            <span style="font-size: 12.5px; line-height: 1.6; color: {{ fr.tc }};">{{ fr.t }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="border: 1px solid #2c2820; background: #12110e; border-radius: 12px; padding: 14px 16px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.16em; color: #83cf9e; margin-bottom: 8px;">RECOMMENDED PHRASING — FOR AGENTS &amp; WRITERS</div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; line-height: 1.7; color: #a89f8d;">SAY <span style="color: #83cf9e;">"{{ sel.say }}"</span><br>NOT <span style="color: #e0795f;">"{{ sel.not }}"</span></div>
+      </div>
+      <div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.16em; color: #6f6858; margin-bottom: 10px;">RELATED REPORTS — SHARED MOTIFS</div>
+        <div style="display: flex; flex-direction: column; gap: 7px;">
+          <sc-for list="{{ sel.related }}" as="rr" hint-placeholder-count="3">
+            <button onClick="{{ rr.on }}" style="text-align: left; background: #171511; border: 1px solid #2c2820; border-radius: 10px; padding: 11px 14px; cursor: pointer; display: flex; justify-content: space-between; gap: 10px; align-items: baseline;" style-hover="border-color: #e6b15355;">
+              <span style="font-family: 'Instrument Serif', serif; font-size: 15.5px; color: #ece6d8;">{{ rr.t }}</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: {{ rr.gc }}; white-space: nowrap;">{{ rr.gr }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </aside>
+  </sc-if>
+
+  <!-- ============ MANDELA FLASH ============ -->
+  <sc-if value="{{ flash }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; z-index: 200; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(221,143,192,0.12) 0 2px, rgba(95,208,228,0.12) 2px 4px, transparent 4px 7px); animation: tpFlash 0.6s ease-out forwards; mix-blend-mode: screen;"></div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;defaultLens&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;neutral&quot;, &quot;belief&quot;, &quot;skeptic&quot;], &quot;default&quot;: &quot;neutral&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Framing&quot; },
+  &quot;mandelaMode&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Fun&quot; },
+  &quot;glitchFx&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Fun&quot; }
+}">
+const GC = { official: '#5fd0e4', firsthand: '#e6b153', reported: '#d6cfbf', interpretive: '#dd8fc0', symbolic: '#a58fe8', speculative: '#8f8776' };
+const GTIP = { official: 'Published by the institution itself — always linked', firsthand: 'A person reporting their own experience', reported: 'Shared accounts: forums, polls, threads', interpretive: 'Community meaning-making on top of events', symbolic: 'Allegory and teaching language, filed as such', speculative: 'Unverified conjecture, clearly flagged' };
+const FAM = { machine: '#5fd0e4', memory: '#e6b153', light: '#f0ead8', time: '#a58fe8', body: '#dd8fc0', simulation: '#83cf9e' };
+
+const MOTIFS = [
+  { id: 'machine-silence', f: 'machine', x: 0.42, y: 0.38, freq: 7, def: 'A shutdown or pause read as a window rather than an absence.' },
+  { id: 'calibration', f: 'machine', x: 0.35, y: 0.55, freq: 6, def: 'Tuning the inner field — practice language, not physics.' },
+  { id: 'threshold', f: 'machine', x: 0.52, y: 0.22, freq: 5, def: 'A milestone treated as a door between states.' },
+  { id: 'machine-mirror', f: 'machine', x: 0.30, y: 0.30, freq: 3, def: 'The external machine as mirror of an inner process.' },
+  { id: 'heart-collider', f: 'body', x: 0.52, y: 0.55, freq: 5, def: 'Consciousness as the nonviolent inner collider.' },
+  { id: 'rainbow-bridge', f: 'light', x: 0.63, y: 0.16, freq: 4, def: 'The restored connection between matter, spirit, color, and dimension.' },
+  { id: 'spectrum', f: 'light', x: 0.52, y: 0.08, freq: 2, def: 'Wholeness of light; what is present and what is missing.' },
+  { id: 'lost-ion', f: 'light', x: 0.72, y: 0.24, freq: 2, def: 'A missing particle of light blamed, symbolically, for fragmentation.' },
+  { id: 'mandela-residue', f: 'memory', x: 0.78, y: 0.45, freq: 8, def: 'Artifacts and memories kept as traces of another branch.' },
+  { id: 'collective-memory', f: 'memory', x: 0.88, y: 0.33, freq: 5, def: 'The same "wrong" detail remembered by thousands.' },
+  { id: 'childhood-anchor', f: 'memory', x: 0.85, y: 0.60, freq: 4, def: 'A memory rooted in early life, resistant to correction.' },
+  { id: 'timeline-bleed', f: 'time', x: 0.66, y: 0.62, freq: 5, def: 'Overlap between remembered and current versions of reality.' },
+  { id: 'serpent-time', f: 'time', x: 0.50, y: 0.76, freq: 3, def: 'Time as serpent — loop, wound, and chaos force.' },
+  { id: 'apophis-window', f: 'time', x: 0.36, y: 0.85, freq: 2, def: 'The 2029 close approach as serpent/chaos anchor. Needs sourcing.' },
+  { id: 'poison-remedy', f: 'time', x: 0.60, y: 0.88, freq: 3, def: 'A harmful force transmuted into medicine.' },
+  { id: 'simulation-glitch', f: 'simulation', x: 0.76, y: 0.76, freq: 4, def: 'Reality experienced as rendered, patched, or overwritten.' },
+  { id: 'silicon-mirror', f: 'simulation', x: 0.90, y: 0.84, freq: 2, def: 'Mineral and computation as a consciousness mirror.' }
+];
+
+const EDGES = [
+  ['machine-silence', 'calibration', 5], ['machine-silence', 'heart-collider', 3], ['machine-silence', 'threshold', 3], ['machine-silence', 'machine-mirror', 2],
+  ['rainbow-bridge', 'lost-ion', 3], ['rainbow-bridge', 'spectrum', 2], ['rainbow-bridge', 'threshold', 1], ['lost-ion', 'poison-remedy', 1], ['spectrum', 'lost-ion', 1],
+  ['serpent-time', 'timeline-bleed', 2], ['serpent-time', 'apophis-window', 2], ['serpent-time', 'poison-remedy', 2], ['apophis-window', 'poison-remedy', 1],
+  ['mandela-residue', 'collective-memory', 4], ['mandela-residue', 'childhood-anchor', 3], ['mandela-residue', 'timeline-bleed', 2], ['collective-memory', 'childhood-anchor', 2],
+  ['simulation-glitch', 'timeline-bleed', 3], ['simulation-glitch', 'silicon-mirror', 2], ['simulation-glitch', 'threshold', 2],
+  ['heart-collider', 'calibration', 3], ['heart-collider', 'machine-mirror', 2], ['heart-collider', 'timeline-bleed', 1], ['silicon-mirror', 'machine-mirror', 1]
+];
+
+const REPORTS = [
+  { id: 'tp-001', t: 'Machine silence and the calibration window', d: '2026-06-29', ph: 'timeline-lore', src: 'symbolic-summary', gr: 'symbolic', mo: ['machine-silence', 'calibration', 'heart-collider'], s: 'A symbolic reading that treats the LS3 pause as an invitation to tune the "inner collider" while the outer one rests.', x: 'Drawn from a family of symbolic teachings — summarized without naming its source, by policy — this reading treats the shutdown as an invitation: while the magnets warm and the tunnels go quiet, the practitioner tunes the inner instrument. Archived as symbolic reading, not a claim about physics.' },
+  { id: 'tp-002', t: 'The day the hum stopped', d: '2026-06-30', ph: 'synchronicity', src: 'firsthand-report', gr: 'firsthand', mo: ['machine-silence', 'threshold'], s: 'A Meyrin resident reports waking at 4 a.m. to "a silence with edges" the night Run 3 ended.', x: 'The reporter has lived near the ring for eleven years and describes the ambient sense of the site as "a weather." On the night of the final beam dump they report waking at 4 a.m. to "a silence with edges." Logged as personal experience; no claim beyond it.' },
+  { id: 'tp-003', t: 'Berenstein holdouts, year nine', d: '2015-02-14', ph: 'mandela-effect', src: 'forum-thread', gr: 'reported', mo: ['mandela-residue', 'childhood-anchor', 'collective-memory'], s: 'A long-running thread where thousands compare memories of the -ein spelling against every printed -ain.', x: 'One of the longest-running Mandela threads: thousands of replies comparing childhood memories of "-ein" against every printed "-ain." The thread\'s own FAQ lists both the timeline reading and the spelling-expectation explanation side by side — a rare case of a community documenting its own counterargument.' },
+  { id: 'tp-004', t: 'The cornucopia receipts hunt', d: '2019-08-02', ph: 'mandela-effect', src: 'social-post', gr: 'reported', mo: ['mandela-residue', 'collective-memory'], s: 'Collectors crowdsource vintage tags hunting a horn of plenty that no catalog ever shows.', x: 'Collectors post photographs of vintage tags, waistbands, and school-play costumes hunting a horn of plenty. The company states no cornucopia was ever registered; the hunt continues — which is itself the story this archive files.' },
+  { id: 'tp-005', t: 'Rainbow bridge dream wave', d: '2012-12-21', ph: 'timeline-lore', src: 'forum-thread', gr: 'interpretive', mo: ['rainbow-bridge', 'spectrum', 'threshold'], s: 'Dream logs posted the same December week describe crossing a seven-color bridge "one color short."', x: 'Posted across three forums in the same week of December 2012: dream logs describing a bridge of light "one color short." Later cited by rainbow-bridge threads as an early wave marker for the 2012 shift narrative.' },
+  { id: 'tp-006', t: 'The lost ion letter', d: '2013-03-11', ph: 'timeline-lore', src: 'symbolic-summary', gr: 'symbolic', mo: ['lost-ion', 'rainbow-bridge', 'poison-remedy'], s: 'A symbolic text about a missing particle of light whose return would mend the spectrum — archived as allegory.', x: 'An allegorical text about a particle of light that left the world, and the long work of inviting it back. Stored as a project-authored summary; the original circulates in fragments across several communities.' },
+  { id: 'tp-007', t: 'Serpent swallowing the clock', d: '2020-01-01', ph: 'synchronicity', src: 'firsthand-report', gr: 'firsthand', mo: ['serpent-time', 'timeline-bleed'], s: 'A New Year\'s report of a recurring vision: a serpent circling a station clock, biting its tail at midnight.', x: 'Reported on New Year\'s morning: a recurring vision of a serpent circling a station clock, biting its own tail exactly at midnight. The reporter connects it to a feeling that the year "looped." Filed as a firsthand symbol report.' },
+  { id: 'tp-008', t: 'Higgs day déjà vu cluster', d: '2012-07-04', ph: 'reality-glitch', src: 'forum-thread', gr: 'reported', mo: ['threshold', 'simulation-glitch', 'collective-memory'], s: 'Users in three time zones report layered déjà vu during the announcement livestream.', x: 'During the 2012-07-04 webcast, users in three time zones posted about layered déjà vu — "watching something I had already remembered." The cluster became a reference point for threshold language in later threads.' },
+  { id: 'tp-009', t: 'Heart collider meditation notes', d: '2022-02-22', ph: 'timeline-lore', src: 'symbolic-summary', gr: 'symbolic', mo: ['heart-collider', 'calibration', 'machine-mirror'], s: 'Notes framing the heart as the collider that reconciles opposites without violence.', x: 'Practice notes framing the heart as a collider that reconciles opposites without violence — "the only accelerator that runs on stillness." Archived as symbolic practice language.' },
+  { id: 'tp-010', t: 'Apophis window speculation digest', d: '2024-04-13', ph: 'timeline-lore', src: 'aggregate-summary', gr: 'speculative', mo: ['apophis-window', 'serpent-time', 'poison-remedy'], s: 'A digest of posts treating the 2029 close approach as a serpent-of-chaos motif. Flagged for sourcing.', x: 'An aggregate of posts treating the 2029 Apophis close approach as a serpent-of-chaos window. Orbital details are deliberately not stated here until officially sourced; the digest records the motif, not the astronomy.', flag: 'NEEDS OFFICIAL SOURCE · DO NOT STATE AS FACT' },
+  { id: 'tp-011', t: 'Monopoly monocle assurance', d: '2016-06-06', ph: 'mandela-effect', src: 'social-post', gr: 'reported', mo: ['mandela-residue', 'collective-memory'], s: '"He absolutely wore a monocle" — a viral thread of confident memories against the mascot\'s bare face.', x: 'A viral thread of extremely confident monocle memories, complete with drawn "reconstructions." The mascot has never worn one; Mr. Peanut, who does, appears in the replies within minutes — filed with the false-association note attached.' },
+  { id: 'tp-012', t: 'Pikachu tail poll', d: '2018-05-09', ph: 'mandela-effect', src: 'social-post', gr: 'reported', mo: ['childhood-anchor', 'mandela-residue'], s: 'A 40,000-vote poll splits almost evenly on whether the tail tip was ever black.', x: 'A 40,000-vote poll splits nearly evenly on the black tail tip. The comment section becomes an impromptu archive of childhood drawings — many with the tip. Filed as reported memory variance.' },
+  { id: 'tp-013', t: 'Silicon mirror essay', d: '2021-10-10', ph: 'simulation', src: 'community-essay', gr: 'interpretive', mo: ['silicon-mirror', 'simulation-glitch', 'machine-mirror'], s: 'An essay tracing stone → chip → simulation as one long mirror in which humanity studies itself.', x: 'A long community essay tracing stone → crystal → chip → simulation as one continuous mirror. Filed as interpretation; frequently cited by silicon-mirror threads as their clearest statement.' },
+  { id: 'tp-014', t: 'Run 3 farewell field notes', d: '2026-06-29', ph: 'synchronicity', src: 'firsthand-report', gr: 'firsthand', mo: ['machine-silence', 'threshold'], s: 'A visitor describes the control-room applause and "a strange lightness in the corridor" at beam dump.', x: 'A visitor present for the final beam dump describes applause in the control room and "a strange lightness in the corridor after." Logged as firsthand atmosphere — not anomaly — and kept for how it captures the day.' },
+  { id: 'tp-015', t: 'The patch that overwrote Tuesday', d: '2023-11-07', ph: 'reality-glitch', src: 'firsthand-report', gr: 'firsthand', mo: ['simulation-glitch', 'timeline-bleed'], s: 'A commuter reports living the same Tuesday twice — identical except for the color of one door.', x: 'A commuter reports living the same Tuesday twice, identical except for the color of one door. They kept both versions in a notes app "to compare." Filed as a glitch report with no adjudication either way.' },
+  { id: 'tp-016', t: 'Mirror-world shop window', d: '2017-09-23', ph: 'reality-glitch', src: 'firsthand-report', gr: 'firsthand', mo: ['timeline-bleed', 'simulation-glitch'], s: 'A shopper reports a storefront that existed for exactly one afternoon, remembered by no one else.', x: 'A shopper describes a storefront that existed for exactly one afternoon and is remembered by no one else on the street. Follow-ups found no permit records either way — the absence of evidence is filed alongside the report.' },
+  { id: 'tp-017', t: 'The choir remembers an ending', d: '2014-07-19', ph: 'mandela-effect', src: 'forum-thread', gr: 'reported', mo: ['collective-memory', 'mandela-residue'], s: 'Crowds keep finishing the song with "of the world" — an ending the studio version never resolves.', x: 'Choirs and stadium crowds keep finishing the song with "of the world" — an ending the studio version never resolves. The thread collects live recordings where the crowd sings past the band, which skeptics cite as the training mechanism itself.' },
+  { id: 'tp-018', t: 'Vader residue tape', d: '2015-05-04', ph: 'mandela-effect', src: 'social-post', gr: 'reported', mo: ['mandela-residue', 'childhood-anchor'], s: 'A VHS clip circulates as "proof" of the remembered line; provenance disputed, filed as residue lore.', x: 'A VHS clip circulates as proof of the remembered line. Provenance is disputed and the tape trail dead-ends; archived as residue lore with the dispute noted in full.' },
+  { id: 'tp-019', t: 'Music for a quiet machine', d: '2026-07-01', ph: 'community-practice', src: 'social-post', gr: 'interpretive', mo: ['machine-silence', 'calibration'], s: 'Playlists "for the silence window" spread as a soft ritual for the shutdown years.', x: 'Playlists titled "music for the quiet machine" spread as a soft ritual for the shutdown years — ambient tracks "for the field while it rests." Filed as community practice, two days into LS3.' },
+  { id: 'tp-020', t: 'Branch overlap journaling', d: '2025-03-03', ph: 'timeline-lore', src: 'community-method', gr: 'interpretive', mo: ['timeline-bleed', 'calibration', 'heart-collider'], s: 'A journaling method for logging "residue moments" without deciding what they prove.', x: 'A journaling method for logging residue moments — details that feel swapped — without deciding what they prove. The template asks for date, detail, feeling, and "both versions." Filed as method, not claim.' }
+];
+
+const SAY = {
+  official: ['per CERN\'s public schedule…', 'the shutdown proves…'],
+  firsthand: ['the reporter describes…', 'this proves that…'],
+  reported: ['community members report…', 'it is known that…'],
+  interpretive: ['the community links…', 'this shows that…'],
+  symbolic: ['a symbolic reading holds…', 'this reveals that…'],
+  speculative: ['some speculate, without sources, that…', 'this will happen…']
+};
+
+const FRAME_TEXT = {
+  belief: { c: '#e6b153', mk: (r) => 'Read from inside the worldview: ' + r.s.charAt(0).toLowerCase() + r.s.slice(1) },
+  neutral: { c: '#d6cfbf', mk: (r) => 'The archive records that this was ' + (r.gr === 'firsthand' ? 'reported firsthand' : r.gr === 'symbolic' ? 'taught symbolically' : r.gr === 'speculative' ? 'circulated as speculation' : 'shared and interpreted') + ' on ' + r.d + '. It is filed, dated, and graded — nothing more is claimed.' },
+  skeptic: { c: '#5fd0e4', mk: (r) => (r.ph === 'mandela-effect' ? 'Reconstructive memory plus internet-scale comparison reliably produces convergent errors; no timeline mechanics required.' : r.gr === 'firsthand' ? 'A sincere personal experience; sincerity is not evidence of external cause.' : 'Symbol and metaphor doing what they always do around big instruments and big dates — meaningful as culture, silent as physics.') }
+};
+
+const EVENTS = [
+  { id: 'first-beam', date: '2008-09-10', dl: '2008-09-10', title: 'First beam circulates the LHC', layer: 'official', short: 'FIRST BEAM', desc: 'Protons complete a full circuit of the Large Hadron Collider for the first time.', src: 'Official CERN source on file.' },
+  { id: 'higgs', date: '2012-07-04', dl: '2012-07-04', title: 'Higgs boson announced', layer: 'official', short: 'HIGGS', desc: 'ATLAS and CMS announce the discovery of a Higgs-like boson. Timeline-lore communities later treat 2012 as a symbolic shift year — that reading lives on the lower lane, not this one.', src: 'Official CERN source on file.' },
+  { id: 'schedule', date: '2024-10-08', dl: '2024-10-08', title: 'Run 3 extended; HiLumi startup planned for June 2030', layer: 'official', short: 'SCHEDULE', desc: 'CERN publishes an updated accelerator schedule: Run 3 extended, High-Luminosity LHC startup planned for June 2030.', src: 'Official CERN source on file.' },
+  { id: 'ls3', date: '2026-06-29', dl: '2026-06-29', title: 'The LHC switches off — Long Shutdown 3 begins', layer: 'official', short: 'LS3', desc: 'The LHC ends Run 3 and enters Long Shutdown 3: maintenance, consolidation, and upgrade work to prepare the High-Luminosity LHC. This is the machine going quiet — on purpose, on schedule.', src: 'Official CERN source on file.' },
+  { id: 'hilumi', date: '2030-06-01', dl: '2030 (planned)', title: 'HiLumi LHC operation window', layer: 'official', short: 'HILUMI', desc: 'Planned start of High-Luminosity LHC operation, per CERN\'s published schedule.', src: 'Official CERN source on file.' },
+  { id: 'wave-2012', date: '2012-12-21', dl: '2012', title: 'The 2012 shift wave', layer: 'community', desc: 'Communities mark 2012 as a symbolic shift year; dream logs, threshold language, and rainbow-bridge imagery cluster around it.', src: 'Community wave — interpretation, not causation.' },
+  { id: 'wave-mandela', date: '2014-09-01', dl: '2014–2015', title: 'Mandela Effect community expansion', layer: 'community', desc: 'The classic catalog items — Berenstain, cornucopia, monocle — reach mainstream attention and the community grows an order of magnitude.', src: 'Community wave — interpretation, not causation.' },
+  { id: 'silence-window', date: '2026-06-29', dl: '2026 → 2030', title: 'The machine silence window', layer: 'symbolic', desc: 'The LS3 years read as a collective calibration window: "while the machine rests, tune the inner field." A symbolic overlay on an official maintenance schedule.', src: 'Symbolic anchor — filed as reading, not event.' },
+  { id: 'apophis', date: '2029-04-13', dl: '2029-04-13', title: 'The Apophis window', layer: 'symbolic', flag: true, desc: 'The 2029 close approach used as a serpent-of-chaos anchor and "transmutation window." Astronomical details deliberately unstated until sourced from official pages.', src: 'Symbolic anchor — astronomical details pending official source.' }
+];
+
+const THREADS = [
+  { id: 'collider-as-threshold', title: 'Collider as threshold', anchor: '2012-07-04 · HIGGS', mo: ['threshold', 'machine-mirror'], fr: { belief: 'The collider is humanity knocking on the origin of matter from the outside — every collision a question asked with force, every discovery a door left ajar.', neutral: 'Records how communities turn high-energy physics milestones into symbols of threshold, origin-search, and reality instability.', skeptic: 'The LHC is a particle accelerator. Official sources describe research, maintenance, and upgrades — instruments, not doors.' }, prompt: 'Collect three origin-quest metaphors used for other big instruments — telescopes, submersibles, seed vaults.' },
+  { id: 'machine-silence-calibration', title: 'Machine silence calibration', anchor: '2026-06-29 · LS3', mo: ['machine-silence', 'calibration', 'heart-collider'], fr: { belief: 'While the machine rests, the inner field can finally be heard. The pause is not downtime — it is the practice window.', neutral: 'Clusters reports linking the 2026–2030 shutdown to a symbolic pause: playlists, rituals, journaling methods, quiet-machine language.', skeptic: 'LS3 is scheduled maintenance and upgrade work for HiLumi, planned and published years in advance.' }, prompt: 'Map "quiet machine" language across monastic, musical, and engineering vocabularies.' },
+  { id: 'rainbow-bridge-restoration', title: 'Rainbow bridge restoration', anchor: '2012-12-21 · SHIFT WAVE', mo: ['rainbow-bridge', 'lost-ion', 'spectrum'], fr: { belief: 'A missing color — a lost ion of light — waits to be returned, so the bridge between matter and spirit can carry weight again.', neutral: 'Groups stories about spectrum, missing wholeness, and repair; the lost element is the connective image.', skeptic: 'Rainbows are dispersion. No color is missing from the spectrum; the missing piece is a narrative device.' }, prompt: 'Trace rainbow-bridge cosmology across at least three cultures without merging them into one.' },
+  { id: 'serpent-time-wound', title: 'Serpent time wound', anchor: 'ONGOING', mo: ['serpent-time', 'poison-remedy', 'timeline-bleed'], fr: { belief: 'Time is a serpent with a wound; linear experience is the scar. Healing the wound turns poison into remedy and the line back into a circle.', neutral: 'Groups serpent, loop, wound, poison-remedy, and timeline-repair language wherever it recurs in the corpus.', skeptic: 'Ouroboros symbolism is thousands of years old and needs no physics to be meaningful — which is rather the point.' }, prompt: 'Compare loop-healing metaphors in myth with narrative time-loop fiction of the last decade.' },
+  { id: 'heart-collider', title: 'Heart collider', anchor: '2026 → 2030 · WINDOW', mo: ['heart-collider', 'calibration', 'machine-mirror'], fr: { belief: 'The true collider is internal: the heart reconciles opposites without violence — the only accelerator that runs on stillness.', neutral: 'Captures a recurring contrast between external technology and inner integration across practice notes and teachings.', skeptic: 'A metaphor of interiority — meaningful as practice language, not as physics. Filed accordingly.' }, prompt: 'Collect "inner instrument" metaphors from contemplative traditions, old and new.' },
+  { id: 'mandela-waves', title: 'Mandela waves', anchor: '2014–2015 · EXPANSION', mo: ['mandela-residue', 'collective-memory', 'timeline-bleed'], fr: { belief: 'Shared misrememberings are bleed-through — residue from a branch nearby, surfacing where memories were anchored young.', neutral: 'Records how memory anomalies cluster into wave-like periods around cultural and technological milestones.', skeptic: 'Reconstructive memory plus internet-scale comparison produces convergent errors — the waves track attention, not branches.' }, prompt: 'Chart when each classic item first appears online versus when people remember it from.' },
+  { id: 'apophis-window', title: 'Apophis window', anchor: '2029-04-13', flag: true, mo: ['apophis-window', 'serpent-time', 'poison-remedy'], fr: { belief: 'The 2029 passage is a serpent-of-chaos moment — a window where what threatens can be transmuted into what heals.', neutral: 'A symbolic astronomical anchor, stored with strict sourcing flags until official close-approach details are cited.', skeptic: 'A well-tracked close approach with published orbital data. Ephemerides are not omens.' }, prompt: 'Source the official close-approach details before expanding this thread any further.' },
+  { id: 'silicon-mirror', title: 'Silicon mirror', anchor: 'ONGOING', mo: ['silicon-mirror', 'simulation-glitch', 'machine-mirror'], fr: { belief: 'Stone learned to think. In the chip, matter reflects mind back at itself — the simulation is the mirror finally polished.', neutral: 'Captures the symbolic bridge between mineral, computation, and consciousness language across the corpus.', skeptic: 'Semiconductors are engineering. The mirror is a metaphor we bring to them — and always have, with every new machine.' }, prompt: 'Trace "thinking stone" imagery from alchemy to computing marketing.' }
+];
+
+const MANDELA = [
+  { name: 'Berenstain Bears', cat: 'POP-CULTURE', status: 'CLASSIC', rem: '"The Berenstein Bears" — with an E', cur: '"The Berenstain Bears" — with an A, in every printing', note: '-ein is a far more common surname ending; memory reconstructs toward the familiar.' },
+  { name: 'Fruit of the Loom', cat: 'BRAND', status: 'CLASSIC', rem: 'A cornucopia behind the fruit', cur: 'Fruit only — no cornucopia in any registered logo', note: 'Cornucopias co-occur with fruit imagery everywhere else; schema fills the gap.' },
+  { name: 'The Monopoly Man', cat: 'BRAND', status: 'CLASSIC', rem: 'Rich Uncle Pennybags wears a monocle', cur: 'No monocle — top hat and cane only', note: 'Blends with Mr. Peanut, a similar mascot who does wear one.' },
+  { name: 'Pikachu', cat: 'POP-CULTURE', status: 'CLASSIC', rem: 'A black tip at the end of the tail', cur: 'Solid yellow tail, brown only at the base', note: 'The ears are black-tipped; the pattern migrates in memory.' },
+  { name: 'The Vader line', cat: 'FILM', status: 'CLASSIC', rem: '"Luke, I am your father"', cur: '"No, I am your father"', note: 'The name makes the quote quotable out of context; the paraphrase became canon.' },
+  { name: 'We Are the Champions', cat: 'MUSIC', status: 'CLASSIC', rem: 'Ends on a final "…of the world"', cur: 'The studio version ends without it', note: 'Live versions and the mid-song chorus train the expectation.' }
+];
+
+const TOOLS = [
+  { n: 'timeline_search_reports', d: 'Search reports by text, motif, phenomenon, source type, date, stance, or evidence grade.' },
+  { n: 'timeline_get_report', d: 'One full report: summary, sources, motifs, related reports, safety labels.' },
+  { n: 'timeline_mandela_catalog', d: 'Browse memory variants, mainstream explanations, and residue links.' },
+  { n: 'timeline_motif_map', d: 'Recurring symbols and their co-occurrence graph — the constellation, as JSON.' },
+  { n: 'timeline_story_threads', d: 'Curated arcs with belief, neutral, and skeptical framings built in.' },
+  { n: 'timeline_events', d: 'Official science milestones and community waves on one labeled axis.' },
+  { n: 'timeline_compare_sources', d: 'Belief / neutral / skeptic framings for one topic, plus shared facts.' },
+  { n: 'timeline_deepen_story', d: 'Research prompts and follow-up angles — never fabricated sources.' },
+  { n: 'timeline_stats', d: 'Corpus totals by phenomenon, motif, source type, year, and grade.' },
+  { n: 'timeline_agent_manifest', d: 'The rules of the corpus: first calls, safe language, citation policy.' }
+];
+
+const TERM_SCRIPT = [
+  ['$ npx -y timeline-pulse', '#e6b153'],
+  ['● timeline-pulse mcp · corpus loaded · 20 reports · 17 motifs · read-only', '#83cf9e'],
+  [' ', '#a89f8d'],
+  ['> timeline_search_reports({ "query": "machine silence" })', '#5fd0e4'],
+  ['{', '#a89f8d'],
+  ['  "total_matches": 4,', '#a89f8d'],
+  ['  "reports": [', '#a89f8d'],
+  ['    { "id": "tp-001", "title": "Machine silence and the', '#a89f8d'],
+  ['      calibration window", "evidence_grade": "symbolic" },', '#a89f8d'],
+  ['    { "id": "tp-002", "title": "The day the hum stopped",', '#a89f8d'],
+  ['      "evidence_grade": "firsthand" } ]', '#a89f8d'],
+  ['}', '#a89f8d'],
+  [' ', '#a89f8d'],
+  ['> timeline_compare_sources({ "topic": "LS3 shutdown" })', '#5fd0e4'],
+  ['{', '#a89f8d'],
+  ['  "belief":  "a calibration window for the inner field",', '#a89f8d'],
+  ['  "neutral": "a pause that communities read as a motif",', '#a89f8d'],
+  ['  "skeptic": "scheduled maintenance ahead of HiLumi",', '#a89f8d'],
+  ['  "shared_facts": [ "the LHC entered LS3 on 2026-06-29" ]', '#a89f8d'],
+  ['}', '#a89f8d']
+];
+
+const AGENT_RULES = [
+  'Say "reported", "interpreted", "community-linked", or "symbolically framed" — never "proven".',
+  'Keep official CERN information on a separate shelf from metaphysical interpretation.',
+  'One source family is summarized without naming its teacher. Keep it that way.',
+  'Never encourage fear, harassment, or risky behavior. Cite source URLs when they exist.'
+];
+
+const LENS_META = {
+  belief: { color: '#e6b153', line: 'Reading the archive through the eyes of those who lived it.' },
+  neutral: { color: '#d6cfbf', line: 'Facts on one shelf, stories on another. Both labeled.' },
+  skeptic: { color: '#5fd0e4', line: 'All myth, carefully filed. No physics were harmed.' }
+};
+
+const T0 = Date.UTC(2008, 0, 1);
+const T1 = Date.UTC(2031, 5, 1);
+const LS3 = Date.UTC(2026, 5, 29);
+const HILUMI = Date.UTC(2030, 5, 1);
+const pctOf = (iso) => ((Date.parse(iso + 'T00:00:00Z') - T0) / (T1 - T0)) * 88 + 3;
+
+const CHIP = "font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; padding: 7px 13px; border-radius: 999px; border: 1px solid; cursor: pointer; background: transparent; white-space: nowrap; transition: all .15s;";
+const LENSB = "font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; padding: 5px 11px; border-radius: 999px; border: 1px solid transparent; cursor: pointer; background: transparent;";
+
+class Component extends DCLogic {
+  state = { q: '', grade: '', motif: '', sel: null, ev: 'ls3', lens: null, mandela: null, flash: false, copied: '', copiedCfg: '', termN: 2, statT: 0 };
+
+  lens() { return this.state.lens ?? this.props.defaultLens ?? 'neutral'; }
+  isMandela() { return this.state.mandela ?? this.props.mandelaMode ?? false; }
+
+  componentDidMount() {
+    this._mounted = true;
+    this._hover = null;
+    this._mx = -999; this._my = -999;
+    this._pulses = [];
+    this._lastSpawn = 0;
+    const loop = (t) => { if (!this._mounted) return; this.drawCanvas(t); this._raf = requestAnimationFrame(loop); };
+    this._raf = requestAnimationFrame(loop);
+    const st = performance.now();
+    const cu = () => { if (!this._mounted) return; const p = Math.min(1, (performance.now() - st) / 1400); this.setState({ statT: 1 - Math.pow(1 - p, 3) }); if (p < 1) setTimeout(cu, 40); };
+    cu();
+    this._term = setInterval(() => {
+      if (!this._mounted) return;
+      this.setState((s) => ({ termN: s.termN >= TERM_SCRIPT.length + 10 ? 2 : s.termN + 1 }));
+    }, 420);
+    this._key = (e) => {
+      const tag = (e.target && e.target.tagName) || '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      if (e.key === 'm' || e.key === 'M') this.toggleMandela();
+      if (e.key === 'Escape') this.setState({ sel: null });
+    };
+    window.addEventListener('keydown', this._key);
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
+    cancelAnimationFrame(this._raf);
+    clearInterval(this._term);
+    window.removeEventListener('keydown', this._key);
+  }
+
+  toggleMandela = () => {
+    const next = !this.isMandela();
+    this.setState({ mandela: next, flash: true });
+    clearTimeout(this._flashT);
+    this._flashT = setTimeout(() => this._mounted && this.setState({ flash: false }), 650);
+  };
+
+  nodePos(m, i, W, H, t) {
+    return [m.x * W + Math.sin(t * 0.00022 + i * 1.7) * 6, m.y * H + Math.cos(t * 0.00019 + i * 2.3) * 5];
+  }
+
+  drawCanvas(t) {
+    const cv = this._cv; if (!cv) return;
+    const parent = cv.parentElement; if (!parent) return;
+    const W = parent.clientWidth, H = parent.clientHeight;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    if (cv.width !== W * dpr || cv.height !== H * dpr) { cv.width = W * dpr; cv.height = H * dpr; }
+    const ctx = cv.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+
+    if (!this._stars) { this._stars = []; for (let i = 0; i < 110; i++) { const a = Math.sin(i * 127.1) * 43758.5453, b = Math.sin(i * 311.7) * 12543.21; this._stars.push({ x: a - Math.floor(a), y: b - Math.floor(b), r: 0.4 + ((i * 7) % 10) / 9, ph: i }); } }
+    for (const s of this._stars) {
+      ctx.globalAlpha = 0.10 + 0.16 * (0.5 + 0.5 * Math.sin(t * 0.001 + s.ph));
+      ctx.fillStyle = '#ece6d8';
+      ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, 7); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    ctx.strokeStyle = 'rgba(230,177,83,0.055)'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(W * 0.08, H * 1.3, H * 0.95, 0, 7); ctx.stroke();
+    ctx.strokeStyle = 'rgba(95,208,228,0.045)'; ctx.lineWidth = 1;
+    ctx.setLineDash([3, 7]);
+    ctx.beginPath(); ctx.arc(W * 0.08, H * 1.3, H * 0.7, 0, 7); ctx.stroke();
+    ctx.setLineDash([]);
+
+    const pos = {}; const idx = {};
+    MOTIFS.forEach((m, i) => { pos[m.id] = this.nodePos(m, i, W, H, t); idx[m.id] = i; });
+
+    const active = this.state.motif;
+    EDGES.forEach((e) => {
+      const [a, b, w] = e; const pa = pos[a], pb = pos[b];
+      const hot = active && (a === active || b === active);
+      const hov = this._hover && (a === this._hover || b === this._hover);
+      ctx.strokeStyle = hot ? 'rgba(95,208,228,0.5)' : hov ? 'rgba(230,177,83,0.4)' : 'rgba(236,230,216,' + (0.05 + w * 0.018) + ')';
+      ctx.lineWidth = hot || hov ? 1.2 : 1;
+      ctx.beginPath(); ctx.moveTo(pa[0], pa[1]); ctx.lineTo(pb[0], pb[1]); ctx.stroke();
+    });
+
+    if (t - this._lastSpawn > 1500 && this._pulses.length < 7) {
+      this._lastSpawn = t;
+      this._pulses.push({ e: Math.floor(Math.random() * EDGES.length), t: 0, sp: 0.005 + Math.random() * 0.005 });
+    }
+    this._pulses = this._pulses.filter((p) => p.t <= 1);
+    for (const p of this._pulses) {
+      p.t += p.sp;
+      const [a, b] = EDGES[p.e]; const pa = pos[a], pb = pos[b];
+      const x = pa[0] + (pb[0] - pa[0]) * p.t, y = pa[1] + (pb[1] - pa[1]) * p.t;
+      const col = FAM[MOTIFS[idx[b]].f];
+      ctx.shadowBlur = 10; ctx.shadowColor = col; ctx.fillStyle = col;
+      ctx.beginPath(); ctx.arc(x, y, 2.2, 0, 7); ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+
+    let hover = null;
+    MOTIFS.forEach((m, i) => {
+      const [x, y] = pos[m.id];
+      const r = 3 + m.freq * 0.85;
+      const isActive = m.id === active;
+      const d = Math.hypot(this._mx - x, this._my - y);
+      if (d < r + 12) hover = m.id;
+      const isHover = this._hover === m.id;
+      const col = FAM[m.f];
+      const breathe = m.id === 'heart-collider' ? 1 + 0.12 * Math.sin(t * 0.0016) : 1;
+      if (isActive || isHover) { ctx.shadowBlur = 16; ctx.shadowColor = col; }
+      ctx.fillStyle = col;
+      ctx.globalAlpha = isActive ? 1 : isHover ? 0.95 : 0.8;
+      ctx.beginPath(); ctx.arc(x, y, r * breathe * (isHover ? 1.25 : 1), 0, 7); ctx.fill();
+      ctx.shadowBlur = 0;
+      if (m.id === 'rainbow-bridge') {
+        const hue = (t * 0.05) % 360;
+        ctx.strokeStyle = 'hsla(' + hue + ',70%,70%,0.8)'; ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.arc(x, y, r + 4, 0, 7); ctx.stroke();
+      }
+      if (isActive) {
+        ctx.strokeStyle = col; ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
+        ctx.beginPath(); ctx.arc(x, y, r + 7 + Math.sin(t * 0.004) * 1.5, 0, 7); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+      ctx.globalAlpha = isHover || isActive ? 1 : 0.5;
+      ctx.fillStyle = isHover || isActive ? col : '#a89f8d';
+      ctx.font = (isHover ? '600 ' : '') + '9px "IBM Plex Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(m.id, x, y + r + 14);
+      if (isHover) { ctx.globalAlpha = 0.75; ctx.fillText('×' + m.freq + ' · click to filter', x, y + r + 26); }
+      ctx.globalAlpha = 1;
+    });
+    this._hover = hover;
+    cv.style.cursor = hover ? 'pointer' : 'default';
+  }
+
+  motifClick(id) {
+    this.setState((s) => ({ motif: s.motif === id ? '' : id }));
+  }
+
+  renderVals() {
+    const s = this.state;
+    const lens = this.lens();
+    const mandela = this.isMandela();
+    const glitchOn = this.props.glitchFx ?? true;
+    const now = Date.now();
+
+    const mkChip = (id) => { const m = MOTIFS.find((x) => x.id === id); return { n: id, c: m ? FAM[m.f] : '#a89f8d', on: (e) => { e.stopPropagation(); this.motifClick(id); } }; };
+
+    const ql = s.q.trim().toLowerCase();
+    const filtered = REPORTS.filter((r) => {
+      if (s.grade && r.gr !== s.grade) return false;
+      if (s.motif && !r.mo.includes(s.motif)) return false;
+      if (ql && !(r.t + ' ' + r.s + ' ' + r.x + ' ' + r.mo.join(' ') + ' ' + r.ph).toLowerCase().includes(ql)) return false;
+      return true;
+    }).sort((a, b) => b.d.localeCompare(a.d));
+
+    const reports = filtered.map((r) => ({
+      ...r, gc: GC[r.gr], chips: r.mo.map(mkChip), open: () => this.setState({ sel: r.id })
+    }));
+
+    const grades = ['official', 'firsthand', 'reported', 'interpretive', 'symbolic', 'speculative'];
+    const gradeChips = [{ label: 'ALL', g: '' }].concat(grades.map((g) => ({ label: g.toUpperCase(), g }))).map((o) => {
+      const c = o.g ? GC[o.g] : '#ece6d8';
+      const act = s.grade === o.g;
+      return { label: o.label, tip: o.g ? GTIP[o.g] : 'Show all evidence grades', on: () => this.setState({ grade: o.g }), style: CHIP + (act ? 'color: #12110e; background: ' + c + '; border-color: ' + c + '; font-weight: 600;' : 'color: ' + c + '; border-color: ' + c + '44;') };
+    });
+
+    const selR = REPORTS.find((r) => r.id === s.sel);
+    let sel = null;
+    if (selR) {
+      const related = REPORTS.filter((r) => r.id !== selR.id && r.mo.some((m) => selR.mo.includes(m)))
+        .map((r) => ({ r, n: r.mo.filter((m) => selR.mo.includes(m)).length })).sort((a, b) => b.n - a.n).slice(0, 3)
+        .map(({ r }) => ({ t: r.t, gr: r.gr.toUpperCase(), gc: GC[r.gr], on: () => this.setState({ sel: r.id }) }));
+      sel = {
+        ...selR, gc: GC[selR.gr], gr: selR.gr.toUpperCase(), chips: selR.mo.map(mkChip),
+        flagged: !!selR.flag, flagText: selR.flag || '',
+        say: SAY[selR.gr][0], not: SAY[selR.gr][1],
+        frames: ['belief', 'neutral', 'skeptic'].map((L) => ({
+          n: L.toUpperCase(), c: FRAME_TEXT[L].c, t: FRAME_TEXT[L].mk(selR),
+          tc: L === lens ? '#ece6d8' : '#6f6858',
+          style: 'display: flex; gap: 12px; padding: 12px 16px; align-items: baseline;' + (L === lens ? 'background: #211e18; border-left: 2px solid ' + FRAME_TEXT[L].c + ';' : 'border-left: 2px solid transparent;')
+        })),
+        related
+      };
+    }
+
+    const statDefs = [
+      { label: 'REPORTS', v: 20, c: '#e6b153' },
+      { label: mandela ? 'MOTIFFS' : 'MOTIFS', v: 17, c: '#a58fe8' },
+      { label: mandela ? 'MANDELLA ITEMS' : 'MANDELA ITEMS', v: 6, c: '#dd8fc0' },
+      { label: 'STORY THREADS', v: 8, c: '#5fd0e4' },
+      { label: 'OFFICIAL ANCHORS', v: 5, c: '#83cf9e' }
+    ];
+    const stats = statDefs.map((d) => ({ label: d.label, c: d.c, val: String(Math.round(d.v * s.statT)).padStart(2, '0') }));
+
+    const yc = { 2012: 2, 2013: 1, 2014: 1, 2015: 2, 2016: 1, 2017: 1, 2018: 1, 2019: 1, 2020: 1, 2021: 1, 2022: 1, 2023: 1, 2024: 1, 2025: 1, 2026: 4 };
+    const yearBars = Object.keys(yc).map((y) => ({ h: (yc[y] / 4) * 100, tip: y + ' · ' + yc[y] + ' report' + (yc[y] > 1 ? 's' : ''), c: y === '2026' ? '#e6b153' : '#504a3e' }));
+
+    const gridYears = []; for (let y = 2008; y <= 2030; y += 2) gridYears.push({ label: "'" + String(y).slice(2), left: ((Date.UTC(y, 0, 1) - T0) / (T1 - T0)) * 88 + 3 });
+
+    const mkEv = (e) => ({
+      title: e.title, left: pctOf(e.date), short: e.short || '',
+      size: e.id === 'ls3' ? 15 : 11,
+      bg: e.layer === 'official' ? '#5fd0e4' : e.layer === 'community' ? '#e6b153' : 'transparent',
+      border: e.layer === 'symbolic' ? '1.5px dashed #a58fe8' : (s.ev === e.id ? '2px solid #ece6d8' : '2px solid #12110e'),
+      top: e.layer === 'community' ? 68 : 82,
+      on: () => this.setState({ ev: e.id })
+    });
+    const evOfficial = EVENTS.filter((e) => e.layer === 'official').map(mkEv);
+    const evLore = EVENTS.filter((e) => e.layer !== 'official').map(mkEv);
+    const se = EVENTS.find((e) => e.id === s.ev) || EVENTS[3];
+    const layerMeta = { official: ['OFFICIAL SCIENCE', '#5fd0e4'], community: ['COMMUNITY WAVE', '#e6b153'], symbolic: ['SYMBOLIC ANCHOR', '#a58fe8'] };
+    const selEv = { title: se.title, date: se.dl, desc: se.desc, src: se.src, flag: !!se.flag, layer: layerMeta[se.layer][0], lc: layerMeta[se.layer][1] };
+    const spanL = pctOf('2026-06-29'), spanR = pctOf('2030-06-01');
+
+    const coFor = (id) => {
+      const partners = EDGES.filter((e) => e[0] === id || e[1] === id).sort((a, b) => b[2] - a[2]).slice(0, 2).map((e) => (e[0] === id ? e[1] : e[0]));
+      return partners.join(' · ') || '—';
+    };
+    const maxF = 8;
+    const motifCards = MOTIFS.slice().sort((a, b) => b.freq - a.freq).map((m) => ({
+      n: m.id, c: FAM[m.f], def: m.def, freq: m.freq, pct: (m.freq / maxF) * 100, co: coFor(m.id),
+      on: () => this.motifClick(m.id),
+      style: 'display: flex; flex-direction: column; gap: 9px; background: #171511; border-radius: 14px; padding: 17px 18px; cursor: pointer; transition: border-color .15s, transform .15s; border: 1px solid ' + (s.motif === m.id ? FAM[m.f] : '#2c2820') + ';'
+    }));
+
+    const threadCards = THREADS.map((t) => ({
+      title: t.title, anchor: t.anchor, flag: !!t.flag, prompt: t.prompt,
+      chips: t.mo.map(mkChip), text: t.fr[lens]
+    }));
+
+    const lensBtns = ['belief', 'neutral', 'skeptic'].map((L) => ({
+      label: L.toUpperCase(),
+      on: () => this.setState({ lens: L }),
+      style: LENSB + (L === lens ? 'color: #12110e; background: ' + LENS_META[L].color + '; font-weight: 600;' : 'color: #a89f8d;')
+    }));
+
+    const termLines = TERM_SCRIPT.slice(0, Math.min(s.termN, TERM_SCRIPT.length)).map((l) => ({ t: l[0], c: l[1] }));
+
+    const silenceDays = Math.max(1, Math.floor((now - LS3) / 86400000) + 1);
+
+    const famLegend = [{ n: 'MACHINE', c: FAM.machine }, { n: 'MEMORY', c: FAM.memory }, { n: 'LIGHT', c: FAM.light }, { n: 'TIME/SERPENT', c: FAM.time }, { n: 'BODY', c: FAM.body }, { n: 'SIMULATION', c: FAM.simulation }];
+
+    return {
+      q: s.q,
+      onQ: (e) => this.setState({ q: e.target.value }),
+      cvRef: (el) => { this._cv = el; },
+      cvMove: (e) => { const r = e.currentTarget.getBoundingClientRect(); this._mx = e.clientX - r.left; this._my = e.clientY - r.top; },
+      cvLeave: () => { this._mx = -999; this._my = -999; },
+      cvClick: () => { if (this._hover) this.motifClick(this._hover); },
+      onGlyph: () => { for (let i = 0; i < EDGES.length; i++) this._pulses.push({ e: i, t: 0, sp: 0.008 + Math.random() * 0.006 }); },
+
+      reports, gradeChips,
+      resultCount: filtered.length + ' / ' + REPORTS.length + ' REPORTS',
+      noResults: filtered.length === 0,
+      hasFilters: !!(ql || s.grade || s.motif),
+      clearFilters: () => this.setState({ q: '', grade: '', motif: '' }),
+      heroMotifHint: !!s.motif,
+      activeMotifName: s.motif || '',
+
+      drawerOpen: !!sel, sel: sel || {}, closeDrawer: () => this.setState({ sel: null }),
+
+      stats, yearBars, gridYears, evOfficial, evLore, selEv,
+      nowLeft: ((now - T0) / (T1 - T0)) * 88 + 3,
+      silenceSpan: { left: spanL, width: spanR - spanL, labelLeft: spanL + 1 },
+      tlOpacityStyle: lens === 'skeptic' ? 'opacity: 1;' : 'opacity: 1;',
+
+      motifCards, threadCards, mandelaCards: MANDELA, tools: TOOLS,
+      endpoints: ['/reports.json', '/mandela-items.json', '/motifs.json', '/events.json', '/story-threads.json', '/llms.txt'],
+      agentRules: AGENT_RULES, termLines, famLegend,
+      gradeLegend: [
+        { n: 'OFFICIAL', c: GC.official, d: 'Published by the institution itself. Always linked.' },
+        { n: 'FIRSTHAND', c: GC.firsthand, d: 'A person reporting their own experience.' },
+        { n: 'REPORTED', c: GC.reported, d: 'Shared accounts — forums, polls, threads.' },
+        { n: 'INTERPRETIVE', c: GC.interpretive, d: 'Community meaning-making on top of events.' },
+        { n: 'SYMBOLIC', c: GC.symbolic, d: 'Allegory and teaching language, filed as such.' },
+        { n: 'SPECULATIVE', c: GC.speculative, d: 'Unverified conjecture, clearly flagged.' }
+      ],
+
+      lensBtns, lensName: lens, lensColor: LENS_META[lens].color, lensLine: LENS_META[lens].line,
+
+      silenceDays: String(silenceDays).padStart(3, '0'),
+
+      mGlyph: mandela ? '◎' : '◉',
+      mQuiet: mandela ? 'silent' : 'quiet',
+      mMotifsNav: mandela ? 'MOTIFFS' : 'MOTIFS',
+      mMandelaKicker: mandela ? 'MANDELLA CATALOG' : 'MANDELA CATALOG',
+      mEstYear: mandela ? '2025' : '2026',
+      mFooterSign: mandela ? 'NO PHYSICS WERE HARMED ◎' : 'NO PHYSICS WERE HARMED ◉',
+      toggleMandela: this.toggleMandela,
+      mandelaBtnLabel: mandela ? '5 SHIFTED' : 'MANDELA',
+      mandelaBtnStyle: "font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; border-radius: 999px; padding: 8px 12px; cursor: pointer; white-space: nowrap; background: transparent;" + (mandela ? 'color: #dd8fc0; border: 1px solid #dd8fc088;' : 'color: #a89f8d; border: 1px solid #2c2820;'),
+      flash: s.flash,
+
+      glitchHover: glitchOn ? 'animation: tpGlitch 0.4s steps(2) infinite;' : '',
+      installLabel: s.copied ? 'COPIED ✓' : '$ INSTALL',
+      copyMini: s.copied ? '✓' : 'COPY',
+      copyInstall: () => { try { navigator.clipboard.writeText('npx -y timeline-pulse'); } catch (e) {} this.setState({ copied: '1' }); clearTimeout(this._ct); this._ct = setTimeout(() => this._mounted && this.setState({ copied: '' }), 1600); },
+      copyCfgLabel: s.copiedCfg ? 'COPIED ✓' : 'COPY',
+      copyConfig: () => { try { navigator.clipboard.writeText('{\n  "mcpServers": {\n    "timeline-pulse": {\n      "command": "npx",\n      "args": ["-y", "timeline-pulse"]\n    }\n  }\n}'); } catch (e) {} this.setState({ copiedCfg: '1' }); clearTimeout(this._ct2); this._ct2 = setTimeout(() => this._mounted && this.setState({ copiedCfg: '' }), 1600); }
+    };
+  }
+}
+</script>
+</body>
+</html>

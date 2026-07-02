@@ -1,0 +1,14 @@
+{
+  "$schema": "https://agentskills.io/schema/v0.2.0/index.json",
+  "version": "0.2.0",
+  "skills": [
+    {
+      "name": "timeline-pulse",
+      "type": "mcp",
+      "description": "Search timeline-shift folklore, Mandela Effect reports, and collider-era myth as a source-graded cultural archive. Read-only, no auth. Install: npx -y timeline-pulse.",
+      "url": "https://timeline-pulse.vercel.app/.well-known/agent-skills/timeline-pulse/SKILL.md",
+      "digest": "sha256:51194213b9377ac922a42781c5f25779aa53847f2b9c9fd77befce30e32735d7",
+      "sha256": "51194213b9377ac922a42781c5f25779aa53847f2b9c9fd77befce30e32735d7"
+    }
+  ]
+}

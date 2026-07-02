@@ -1,0 +1,54 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "timeline-pulse data API",
+    "version": "0.1.0",
+    "description": "Read-only access to the Timeline Pulse corpus: timeline-shift folklore, Mandela Effect reports, motifs, events, and story threads — every claim labeled, every source graded. For rich querying, use the MCP server: npx -y timeline-pulse.",
+    "license": { "name": "MIT (code); data under docs/SOURCE_POLICY.md", "url": "https://github.com/davidmosiah/timeline-pulse/blob/main/LICENSE" }
+  },
+  "servers": [{ "url": "https://timeline-pulse.vercel.app" }],
+  "paths": {
+    "/reports.json": {
+      "get": {
+        "operationId": "getReports",
+        "summary": "All reports (seed v0.1: 20 records) with claims, grades, motifs, anchors, and safety flags.",
+        "responses": { "200": { "description": "Report corpus", "content": { "application/json": { "schema": { "type": "object", "properties": { "meta": { "type": "object" }, "reports": { "type": "array", "items": { "type": "object" } } } } } } } }
+      }
+    },
+    "/motifs.json": {
+      "get": {
+        "operationId": "getMotifs",
+        "summary": "Motif constellation: 17 nodes with families and frequencies, plus weighted co-occurrence edges.",
+        "responses": { "200": { "description": "Motifs + edges", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/events.json": {
+      "get": {
+        "operationId": "getEvents",
+        "summary": "Timeline events in three labeled layers: official-science (cited), community-wave, symbolic-anchor.",
+        "responses": { "200": { "description": "Events", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/mandela-items.json": {
+      "get": {
+        "operationId": "getMandelaItems",
+        "summary": "Mandela Effect catalog: remembered vs on-record variants with community and mainstream notes.",
+        "responses": { "200": { "description": "Catalog", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/story-threads.json": {
+      "get": {
+        "operationId": "getStoryThreads",
+        "summary": "Curated narrative arcs written in belief / neutral / skeptical frames.",
+        "responses": { "200": { "description": "Threads", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/sources.json": {
+      "get": {
+        "operationId": "getSources",
+        "summary": "Source-family registry and per-family policies (including the omitted-teacher rule).",
+        "responses": { "200": { "description": "Source families", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    }
+  }
+}

@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timeline Pulse — the machine went quiet; the stories didn't</title>
+<meta name="description" content="An open-source atlas of timeline-shift folklore, Mandela Effect reports, and collider-era myth — every claim labeled, every source graded. MCP server + raw JSON for AI agents. A cultural archive, not a proof engine.">
+<link rel="canonical" href="https://timeline-pulse.vercel.app/">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<meta name="theme-color" content="#12110e">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Timeline Pulse — the machine went quiet; the stories didn't">
+<meta property="og:description" content="Timeline-shift folklore, Mandela Effect reports, and collider-era myth as a source-graded archive for humans and AI agents. npx -y timeline-pulse">
+<meta property="og:url" content="https://timeline-pulse.vercel.app/">
+<meta property="og:image" content="https://timeline-pulse.vercel.app/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@delx369">
+<meta name="twitter:image" content="https://timeline-pulse.vercel.app/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #12110e; color: #ece6d8; font-family: 'IBM Plex Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+  ::selection { background: #e6b153; color: #12110e; }
+  @keyframes tpPulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.9); opacity: 0.35; } 100% { transform: scale(1); opacity: 1; } }
+  @keyframes tpBlink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+  @keyframes tpGlitch { 0% { text-shadow: 2px 0 #5fd0e4, -2px 0 #dd8fc0; transform: skewX(0deg); } 25% { text-shadow: -2px 0 #5fd0e4, 2px 0 #dd8fc0; transform: skewX(1.5deg); } 50% { text-shadow: 1px 0 #a58fe8, -1px 0 #e6b153; transform: skewX(-1deg); } 75% { text-shadow: -1px 0 #e6b153, 1px 0 #5fd0e4; } 100% { text-shadow: 2px 0 #5fd0e4, -2px 0 #dd8fc0; } }
+  @keyframes tpFlash { 0% { opacity: 0; } 12% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes tpShimmer { 0% { background-position: 0% 0; } 100% { background-position: 200% 0; } }
+  @keyframes tpBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .serif { font-family: 'Instrument Serif', serif; font-weight: 400; }
+  .wrap { max-width: 1320px; margin: 0 auto; padding-left: clamp(16px,3vw,40px); padding-right: clamp(16px,3vw,40px); }
+  button { font: inherit; }
+
+  .navlink { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #a89f8d; text-decoration: none; padding: 8px 7px; white-space: nowrap; }
+  .navlink:hover { color: #e6b153; }
+  .btn-install { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; font-weight: 600; color: #12110e; background: #e6b153; border: none; border-radius: 999px; padding: 8px 14px; cursor: pointer; white-space: nowrap; }
+  .btn-install:hover { background: #f0c26e; }
+  .btn-copy { font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.08em; color: #e6b153; background: transparent; border: 1px solid #e6b15344; border-radius: 7px; cursor: pointer; }
+  .btn-copy:hover { background: #e6b15318; }
+  .btn-ghost { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #a89f8d; text-decoration: none; border: 1px solid #2c2820; border-radius: 12px; padding: 13px 18px; }
+  .btn-ghost:hover { color: #ece6d8; border-color: #3a3428; }
+  .glitchable { cursor: default; }
+  .glitch-on .glitchable:hover { animation: tpGlitch 0.4s steps(2) infinite; }
+
+  #q { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ece6d8; background: #1a1814; border: 1px solid #2c2820; border-radius: 10px; padding: 12px 16px; width: min(340px, 100%); outline: none; }
+  #q:focus { border-color: #e6b15366; }
+  .btn-clear { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: #e0795f; background: transparent; border: 1px solid #e0795f44; border-radius: 999px; padding: 5px 12px; cursor: pointer; }
+  .btn-clear:hover { background: #e0795f18; }
+
+  .report-card { background: #171511; border: 1px solid #2c2820; border-radius: 14px; padding: 20px; cursor: pointer; display: flex; flex-direction: column; gap: 10px; transition: border-color .15s, transform .15s; }
+  .report-card:hover { border-color: #e6b15355; transform: translateY(-2px); }
+  .chip-motif { font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.04em; color: var(--c); background: transparent; border: 1px solid var(--cb); border-radius: 999px; cursor: pointer; white-space: nowrap; }
+  .chip-motif:hover { border-color: var(--c); }
+
+  .ev-dot { position: absolute; transform: translate(-50%, -50%); border-radius: 50%; cursor: pointer; padding: 0; z-index: 3; transition: transform .15s; }
+  .ev-dot:hover { transform: translate(-50%, -50%) scale(1.4); }
+
+  .motif-card { display: flex; flex-direction: column; gap: 9px; background: #171511; border-radius: 14px; padding: 17px 18px; cursor: pointer; transition: border-color .15s, transform .15s; border: 1px solid #2c2820; }
+  .motif-card:hover { border-color: var(--ch); transform: translateY(-2px); }
+
+  .mandela-card { background: #12110e; border: 1px solid #2c2820; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 13px; }
+  .mandela-card:hover { border-color: #dd8fc055; }
+
+  .thread-card { background: #171511; border: 1px solid #2c2820; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 12px; }
+  .thread-card:hover { border-color: #3a3428; }
+
+  .tool-row { display: flex; gap: 14px; align-items: baseline; background: #171511; padding: 11px 18px; }
+  .tool-row:hover { background: #1a1814; }
+
+  .flink { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #a89f8d; text-decoration: none; }
+  .flink:hover { color: #e6b153; }
+  .btn-issue { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #12110e; background: #ece6d8; border-radius: 999px; padding: 10px 18px; text-decoration: none; align-self: flex-start; font-weight: 600; }
+  .btn-issue:hover { background: #fff; }
+  .btn-esc { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #a89f8d; background: transparent; border: 1px solid #2c2820; border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+  .btn-esc:hover { color: #ece6d8; border-color: #3a3428; }
+  .rel-btn { text-align: left; background: #171511; border: 1px solid #2c2820; border-radius: 10px; padding: 11px 14px; cursor: pointer; display: flex; justify-content: space-between; gap: 10px; align-items: baseline; width: 100%; box-sizing: border-box; }
+  .rel-btn:hover { border-color: #e6b15355; }
+
+  .kicker { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.22em; color: #6f6858; }
+  .h2 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(34px,4.2vw,54px); line-height: 1.04; margin: 14px 0 8px; color: #ece6d8; }
+  .sub { color: #a89f8d; font-size: 15px; max-width: 620px; margin: 0 0 30px; line-height: 1.6; text-wrap: pretty; }
+</style>
+</head>
+<body class="glitch-on">
+<div id="top" style="min-height: 100vh; background: #12110e;">
+
+  <!-- ============ HEADER ============ -->
+  <header style="position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px); background: rgba(18,17,14,0.86); border-bottom: 1px solid #2c2820;">
+    <div class="wrap" style="padding-top: 8px; padding-bottom: 8px; min-height: 58px; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px;">
+      <a href="#top" style="display: flex; align-items: center; gap: 9px; text-decoration: none; color: #ece6d8; flex-shrink: 0;">
+        <button id="glyphBtn" title="send a pulse through the constellation" style="background: none; border: none; cursor: pointer; padding: 0; font-size: 15px; color: #e6b153; line-height: 1; animation: tpPulse 3.6s ease-in-out infinite;">◉</button>
+        <span class="mono" style="font-size: 13px; font-weight: 600; letter-spacing: 0.18em;">TIMELINE PULSE</span>
+      </a>
+      <nav style="display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; flex: 1 1 auto; min-width: min(320px, 100%); padding-right: 26px; mask-image: linear-gradient(90deg, #000 88%, transparent); -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent);">
+        <a class="navlink" href="#archive">ARCHIVE</a>
+        <a class="navlink" href="#timeline">TIMELINE</a>
+        <a class="navlink" href="#motifs" id="navMotifs">MOTIFS</a>
+        <a class="navlink" href="#mandela">MANDELA</a>
+        <a class="navlink" href="#threads">THREADS</a>
+        <a class="navlink" href="#agents">AGENTS</a>
+        <a class="navlink" href="#sources">SOURCES</a>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-left: auto;">
+        <div id="headerLensBtns" style="display: flex; border: 1px solid #2c2820; border-radius: 999px; padding: 3px; gap: 2px;" title="Lens: how framings are shown across the site"></div>
+        <button id="mandelaBtn" title="Mandela mode: subtly alters details of this site (press M)">🜛 MANDELA</button>
+        <button id="installBtnTop" class="btn-install">$ INSTALL</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section style="position: relative; min-height: min(93vh, 940px); display: flex; align-items: center; overflow: hidden; border-bottom: 1px solid #2c2820;">
+    <canvas id="cv" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></canvas>
+    <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 18% 45%, rgba(18,17,14,0.88), rgba(18,17,14,0.25) 60%, transparent 100%); pointer-events: none;"></div>
+    <div class="wrap" style="position: relative; z-index: 2; padding-top: 90px; padding-bottom: 90px; width: 100%; pointer-events: none; box-sizing: border-box;">
+      <div style="max-width: 660px; display: flex; flex-direction: column; align-items: flex-start; gap: 22px;">
+        <div style="pointer-events: auto; display: inline-flex; align-items: center; gap: 10px; border: 1px solid #2c2820; background: rgba(23,21,17,0.85); border-radius: 999px; padding: 8px 16px 8px 12px;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: #e6b153; animation: tpPulse 2.2s ease-in-out infinite; display: inline-block;"></span>
+          <span class="mono" style="font-size: 11px; letter-spacing: 0.14em; color: #e6b153;">LIVE · LS3</span>
+          <span class="mono" style="font-size: 11px; letter-spacing: 0.06em; color: #a89f8d;">the LHC has been silent for <span id="silenceDays">000</span> days</span>
+        </div>
+        <h1 class="serif" style="font-size: clamp(44px, 7.2vw, 96px); line-height: 0.98; letter-spacing: -0.015em; margin: 0; color: #ece6d8;">
+          The machine went <em id="quietWord" class="glitchable" style="font-style: italic; color: #e6b153; pointer-events: auto;">quiet</em>.<br>
+          The stories didn't.
+        </h1>
+        <p style="font-size: 16.5px; line-height: 1.65; color: #a89f8d; margin: 0; max-width: 560px; text-wrap: pretty;">
+          <strong style="color: #ece6d8; font-weight: 500;">Timeline Pulse</strong> is an open-source atlas of timeline-shift folklore, Mandela Effect reports, and collider-era myth — every claim labeled, every source graded. A structured corpus for humans <em class="serif" style="color: #5fd0e4;">and</em> AI agents.
+        </p>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span id="lensDot" style="width: 7px; height: 7px; border-radius: 50%; background: #d6cfbf; display: inline-block;"></span>
+          <span id="lensLine" class="mono" style="font-size: 11.5px; letter-spacing: 0.05em; color: #6f6858;">Facts on one shelf, stories on another. Both labeled.</span>
+        </div>
+        <div style="pointer-events: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 6px;">
+          <div style="display: flex; align-items: center; gap: 12px; background: #1a1814; border: 1px solid #3a3428; border-radius: 12px; padding: 13px 18px;">
+            <span class="mono" style="font-size: 13.5px; color: #6f6858;">$</span>
+            <span class="mono" style="font-size: 13.5px; color: #ece6d8;">npx -y timeline-pulse</span>
+            <button id="installBtnMini" class="btn-copy" style="font-size: 10px; padding: 5px 9px;">COPY</button>
+          </div>
+          <a class="btn-ghost" href="https://github.com/davidmosiah/timeline-pulse" target="_blank" rel="noopener">GITHUB ↗</a>
+          <a class="btn-ghost" href="https://www.npmjs.com/package/timeline-pulse" target="_blank" rel="noopener">NPM ↗</a>
+        </div>
+        <div style="height: 2px; width: 130px; border-radius: 2px; background: linear-gradient(90deg, #e0795f, #e6b153, #d9d06e, #83cf9e, #5fd0e4, #a58fe8, #dd8fc0, #e0795f); background-size: 200% 100%; animation: tpShimmer 6s linear infinite;"></div>
+        <a id="heroHint" href="#archive" style="display: none; pointer-events: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #5fd0e4; text-decoration: none; border: 1px dashed #5fd0e455; border-radius: 999px; padding: 7px 14px;"></a>
+      </div>
+    </div>
+    <div style="position: absolute; right: clamp(16px,3vw,40px); bottom: 20px; z-index: 2; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; pointer-events: none;">
+      <span class="mono" style="font-size: 10px; letter-spacing: 0.12em; color: #6f6858;">THE MOTIF CONSTELLATION — CLICK A STAR TO FILTER THE ARCHIVE</span>
+      <div id="famLegend" style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end;"></div>
+    </div>
+    <a href="#stats" style="position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 2; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: #6f6858; text-decoration: none; animation: tpBob 2.6s ease-in-out infinite;">▾</a>
+  </section>
+
+  <!-- ============ STATS BAND ============ -->
+  <section id="stats" style="scroll-margin-top: 78px; border-bottom: 1px solid #2c2820; background: #171511;">
+    <div class="wrap" style="padding-top: 30px; padding-bottom: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: clamp(24px,4vw,56px);">
+      <div id="statsRow" style="display: flex; flex-wrap: wrap; align-items: center; gap: clamp(24px,4vw,56px);"></div>
+      <div style="flex: 1;"></div>
+      <div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-end;">
+        <div id="yearBars" style="display: flex; align-items: flex-end; gap: 3px; height: 40px;"></div>
+        <span id="yearCaption" class="mono" style="font-size: 9px; letter-spacing: 0.14em; color: #6f6858;">REPORTS / YEAR · SEED BATCH v0.1</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ARCHIVE ============ -->
+  <section id="archive" style="scroll-margin-top: 78px; padding: clamp(70px,9vw,110px) 0 90px;">
+    <div class="wrap">
+      <div class="kicker"><span style="color: #e6b153;">01</span> · ARCHIVE</div>
+      <h2 class="h2">Twenty ways reality <em style="font-style: italic; color: #5fd0e4;">wobbled</em></h2>
+      <p class="sub">Every report carries a source type and an evidence grade. Nothing here is presented as proof — it is presented as <em class="serif">filed</em>.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px;">
+        <input id="q" type="search" placeholder="Search reports, motifs, phrases…" autocomplete="off">
+        <div id="gradeChips" style="display: flex; flex-wrap: wrap; gap: 7px;"></div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px; min-height: 28px; flex-wrap: wrap;">
+        <span id="resultCount" class="mono" style="font-size: 10.5px; letter-spacing: 0.1em; color: #6f6858;">LOADING CORPUS…</span>
+        <span id="clearWrap"></span>
+        <span id="motifHintArchive" class="mono" style="display: none; font-size: 10.5px; color: #5fd0e4;"></span>
+      </div>
+      <div id="reportsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(310px, 100%), 1fr)); gap: 14px;"></div>
+      <div id="emptyState" style="display: none; text-align: center; padding: 60px 20px; border: 1px dashed #2c2820; border-radius: 14px;">
+        <div class="serif" style="font-size: 26px; color: #a89f8d; font-style: italic;">No reports match.</div>
+        <div class="mono" style="font-size: 11px; color: #6f6858; margin-top: 8px;">Perhaps they exist in a nearby branch.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TIMELINE ============ -->
+  <section id="timeline" style="scroll-margin-top: 78px; padding: clamp(70px,9vw,110px) 0; background: #171511; border-top: 1px solid #2c2820; border-bottom: 1px solid #2c2820;">
+    <div class="wrap">
+      <div class="kicker"><span style="color: #e6b153;">02</span> · TIMELINE</div>
+      <h2 class="h2">Two chronologies, <em style="font-style: italic; color: #e6b153;">one axis</em></h2>
+      <p class="sub" style="margin-bottom: 26px;">Official science above the line. Community waves and symbolic anchors below it. They share a calendar — never a claim.</p>
+      <div style="display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 20px;">
+        <span class="mono" style="display: inline-flex; align-items: center; gap: 7px; font-size: 10px; letter-spacing: 0.1em; color: #a89f8d;"><span style="width: 9px; height: 9px; border-radius: 50%; background: #5fd0e4; display: inline-block;"></span>OFFICIAL SCIENCE</span>
+        <span class="mono" style="display: inline-flex; align-items: center; gap: 7px; font-size: 10px; letter-spacing: 0.1em; color: #a89f8d;"><span style="width: 9px; height: 9px; border-radius: 50%; background: #e6b153; display: inline-block;"></span>COMMUNITY WAVE</span>
+        <span class="mono" style="display: inline-flex; align-items: center; gap: 7px; font-size: 10px; letter-spacing: 0.1em; color: #a89f8d;"><span style="width: 9px; height: 9px; border-radius: 50%; border: 1.5px dashed #a58fe8; display: inline-block; box-sizing: border-box;"></span>SYMBOLIC ANCHOR</span>
+      </div>
+      <div id="tlBox" style="position: relative; height: 240px; border: 1px solid #2c2820; border-radius: 16px; background: #12110e; overflow: hidden;"></div>
+      <div id="tlDetail" style="margin-top: 16px; border: 1px solid #2c2820; border-radius: 14px; background: #1a1814; padding: 20px 22px; display: flex; flex-direction: column; gap: 8px;"></div>
+      <p class="mono" style="font-size: 10.5px; color: #6f6858; margin: 18px 0 0; letter-spacing: 0.04em;">Official events cite CERN's public pages. Community and symbolic layers are interpretation — never causation.</p>
+    </div>
+  </section>
+
+  <!-- ============ MOTIFS ============ -->
+  <section id="motifs" style="scroll-margin-top: 78px; padding: clamp(70px,9vw,110px) 0;">
+    <div class="wrap">
+      <div class="kicker"><span style="color: #e6b153;">03</span> · <span id="kickerMotifs">MOTIFS</span></div>
+      <h2 class="h2">The symbols that keep <em style="font-style: italic; color: #a58fe8;">returning</em></h2>
+      <p class="sub">Seventeen recurring symbols, sized by frequency, linked by co-occurrence. The same constellation you saw above — laid flat for reading.</p>
+      <div id="motifsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr)); gap: 12px;"></div>
+    </div>
+  </section>
+
+  <!-- ============ MANDELA CATALOG ============ -->
+  <section id="mandela" style="scroll-margin-top: 78px; padding: clamp(70px,9vw,110px) 0; background: #171511; border-top: 1px solid #2c2820; border-bottom: 1px solid #2c2820;">
+    <div class="wrap">
+      <div class="kicker"><span style="color: #e6b153;">04</span> · <span id="kickerMandela">MANDELA CATALOG</span></div>
+      <h2 class="h2">You remember it <em style="font-style: italic; color: #dd8fc0;">differently</em></h2>
+      <p class="sub">Six classic memory variants: what people swear they remember, what the record shows, and what mainstream memory science says about the gap.</p>
+      <div id="mandelaGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr)); gap: 14px;"></div>
+    </div>
+  </section>
+
+  <!-- ============ STORY THREADS ============ -->
+  <section id="threads" style="scroll-margin-top: 78px; padding: clamp(70px,9vw,110px) 0;">
+    <div class="wrap">
+      <div class="kicker"><span style="color: #e6b153;">05</span> · STORY THREADS</div>
+      <h2 class="h2">Eight arcs, three <em style="font-style: italic; color: #e6b153;">lenses</em></h2>
+      <p class="sub" style="max-width: 640px; margin-bottom: 12px;">Every thread is written three times — as belief, as neutral archive, as skepticism. You are currently reading through the <strong id="lensNameInline" style="color: #d6cfbf; font-weight: 600;">neutral</strong> lens. Switch it in the header, or right here:</p>
+      <div id="threadLensBtns" style="display: inline-flex; border: 1px solid #2c2820; border-radius: 999px; padding: 3px; gap: 2px; margin-bottom: 30px;"></div>
+      <div id="threadsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr)); gap: 14px;"></div>
+    </div>
+  </section>
+
+  <!-- ============ AGENTS ============ -->
+  <section id="agents" style="scroll-margin-top: 78px; padding: clamp(70px,9vw,110px) 0; background: #171511; border-top: 1px solid #2c2820; border-bottom: 1px solid #2c2820;">
+    <div class="wrap">
+      <div class="kicker"><span style="color: #e6b153;">06</span> · FOR AGENTS</div>
+      <h2 class="h2">Built for hands <em style="font-style: italic; color: #83cf9e;">without bodies</em></h2>
+      <p class="sub" style="max-width: 640px; margin-bottom: 34px;">Ten read-only MCP tools, a bundled corpus, zero auth. The whole archive is also served as raw JSON — agents get the same shelf humans do.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 22px; align-items: start;">
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <div style="background: #12110e; border: 1px solid #2c2820; border-radius: 14px; overflow: hidden;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; border-bottom: 1px solid #2c2820;">
+              <span class="mono" style="font-size: 9.5px; letter-spacing: 0.14em; color: #6f6858;">CLAUDE / CURSOR / ANY MCP CLIENT</span>
+              <button id="copyCfgBtn" class="btn-copy" style="font-size: 9.5px; padding: 4px 9px;">COPY</button>
+            </div>
+            <pre class="mono" style="margin: 0; padding: 18px; font-size: 12.5px; line-height: 1.6; color: #a89f8d; overflow-x: auto;">{
+  <span style="color: #e6b153;">"mcpServers"</span>: {
+    <span style="color: #e6b153;">"timeline-pulse"</span>: {
+      <span style="color: #e6b153;">"command"</span>: <span style="color: #5fd0e4;">"npx"</span>,
+      <span style="color: #e6b153;">"args"</span>: [<span style="color: #5fd0e4;">"-y"</span>, <span style="color: #5fd0e4;">"timeline-pulse"</span>]
+    }
+  }
+}</pre>
+          </div>
+          <div id="toolsList" style="display: grid; grid-template-columns: 1fr; gap: 1px; background: #2c2820; border: 1px solid #2c2820; border-radius: 14px; overflow: hidden;"></div>
+          <div style="display: flex; flex-wrap: wrap; gap: 7px; align-items: center;">
+            <span class="mono" style="font-size: 9.5px; letter-spacing: 0.14em; color: #6f6858;">RAW ENDPOINTS:</span>
+            <span id="endpointChips" style="display: contents;"></span>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <div style="background: #0d0c0a; border: 1px solid #2c2820; border-radius: 14px; overflow: hidden;">
+            <div style="display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid #2c2820;">
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: #e0795f; display: inline-block;"></span>
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: #e6b153; display: inline-block;"></span>
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: #83cf9e; display: inline-block;"></span>
+              <span class="mono" style="font-size: 9.5px; letter-spacing: 0.12em; color: #6f6858; margin-left: 8px;">AGENT SESSION — LIVE</span>
+            </div>
+            <div style="padding: 16px 18px; min-height: 380px;">
+              <div id="termBox"></div>
+              <span style="display: inline-block; width: 8px; height: 14px; background: #83cf9e; animation: tpBlink 1s step-end infinite; vertical-align: text-bottom;"></span>
+            </div>
+          </div>
+          <div style="border: 1px solid #2c2820; border-radius: 14px; padding: 18px 20px; background: #12110e;">
+            <div class="mono" style="font-size: 9.5px; letter-spacing: 0.14em; color: #6f6858; margin-bottom: 10px;">AGENT LANGUAGE RULES — FROM timeline_agent_manifest</div>
+            <div id="rulesList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section id="sources" style="scroll-margin-top: 78px; padding: clamp(70px,9vw,110px) 0 60px;">
+    <div class="wrap">
+      <div class="kicker"><span style="color: #e6b153;">07</span> · SOURCES &amp; STANCE</div>
+      <h2 class="serif" style="font-size: clamp(38px,5vw,64px); line-height: 1.06; margin: 18px 0 40px; color: #ece6d8; max-width: 900px;">A cultural archive, <em style="font-style: italic; color: #5fd0e4;">not a proof engine</em>.</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr)); gap: 22px;">
+        <div style="border: 1px solid #2c2820; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 12px;">
+          <div class="mono" style="font-size: 10px; letter-spacing: 0.16em; color: #e6b153;">WHAT THIS IS</div>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.65; color: #a89f8d;">A structured record of how communities tell timeline-shift stories: who reported what, when, in what kind of source, and with what confidence. Official science facts sit on their own shelf, always cited.</p>
+          <div class="mono" style="font-size: 10px; letter-spacing: 0.16em; color: #e0795f; margin-top: 8px;">WHAT IT NEVER CLAIMS</div>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.65; color: #a89f8d;">That CERN, the LHC, or particle physics proves timeline manipulation. No scientific, medical, or prophetic claims. No harassment of researchers, believers, or skeptics. One source family is summarized without naming its teacher — by design.</p>
+        </div>
+        <div style="border: 1px solid #2c2820; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 10px;">
+          <div class="mono" style="font-size: 10px; letter-spacing: 0.16em; color: #e6b153; margin-bottom: 4px;">EVIDENCE GRADES</div>
+          <div id="gradeLegend" style="display: flex; flex-direction: column; gap: 10px;"></div>
+        </div>
+        <div style="border: 1px solid #2c2820; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 12px;">
+          <div class="mono" style="font-size: 10px; letter-spacing: 0.16em; color: #e6b153;">CONTRIBUTE A REPORT</div>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.65; color: #a89f8d;">Open an issue with the report template: what you experienced or found, when, where it was posted, and a link if one exists. Curators grade it, tag motifs, and file it. Excerpts stay short; summaries and URLs are preferred over copies.</p>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.65; color: #a89f8d;">Corrections welcome — especially official sources for anything flagged <span class="mono" style="font-size: 11px; color: #e0795f;">⚑ needs source</span>.</p>
+          <a class="btn-issue" href="https://github.com/davidmosiah/timeline-pulse/issues/new/choose" target="_blank" rel="noopener">OPEN AN ISSUE ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="border-top: 1px solid #2c2820;">
+    <div style="height: 2px; background: linear-gradient(90deg, #e0795f, #e6b153, #d9d06e, #83cf9e, #5fd0e4, #a58fe8, #dd8fc0); opacity: 0.55;"></div>
+    <div class="wrap" style="padding-top: 44px; padding-bottom: 54px; display: flex; flex-wrap: wrap; gap: 30px; align-items: flex-start; justify-content: space-between;">
+      <div style="display: flex; flex-direction: column; gap: 10px; max-width: 420px;">
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <span id="glyphFooter" style="font-size: 15px; color: #e6b153;">◉</span>
+          <span class="mono" style="font-size: 13px; font-weight: 600; letter-spacing: 0.18em; color: #ece6d8;">TIMELINE PULSE</span>
+        </div>
+        <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #6f6858;">Built like uap-pulse: small, public, source-aware, agent-friendly. Code MIT. Data respects its sources.</p>
+        <span id="estLine" class="mono" style="font-size: 10px; letter-spacing: 0.1em; color: #504a3e;">EST. 2026 · SEED CORPUS v0.1 · NO PHYSICS WERE HARMED ◉</span>
+      </div>
+      <div style="display: flex; gap: clamp(30px,5vw,70px); flex-wrap: wrap;">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <span class="mono" style="font-size: 9.5px; letter-spacing: 0.16em; color: #6f6858;">PROJECT</span>
+          <a class="flink" href="https://github.com/davidmosiah/timeline-pulse" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="flink" href="https://www.npmjs.com/package/timeline-pulse" target="_blank" rel="noopener">npm ↗</a>
+          <a class="flink" href="#agents">MCP install</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <span class="mono" style="font-size: 9.5px; letter-spacing: 0.16em; color: #6f6858;">FOR AGENTS</span>
+          <a class="flink" href="/llms.txt">/llms.txt</a>
+          <a class="flink" href="/reports.json">/reports.json</a>
+          <a class="flink" href="/motifs.json">/motifs.json</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <span class="mono" style="font-size: 9.5px; letter-spacing: 0.16em; color: #6f6858;">EXPLORE</span>
+          <a class="flink" href="#archive">Archive</a>
+          <a class="flink" href="#timeline">Timeline</a>
+          <a class="flink" href="#threads">Story threads</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="drawerRoot"></div>
+  <div id="flashRoot"></div>
+</div>
+
+<noscript><p style="padding: 20px; font-family: monospace;">Timeline Pulse is an interactive archive and needs JavaScript. The raw corpus is at <a href="/reports.json">/reports.json</a> and the agent guide at <a href="/llms.txt">/llms.txt</a>.</p></noscript>
+
+<script type="module">
+/* timeline-pulse site — vanilla port of the Claude Design prototype (design/timeline-pulse-site.dc.html).
+   Data comes from the same JSON the MCP server ships (synced from data/ by scripts/sync-site-data.mjs). */
+
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+// ------------------------------------------------------------- constants
+const GC = { official: "#5fd0e4", firsthand: "#e6b153", reported: "#d6cfbf", interpretive: "#dd8fc0", symbolic: "#a58fe8", speculative: "#8f8776" };
+const GTIP = { official: "Published by the institution itself — always linked", firsthand: "A person reporting their own experience", reported: "Shared accounts: forums, polls, threads", interpretive: "Community meaning-making on top of events", symbolic: "Allegory and teaching language, filed as such", speculative: "Unverified conjecture, clearly flagged" };
+const LENS_META = {
+  belief: { color: "#e6b153", line: "Reading the archive through the eyes of those who lived it." },
+  neutral: { color: "#d6cfbf", line: "Facts on one shelf, stories on another. Both labeled." },
+  skeptic: { color: "#5fd0e4", line: "All myth, carefully filed. No physics were harmed." },
+};
+const FRAME_TEXT = {
+  belief: { c: "#e6b153", mk: (r) => "Read from inside the worldview: " + r.summary.charAt(0).toLowerCase() + r.summary.slice(1) },
+  neutral: { c: "#d6cfbf", mk: (r) => "The archive records that this was " + (r.evidence_grade === "firsthand" ? "reported firsthand" : r.evidence_grade === "symbolic" ? "taught symbolically" : r.evidence_grade === "speculative" ? "circulated as speculation" : "shared and interpreted") + " on " + (r.date_observed ?? "an unrecorded date") + ". It is filed, dated, and graded — nothing more is claimed." },
+  skeptic: { c: "#5fd0e4", mk: (r) => (r.phenomenon_type === "mandela-effect" ? "Reconstructive memory plus internet-scale comparison reliably produces convergent errors; no timeline mechanics required." : r.evidence_grade === "firsthand" ? "A sincere personal experience; sincerity is not evidence of external cause." : "Symbol and metaphor doing what they always do around big instruments and big dates — meaningful as culture, silent as physics.") },
+};
+const AGENT_RULES = [
+  'Say "reported", "interpreted", "community-linked", or "symbolically framed" — never "proven".',
+  "Keep official CERN information on a separate shelf from metaphysical interpretation.",
+  "One source family is summarized without naming its teacher. Keep it that way.",
+  "Never encourage fear, harassment, or risky behavior. Cite source URLs when they exist.",
+];
+const TOOLS = [
+  ["timeline_search_reports", "Search reports by text, motif, phenomenon, source type, date, stance, or evidence grade."],
+  ["timeline_get_report", "One full report: summary, sources, motifs, related reports, safety labels."],
+  ["timeline_mandela_catalog", "Browse memory variants, mainstream explanations, and residue links."],
+  ["timeline_motif_map", "Recurring symbols and their co-occurrence graph — the constellation, as JSON."],
+  ["timeline_story_threads", "Curated arcs with belief, neutral, and skeptical framings built in."],
+  ["timeline_events", "Official science milestones and community waves on one labeled axis."],
+  ["timeline_compare_sources", "Belief / neutral / skeptic framings for one topic, plus shared facts."],
+  ["timeline_deepen_story", "Research prompts and follow-up angles — never fabricated sources."],
+  ["timeline_stats", "Corpus totals by phenomenon, motif, source type, year, and grade."],
+  ["timeline_agent_manifest", "The rules of the corpus: first calls, safe language, citation policy."],
+];
+const TERM_SCRIPT = [
+  ["$ npx -y timeline-pulse", "#e6b153"],
+  ["● timeline-pulse mcp · corpus loaded · 20 reports · 17 motifs · read-only", "#83cf9e"],
+  [" ", "#a89f8d"],
+  ['> timeline_search_reports({ "query": "machine silence" })', "#5fd0e4"],
+  ["{", "#a89f8d"],
+  ['  "total_matches": 4,', "#a89f8d"],
+  ['  "reports": [', "#a89f8d"],
+  ['    { "id": "tp-001", "title": "Machine silence and the', "#a89f8d"],
+  ['      calibration window", "evidence_grade": "symbolic" },', "#a89f8d"],
+  ['    { "id": "tp-002", "title": "The day the hum stopped",', "#a89f8d"],
+  ['      "evidence_grade": "firsthand" } ]', "#a89f8d"],
+  ["}", "#a89f8d"],
+  [" ", "#a89f8d"],
+  ['> timeline_compare_sources({ "topic": "LS3 shutdown" })', "#5fd0e4"],
+  ["{", "#a89f8d"],
+  ['  "belief":  "a calibration window for the inner field",', "#a89f8d"],
+  ['  "neutral": "a pause that communities read as a motif",', "#a89f8d"],
+  ['  "skeptic": "scheduled maintenance ahead of HiLumi",', "#a89f8d"],
+  ['  "shared_facts": [ "the LHC entered LS3 on 2026-06-29" ]', "#a89f8d"],
+]
+;
+const T0 = Date.UTC(2008, 0, 1);
+const T1 = Date.UTC(2031, 5, 1);
+const LS3 = Date.UTC(2026, 5, 29);
+const pctOf = (iso) => ((Date.parse(iso + "T00:00:00Z") - T0) / (T1 - T0)) * 88 + 3;
+const CHIP = "font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; padding: 7px 13px; border-radius: 999px; border: 1px solid; cursor: pointer; background: transparent; white-space: nowrap; transition: all .15s;";
+const LENSB = "font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; padding: 5px 11px; border-radius: 999px; border: 1px solid transparent; cursor: pointer; background: transparent;";
+const LAYER_META = { "official-science": ["OFFICIAL SCIENCE", "#5fd0e4"], "community-wave": ["COMMUNITY WAVE", "#e6b153"], "symbolic-anchor": ["SYMBOLIC ANCHOR", "#a58fe8"], "site-update": ["SITE UPDATE", "#83cf9e"] };
+
+// ------------------------------------------------------------------ state
+const state = { q: "", grade: "", motif: "", sel: null, ev: "ls3", lens: "neutral", mandela: false, statT: 0, termN: 2 };
+let DATA = null; // { reports, motifs, edges, fam, events, threads, mandela }
+
+// ------------------------------------------------------------------ data
+async function loadData() {
+  const get = (f) => fetch(f).then((r) => { if (!r.ok) throw new Error(f + " → " + r.status); return r.json(); });
+  const [rep, mot, ev, th, ma] = await Promise.all([
+    get("./reports.json"), get("./motifs.json"), get("./events.json"), get("./story-threads.json"), get("./mandela-items.json"),
+  ]);
+  DATA = {
+    reports: rep.reports,
+    motifs: mot.motifs,
+    edges: mot.edges,
+    fam: mot.meta.families,
+    events: ev.events,
+    threads: th.threads,
+    mandela: ma.items,
+  };
+}
+
+const motifColor = (id) => { const m = DATA.motifs.find((x) => x.id === id); return m ? DATA.fam[m.family] : "#a89f8d"; };
+const reportText = (r) => (r.title + " " + r.summary + " " + (r.long_summary ?? "") + " " + r.motifs.join(" ") + " " + r.phenomenon_type).toLowerCase().replace(/-/g, " ");
+const matches = (r) => {
+  if (state.grade && r.evidence_grade !== state.grade) return false;
+  if (state.motif && !r.motifs.includes(state.motif)) return false;
+  const q = state.q.trim().toLowerCase().replace(/-/g, " ");
+  if (q && !q.split(/\s+/).every((t) => reportText(r).includes(t))) return false;
+  return true;
+};
+
+// ------------------------------------------------------------- renderers
+function motifChipHTML(id, size) {
+  const c = motifColor(id);
+  const pad = size === "sm" ? "padding: 3px 9px; font-size: 9.5px;" : "padding: 4px 10px; font-size: 10px;";
+  return `<button class="chip-motif" data-motif="${esc(id)}" style="--c: ${c}; --cb: ${c}33; ${pad}">✦ ${esc(id)}</button>`;
+}
+
+function renderHeaderBits() {
+  const m = state.mandela;
+  $("#navMotifs").textContent = m ? "MOTIFFS" : "MOTIFS";
+  $("#kickerMotifs").textContent = m ? "MOTIFFS" : "MOTIFS";
+  $("#kickerMandela").textContent = m ? "MANDELLA CATALOG" : "MANDELA CATALOG";
+  $("#quietWord").textContent = m ? "silent" : "quiet";
+  $("#glyphBtn").textContent = m ? "◎" : "◉";
+  $("#glyphFooter").textContent = m ? "◎" : "◉";
+  $("#estLine").textContent = m ? "EST. 2025 · SEED CORPUS v0.1 · NO PHYSICS WERE HARMED ◎" : "EST. 2026 · SEED CORPUS v0.1 · NO PHYSICS WERE HARMED ◉";
+  const b = $("#mandelaBtn");
+  b.textContent = m ? "🜛 5 SHIFTED" : "🜛 MANDELA";
+  b.style.cssText = "font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; border-radius: 999px; padding: 8px 12px; cursor: pointer; white-space: nowrap; background: transparent;" + (m ? "color: #dd8fc0; border: 1px solid #dd8fc088;" : "color: #a89f8d; border: 1px solid #2c2820;");
+  for (const [rootId] of [["#headerLensBtns"], ["#threadLensBtns"]]) {
+    $(rootId).innerHTML = ["belief", "neutral", "skeptic"].map((L) =>
+      `<button data-lens="${L}" style="${LENSB}${L === state.lens ? `color: #12110e; background: ${LENS_META[L].color}; font-weight: 600;` : "color: #a89f8d;"}">${L.toUpperCase()}</button>`
+    ).join("");
+  }
+  $("#lensDot").style.background = LENS_META[state.lens].color;
+  $("#lensLine").textContent = LENS_META[state.lens].line;
+  const inline = $("#lensNameInline");
+  inline.textContent = state.lens;
+  inline.style.color = LENS_META[state.lens].color;
+}
+
+function renderHero() {
+  const days = Math.max(1, Math.floor((Date.now() - LS3) / 864e5) + 1);
+  $("#silenceDays").textContent = String(days).padStart(3, "0");
+  $("#famLegend").innerHTML = [["MACHINE", "machine"], ["MEMORY", "memory"], ["LIGHT", "light"], ["TIME/SERPENT", "time"], ["BODY", "body"], ["SIMULATION", "simulation"]]
+    .map(([n, f]) => `<span class="mono" style="display: inline-flex; align-items: center; gap: 5px; font-size: 9.5px; letter-spacing: 0.08em; color: #6f6858;"><span style="width: 6px; height: 6px; border-radius: 50%; background: ${DATA.fam[f]}; display: inline-block;"></span>${n}</span>`).join("");
+  const hint = $("#heroHint");
+  hint.style.display = state.motif ? "inline-block" : "none";
+  if (state.motif) hint.textContent = `✦ filtering archive by ${state.motif} — jump to reports ↓`;
+}
+
+function renderStats() {
+  const m = state.mandela;
+  const defs = [
+    ["REPORTS", DATA.reports.length, "#e6b153"],
+    [m ? "MOTIFFS" : "MOTIFS", DATA.motifs.length, "#a58fe8"],
+    [m ? "MANDELLA ITEMS" : "MANDELA ITEMS", DATA.mandela.length, "#dd8fc0"],
+    ["STORY THREADS", DATA.threads.length, "#5fd0e4"],
+    ["OFFICIAL ANCHORS", DATA.events.filter((e) => e.layer === "official-science").length, "#83cf9e"],
+  ];
+  $("#statsRow").innerHTML = defs.map(([label, v, c]) =>
+    `<div style="display: flex; flex-direction: column; gap: 3px;">
+      <span class="mono" style="font-size: 30px; font-weight: 500; color: ${c};">${String(Math.round(v * state.statT)).padStart(2, "0")}</span>
+      <span class="mono" style="font-size: 9.5px; letter-spacing: 0.16em; color: #6f6858;">${label}</span>
+    </div>`).join("");
+
+  const byYear = {};
+  for (const r of DATA.reports) { const y = (r.date_observed ?? "").slice(0, 4); if (y) byYear[y] = (byYear[y] ?? 0) + 1; }
+  const years = Object.keys(byYear).sort();
+  const lo = years[0], hi = years[years.length - 1];
+  const max = Math.max(...Object.values(byYear));
+  const peak = years.find((y) => byYear[y] === max);
+  let bars = "";
+  for (let y = +lo; y <= +hi; y++) {
+    const n = byYear[y] ?? 0;
+    bars += `<div title="${y} · ${n} report${n === 1 ? "" : "s"}" style="width: 9px; height: ${(n / max) * 100}%; background: ${String(y) === peak ? "#e6b153" : "#504a3e"}; border-radius: 2px 2px 0 0; min-height: 2px;"></div>`;
+  }
+  $("#yearBars").innerHTML = bars;
+  $("#yearCaption").textContent = `REPORTS / YEAR · ${lo} — ${hi} · SEED BATCH v0.1`;
+}
+
+function renderArchive() {
+  const grades = ["", "official", "firsthand", "reported", "interpretive", "symbolic", "speculative"];
+  $("#gradeChips").innerHTML = grades.map((g) => {
+    const c = g ? GC[g] : "#ece6d8";
+    const act = state.grade === g;
+    return `<button data-grade="${g}" title="${g ? GTIP[g] : "Show all evidence grades"}" style="${CHIP}${act ? `color: #12110e; background: ${c}; border-color: ${c}; font-weight: 600;` : `color: ${c}; border-color: ${c}44;`}">${g ? g.toUpperCase() : "ALL"}</button>`;
+  }).join("");
+
+  const filtered = DATA.reports.filter(matches).sort((a, b) => (b.date_observed ?? "").localeCompare(a.date_observed ?? ""));
+  $("#resultCount").textContent = `${filtered.length} / ${DATA.reports.length} REPORTS`;
+  const hasFilters = !!(state.q.trim() || state.grade || state.motif);
+  $("#clearWrap").innerHTML = hasFilters ? `<button id="clearBtn" class="btn-clear">✕ CLEAR FILTERS</button>` : "";
+  const mh = $("#motifHintArchive");
+  mh.style.display = state.motif ? "inline" : "none";
+  if (state.motif) mh.textContent = `✦ motif: ${state.motif}`;
+
+  $("#reportsGrid").innerHTML = filtered.map((r) => `
+    <article class="report-card" data-open="${r.id}">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+        <span class="mono" style="font-size: 10px; letter-spacing: 0.1em; color: #6f6858;">${esc(r.date_observed ?? "—")}</span>
+        <span class="mono" style="font-size: 9px; letter-spacing: 0.1em; color: #a89f8d; border: 1px solid #2c2820; border-radius: 999px; padding: 3px 8px;">${esc(r.phenomenon_type)}</span>
+      </div>
+      <h3 class="serif" style="font-size: 21px; line-height: 1.15; margin: 0; color: #ece6d8;">${esc(r.title)}</h3>
+      <p style="font-size: 13.5px; line-height: 1.55; color: #a89f8d; margin: 0; flex: 1;">${esc(r.summary)}</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 5px;">${r.motifs.map((m) => motifChipHTML(m, "sm")).join("")}</div>
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #2c2820; padding-top: 11px; gap: 8px;">
+        <span class="mono" style="font-size: 9.5px; letter-spacing: 0.06em; color: #6f6858;">${esc(r.source.source_type)}</span>
+        <span class="mono" style="font-size: 9.5px; letter-spacing: 0.08em; font-weight: 600; color: ${GC[r.evidence_grade]}; border: 1px solid ${GC[r.evidence_grade]}55; border-radius: 999px; padding: 3px 9px;">${r.evidence_grade.toUpperCase()}</span>
+      </div>
+    </article>`).join("");
+  $("#emptyState").style.display = filtered.length ? "none" : "block";
+}
+
+function renderTimeline() {
+  const box = $("#tlBox");
+  let html = "";
+  for (let y = 2008; y <= 2030; y += 2) {
+    const left = ((Date.UTC(y, 0, 1) - T0) / (T1 - T0)) * 88 + 3;
+    html += `<div style="position: absolute; top: 0; bottom: 0; left: ${left}%; width: 1px; background: #1e1c16;"></div>
+      <span class="mono" style="position: absolute; bottom: 8px; left: ${left}%; transform: translateX(-50%); font-size: 9px; color: #504a3e;">'${String(y).slice(2)}</span>`;
+  }
+  html += `<div style="position: absolute; left: 3%; right: 3%; top: 50%; height: 1px; background: #3a3428;"></div>`;
+  const spanL = pctOf("2026-06-29"), spanR = pctOf("2030-06-01");
+  html += `<div style="position: absolute; top: 62%; height: 22px; left: ${spanL}%; width: ${spanR - spanL}%; background: linear-gradient(90deg, #a58fe833, #5fd0e433); border: 1px dashed #a58fe855; border-radius: 6px;"></div>
+    <span class="mono" style="position: absolute; top: 63%; left: ${spanL + 1}%; transform: translateY(2px); font-size: 8.5px; letter-spacing: 0.08em; color: #a58fe8; white-space: nowrap;">SILENCE WINDOW</span>`;
+  const nowLeft = ((Date.now() - T0) / (T1 - T0)) * 88 + 3;
+  html += `<div style="position: absolute; top: 12%; bottom: 26%; left: ${nowLeft}%; width: 1px; background: linear-gradient(180deg, transparent, #e6b153, transparent);"></div>
+    <span class="mono" style="position: absolute; top: 4%; left: ${nowLeft}%; transform: translateX(-50%); font-size: 8.5px; letter-spacing: 0.12em; color: #e6b153; white-space: nowrap;">YOU ARE HERE</span>`;
+  for (const e of DATA.events) {
+    const left = pctOf(e.date);
+    const official = e.layer === "official-science";
+    const size = e.id === "ls3" ? 15 : 11;
+    const bg = official ? "#5fd0e4" : e.layer === "community-wave" ? "#e6b153" : "transparent";
+    const border = e.layer === "symbolic-anchor" ? "1.5px dashed #a58fe8" : (state.ev === e.id ? "2px solid #ece6d8" : "2px solid #12110e");
+    const top = official ? 50 : e.layer === "community-wave" ? 68 : 82;
+    html += `<button class="ev-dot" data-ev="${e.id}" title="${esc(e.title)}" style="top: ${top}%; left: ${left}%; width: ${size}px; height: ${size}px; background: ${bg}; border: ${border};"></button>`;
+    if (official && e.short) html += `<span class="mono" style="position: absolute; top: 33%; left: ${left}%; transform: translateX(-50%); font-size: 8.5px; letter-spacing: 0.06em; color: #5fd0e4; white-space: nowrap; opacity: 0.85;">${esc(e.short)}</span>`;
+  }
+  box.innerHTML = html;
+
+  const se = DATA.events.find((e) => e.id === state.ev) ?? DATA.events[3];
+  const [layerLabel, lc] = LAYER_META[se.layer];
+  const srcLine = se.layer === "official-science" && se.source_url
+    ? `<a class="mono" href="${esc(se.source_url)}" target="_blank" rel="noopener" style="font-size: 10px; color: #5fd0e4; text-decoration: none;">official source — ${esc(new URL(se.source_url).hostname)} ↗</a>`
+    : `<span class="mono" style="font-size: 10px; color: #6f6858;">${esc(se.attribution ?? "")}</span>`;
+  $("#tlDetail").innerHTML = `
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <span class="mono" style="font-size: 10px; letter-spacing: 0.1em; font-weight: 600; color: ${lc}; border: 1px solid ${lc}55; border-radius: 999px; padding: 3px 10px;">${layerLabel}</span>
+      <span class="mono" style="font-size: 10.5px; color: #6f6858;">${esc(se.date_label ?? se.date)}</span>
+      ${se.flag ? `<span class="mono" style="font-size: 9.5px; letter-spacing: 0.06em; color: #e0795f; border: 1px dashed #e0795f55; border-radius: 999px; padding: 3px 10px;">⚑ NEEDS OFFICIAL SOURCE</span>` : ""}
+    </div>
+    <div class="serif" style="font-size: 24px; color: #ece6d8;">${esc(se.title)}</div>
+    <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #a89f8d; max-width: 720px;">${esc(se.summary)}</p>
+    ${srcLine}`;
+}
+
+function renderMotifs() {
+  const maxF = Math.max(...DATA.motifs.map((m) => m.freq));
+  const coFor = (id) => {
+    const partners = DATA.edges.filter((e) => e[0] === id || e[1] === id).sort((a, b) => b[2] - a[2]).slice(0, 2).map((e) => (e[0] === id ? e[1] : e[0]));
+    return partners.join(" · ") || "—";
+  };
+  $("#motifsGrid").innerHTML = DATA.motifs.slice().sort((a, b) => b.freq - a.freq).map((m) => {
+    const c = DATA.fam[m.family];
+    const active = state.motif === m.id;
+    return `<button class="motif-card" data-motif="${m.id}" style="--ch: ${c}88; ${active ? `border-color: ${c};` : ""}">
+      <span style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+        <span class="mono" style="font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: ${c};">✦ ${m.id}</span>
+        <span class="mono" style="font-size: 9px; color: #6f6858;">×${m.freq}</span>
+      </span>
+      <span style="display: block; height: 3px; border-radius: 2px; background: #2c2820; overflow: hidden;"><span style="display: block; height: 100%; width: ${(m.freq / maxF) * 100}%; background: ${c}; opacity: 0.7;"></span></span>
+      <span style="display: block; font-size: 12.5px; line-height: 1.5; color: #a89f8d; text-align: left;">${esc(m.short_definition)}</span>
+      <span class="mono" style="display: block; font-size: 9px; letter-spacing: 0.04em; color: #6f6858; text-align: left;">WITH: ${coFor(m.id)}</span>
+    </button>`;
+  }).join("");
+}
+
+function renderMandela() {
+  $("#mandelaGrid").innerHTML = DATA.mandela.map((mc) => `
+    <div class="mandela-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+        <span class="mono" style="font-size: 9.5px; letter-spacing: 0.12em; color: #a89f8d; border: 1px solid #2c2820; border-radius: 999px; padding: 3px 9px;">${esc(mc.category.toUpperCase())}</span>
+        <span class="mono" style="font-size: 9.5px; letter-spacing: 0.1em; color: #e6b153; border: 1px solid #e6b15344; border-radius: 999px; padding: 3px 9px;">${esc(mc.status.toUpperCase())}</span>
+      </div>
+      <div class="serif" style="font-size: 22px; color: #ece6d8; line-height: 1.1;">${esc(mc.title)}</div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="border: 1px solid #dd8fc033; background: #dd8fc00d; border-radius: 10px; padding: 10px 14px;">
+          <div class="mono" style="font-size: 8.5px; letter-spacing: 0.16em; color: #dd8fc0; margin-bottom: 4px;">REMEMBERED</div>
+          <div class="glitchable" style="font-size: 14px; color: #ece6d8; text-shadow: 0.6px 0 rgba(221,143,192,0.5), -0.6px 0 rgba(95,208,228,0.5);">${esc(mc.remembered_variant)}</div>
+        </div>
+        <div style="border: 1px solid #5fd0e433; background: #5fd0e40d; border-radius: 10px; padding: 10px 14px;">
+          <div class="mono" style="font-size: 8.5px; letter-spacing: 0.16em; color: #5fd0e4; margin-bottom: 4px;">ON RECORD</div>
+          <div style="font-size: 14px; color: #ece6d8;">${esc(mc.current_variant)}</div>
+        </div>
+      </div>
+      <div style="border-top: 1px solid #2c2820; padding-top: 11px;">
+        <span class="mono" style="font-size: 8.5px; letter-spacing: 0.14em; color: #6f6858;">MAINSTREAM NOTE — </span>
+        <span style="font-size: 12.5px; color: #a89f8d; line-height: 1.5;">${esc(mc.mainstream_notes ?? mc.community_notes)}</span>
+      </div>
+    </div>`).join("");
+}
+
+function renderThreads() {
+  const lensKey = state.lens === "skeptic" ? "skeptical_frame" : state.lens + "_frame";
+  $("#threadsGrid").innerHTML = DATA.threads.map((t) => `
+    <div class="thread-card">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap;">
+        <div class="serif" style="font-size: 25px; color: #ece6d8;">${esc(t.title)}</div>
+        <span class="mono" style="font-size: 9px; letter-spacing: 0.08em; color: #6f6858;">${esc(t.anchor_label ?? "")}</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+        ${t.motifs.map((m) => motifChipHTML(m, "sm")).join("")}
+        ${t.flag ? `<span class="mono" style="font-size: 9px; color: #e0795f; border: 1px dashed #e0795f55; border-radius: 999px; padding: 3px 9px;">⚑ NEEDS SOURCE</span>` : ""}
+      </div>
+      <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #cfc8b8; border-left: 2px solid ${LENS_META[state.lens].color}; padding-left: 14px; min-height: 72px; text-wrap: pretty;">${esc(t[lensKey] ?? t.neutral_frame)}</p>
+      <div style="border-top: 1px solid #2c2820; padding-top: 11px;">
+        <span class="mono" style="font-size: 8.5px; letter-spacing: 0.14em; color: #e6b153;">RESEARCH PROMPT ▸ </span>
+        <span class="mono" style="font-size: 11px; color: #a89f8d; line-height: 1.5;">${esc(t.suggested_questions[0] ?? "")}</span>
+      </div>
+    </div>`).join("");
+}
+
+function renderAgents() {
+  $("#toolsList").innerHTML = TOOLS.map(([n, d]) => `
+    <div class="tool-row">
+      <code class="mono" style="font-size: 11.5px; font-weight: 600; color: #e6b153; white-space: nowrap;">${n}</code>
+      <span style="font-size: 12px; color: #a89f8d; line-height: 1.5;">${d}</span>
+    </div>`).join("");
+  $("#endpointChips").innerHTML = ["/reports.json", "/mandela-items.json", "/motifs.json", "/events.json", "/story-threads.json", "/llms.txt"]
+    .map((ep) => `<a class="mono" href="${ep}" style="font-size: 10.5px; color: #83cf9e; border: 1px solid #83cf9e33; border-radius: 7px; padding: 4px 9px; text-decoration: none;">${ep}</a>`).join("");
+  $("#rulesList").innerHTML = AGENT_RULES.map((rule) => `
+    <div style="display: flex; gap: 10px; align-items: baseline; padding: 4px 0;">
+      <span class="mono" style="color: #83cf9e; font-size: 11px;">▸</span>
+      <span style="font-size: 12.5px; color: #a89f8d; line-height: 1.55;">${esc(rule)}</span>
+    </div>`).join("");
+  $("#gradeLegend").innerHTML = Object.keys(GC).map((g) => `
+    <div style="display: flex; gap: 10px; align-items: baseline;">
+      <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 0.06em; color: ${GC[g]}; min-width: 96px;">● ${g.toUpperCase()}</span>
+      <span style="font-size: 12px; color: #a89f8d; line-height: 1.5;">${GTIP[g]}.</span>
+    </div>`).join("");
+}
+
+function renderTerm() {
+  $("#termBox").innerHTML = TERM_SCRIPT.slice(0, Math.min(state.termN, TERM_SCRIPT.length))
+    .map(([t, c]) => `<div class="mono" style="font-size: 11.5px; line-height: 1.6; color: ${c}; white-space: pre-wrap; word-break: break-word;">${esc(t)}</div>`).join("");
+}
+
+function renderDrawer() {
+  const root = $("#drawerRoot");
+  const r = DATA.reports.find((x) => x.id === state.sel);
+  if (!r) { root.innerHTML = ""; document.body.style.overflow = ""; return; }
+  document.body.style.overflow = "hidden";
+  const gc = GC[r.evidence_grade];
+  const related = (r.related_report_ids ?? []).map((id) => DATA.reports.find((x) => x.id === id)).filter(Boolean);
+  const say = (r.recommended_agent_language ?? [])[0] ?? "community members report…";
+  const not = ((r.recommended_agent_language ?? [])[1] ?? "avoid: it is known that…").replace(/^avoid:\s*/, "");
+  const frames = ["belief", "neutral", "skeptic"].map((L) => {
+    const active = L === state.lens;
+    return `<div style="display: flex; gap: 12px; padding: 12px 16px; align-items: baseline;${active ? `background: #211e18; border-left: 2px solid ${FRAME_TEXT[L].c};` : "border-left: 2px solid transparent;"}">
+      <span class="mono" style="font-size: 9px; letter-spacing: 0.14em; font-weight: 600; color: ${FRAME_TEXT[L].c}; min-width: 64px; display: inline-block;">${L.toUpperCase()}</span>
+      <span style="font-size: 12.5px; line-height: 1.6; color: ${active ? "#ece6d8" : "#6f6858"};">${esc(FRAME_TEXT[L].mk(r))}</span>
+    </div>`;
+  }).join("");
+  root.innerHTML = `
+    <div id="drawerOverlay" style="position: fixed; inset: 0; background: rgba(10,9,7,0.6); backdrop-filter: blur(3px); z-index: 90;"></div>
+    <aside style="position: fixed; top: 0; right: 0; bottom: 0; width: min(460px, 94vw); background: #1a1814; border-left: 1px solid #3a3428; z-index: 91; overflow-y: auto; padding: 26px 28px 40px; display: flex; flex-direction: column; gap: 16px; box-shadow: -30px 0 60px rgba(0,0,0,0.5); box-sizing: border-box;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span class="mono" style="font-size: 10px; letter-spacing: 0.14em; color: #6f6858;">${esc(r.id)} · FULL RECORD</span>
+        <button id="drawerClose" class="btn-esc">ESC ✕</button>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <span class="mono" style="font-size: 9.5px; letter-spacing: 0.08em; font-weight: 600; color: ${gc}; border: 1px solid ${gc}55; border-radius: 999px; padding: 4px 10px;">${r.evidence_grade.toUpperCase()}</span>
+        <span class="mono" style="font-size: 9.5px; letter-spacing: 0.08em; color: #a89f8d; border: 1px solid #2c2820; border-radius: 999px; padding: 4px 10px;">${esc(r.source.source_type)}</span>
+        <span class="mono" style="font-size: 9.5px; letter-spacing: 0.08em; color: #a89f8d; border: 1px solid #2c2820; border-radius: 999px; padding: 4px 10px;">${esc(r.phenomenon_type)}</span>
+      </div>
+      <h3 class="serif" style="font-size: 30px; line-height: 1.1; margin: 0; color: #ece6d8;">${esc(r.title)}</h3>
+      <span class="mono" style="font-size: 11px; color: #6f6858;">observed / posted · ${esc(r.date_observed ?? "—")}</span>
+      ${r.display_flag ? `<div class="mono" style="border: 1px dashed #e0795f66; background: #e0795f0d; border-radius: 10px; padding: 10px 14px; font-size: 10.5px; color: #e0795f; letter-spacing: 0.04em;">⚑ ${esc(r.display_flag)}</div>` : ""}
+      <p style="margin: 0; font-size: 14.5px; line-height: 1.7; color: #cfc8b8; text-wrap: pretty;">${esc(r.long_summary ?? r.summary)}</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">${r.motifs.map((m) => motifChipHTML(m)).join("")}</div>
+      <div style="border: 1px solid #2c2820; border-radius: 12px; overflow: hidden;">
+        <div class="mono" style="font-size: 9px; letter-spacing: 0.16em; color: #6f6858; padding: 10px 16px; border-bottom: 1px solid #2c2820;">THREE FRAMES — ACTIVE LENS HIGHLIGHTED</div>
+        ${frames}
+      </div>
+      <div style="border: 1px solid #2c2820; background: #12110e; border-radius: 12px; padding: 14px 16px;">
+        <div class="mono" style="font-size: 9px; letter-spacing: 0.16em; color: #83cf9e; margin-bottom: 8px;">RECOMMENDED PHRASING — FOR AGENTS &amp; WRITERS</div>
+        <div class="mono" style="font-size: 11px; line-height: 1.7; color: #a89f8d;">SAY <span style="color: #83cf9e;">"${esc(say)}"</span><br>NOT <span style="color: #e0795f;">"${esc(not)}"</span></div>
+      </div>
+      <div>
+        <div class="mono" style="font-size: 9px; letter-spacing: 0.16em; color: #6f6858; margin-bottom: 10px;">RELATED REPORTS — SHARED MOTIFS</div>
+        <div style="display: flex; flex-direction: column; gap: 7px;">
+          ${related.map((rr) => `<button class="rel-btn" data-open="${rr.id}">
+            <span class="serif" style="font-size: 15.5px; color: #ece6d8;">${esc(rr.title)}</span>
+            <span class="mono" style="font-size: 9px; color: ${GC[rr.evidence_grade]}; white-space: nowrap;">${rr.evidence_grade.toUpperCase()}</span>
+          </button>`).join("")}
+        </div>
+      </div>
+    </aside>`;
+}
+
+function renderAll() {
+  renderHeaderBits(); renderHero(); renderStats(); renderArchive(); renderTimeline(); renderMotifs(); renderMandela(); renderThreads(); renderDrawer();
+}
+
+// ------------------------------------------------------------- constellation
+const cvState = { hover: null, mx: -999, my: -999, pulses: [], lastSpawn: 0, stars: null };
+function drawCanvas(t) {
+  const cv = $("#cv"); if (!cv || !DATA) return;
+  const parent = cv.parentElement;
+  const W = parent.clientWidth, H = parent.clientHeight;
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  if (cv.width !== W * dpr || cv.height !== H * dpr) { cv.width = W * dpr; cv.height = H * dpr; }
+  const ctx = cv.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+
+  if (!cvState.stars) {
+    cvState.stars = [];
+    for (let i = 0; i < 110; i++) {
+      const a = Math.sin(i * 127.1) * 43758.5453, b = Math.sin(i * 311.7) * 12543.21;
+      cvState.stars.push({ x: a - Math.floor(a), y: b - Math.floor(b), r: 0.4 + ((i * 7) % 10) / 9, ph: i });
+    }
+  }
+  for (const s of cvState.stars) {
+    ctx.globalAlpha = 0.10 + 0.16 * (0.5 + 0.5 * Math.sin(t * 0.001 + s.ph));
+    ctx.fillStyle = "#ece6d8";
+    ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, 7); ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+
+  ctx.strokeStyle = "rgba(230,177,83,0.055)"; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.arc(W * 0.08, H * 1.3, H * 0.95, 0, 7); ctx.stroke();
+  ctx.strokeStyle = "rgba(95,208,228,0.045)"; ctx.lineWidth = 1;
+  ctx.setLineDash([3, 7]);
+  ctx.beginPath(); ctx.arc(W * 0.08, H * 1.3, H * 0.7, 0, 7); ctx.stroke();
+  ctx.setLineDash([]);
+
+  const MO = DATA.motifs, ED = DATA.edges;
+  const pos = {}, idx = {};
+  MO.forEach((m, i) => {
+    pos[m.id] = [m.x * W + Math.sin(t * 0.00022 + i * 1.7) * 6, m.y * H + Math.cos(t * 0.00019 + i * 2.3) * 5];
+    idx[m.id] = i;
+  });
+
+  const active = state.motif;
+  for (const [a, b, w] of ED) {
+    const pa = pos[a], pb = pos[b];
+    const hot = active && (a === active || b === active);
+    const hov = cvState.hover && (a === cvState.hover || b === cvState.hover);
+    ctx.strokeStyle = hot ? "rgba(95,208,228,0.5)" : hov ? "rgba(230,177,83,0.4)" : "rgba(236,230,216," + (0.05 + w * 0.018) + ")";
+    ctx.lineWidth = hot || hov ? 1.2 : 1;
+    ctx.beginPath(); ctx.moveTo(pa[0], pa[1]); ctx.lineTo(pb[0], pb[1]); ctx.stroke();
+  }
+
+  if (t - cvState.lastSpawn > 1500 && cvState.pulses.length < 7) {
+    cvState.lastSpawn = t;
+    cvState.pulses.push({ e: Math.floor(Math.random() * ED.length), t: 0, sp: 0.005 + Math.random() * 0.005 });
+  }
+  cvState.pulses = cvState.pulses.filter((p) => p.t <= 1);
+  for (const p of cvState.pulses) {
+    p.t += p.sp;
+    const [a, b] = ED[p.e]; const pa = pos[a], pb = pos[b];
+    const x = pa[0] + (pb[0] - pa[0]) * p.t, y = pa[1] + (pb[1] - pa[1]) * p.t;
+    const col = DATA.fam[MO[idx[b]].family];
+    ctx.shadowBlur = 10; ctx.shadowColor = col; ctx.fillStyle = col;
+    ctx.beginPath(); ctx.arc(x, y, 2.2, 0, 7); ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  let hover = null;
+  MO.forEach((m) => {
+    const [x, y] = pos[m.id];
+    const r = 3 + m.freq * 0.85;
+    const isActive = m.id === active;
+    if (Math.hypot(cvState.mx - x, cvState.my - y) < r + 12) hover = m.id;
+    const isHover = cvState.hover === m.id;
+    const col = DATA.fam[m.family];
+    const breathe = m.id === "heart-collider" ? 1 + 0.12 * Math.sin(t * 0.0016) : 1;
+    if (isActive || isHover) { ctx.shadowBlur = 16; ctx.shadowColor = col; }
+    ctx.fillStyle = col;
+    ctx.globalAlpha = isActive ? 1 : isHover ? 0.95 : 0.8;
+    ctx.beginPath(); ctx.arc(x, y, r * breathe * (isHover ? 1.25 : 1), 0, 7); ctx.fill();
+    ctx.shadowBlur = 0;
+    if (m.id === "rainbow-bridge") {
+      const hue = (t * 0.05) % 360;
+      ctx.strokeStyle = "hsla(" + hue + ",70%,70%,0.8)"; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.arc(x, y, r + 4, 0, 7); ctx.stroke();
+    }
+    if (isActive) {
+      ctx.strokeStyle = col; ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
+      ctx.beginPath(); ctx.arc(x, y, r + 7 + Math.sin(t * 0.004) * 1.5, 0, 7); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    ctx.globalAlpha = isHover || isActive ? 1 : 0.5;
+    ctx.fillStyle = isHover || isActive ? col : "#a89f8d";
+    ctx.font = (isHover ? "600 " : "") + '9px "IBM Plex Mono", monospace';
+    ctx.textAlign = "center";
+    ctx.fillText(m.id, x, y + r + 14);
+    if (isHover) { ctx.globalAlpha = 0.75; ctx.fillText("×" + m.freq + " · click to filter", x, y + r + 26); }
+    ctx.globalAlpha = 1;
+  });
+  cvState.hover = hover;
+  cv.style.cursor = hover ? "pointer" : "default";
+}
+
+// ----------------------------------------------------------------- actions
+function setMotif(id) { state.motif = state.motif === id ? "" : id; renderHero(); renderArchive(); renderMotifs(); }
+function flash() {
+  $("#flashRoot").innerHTML = `<div style="position: fixed; inset: 0; z-index: 200; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(221,143,192,0.12) 0 2px, rgba(95,208,228,0.12) 2px 4px, transparent 4px 7px); animation: tpFlash 0.6s ease-out forwards; mix-blend-mode: screen;"></div>`;
+  setTimeout(() => { $("#flashRoot").innerHTML = ""; }, 700);
+}
+function toggleMandela() { state.mandela = !state.mandela; flash(); renderHeaderBits(); renderStats(); }
+function copy(text, btn, doneLabel) {
+  try { navigator.clipboard.writeText(text); } catch {}
+  const prev = btn.textContent;
+  btn.textContent = doneLabel;
+  setTimeout(() => { btn.textContent = prev; }, 1600);
+}
+
+document.addEventListener("click", (e) => {
+  const chip = e.target.closest("[data-motif]");
+  if (chip) { e.stopPropagation(); setMotif(chip.dataset.motif); return; }
+  const lens = e.target.closest("[data-lens]");
+  if (lens) { state.lens = lens.dataset.lens; renderHeaderBits(); renderThreads(); renderDrawer(); return; }
+  const grade = e.target.closest("[data-grade]");
+  if (grade) { state.grade = grade.dataset.grade; renderArchive(); return; }
+  const ev = e.target.closest("[data-ev]");
+  if (ev) { state.ev = ev.dataset.ev; renderTimeline(); return; }
+  const open = e.target.closest("[data-open]");
+  if (open) { state.sel = open.dataset.open; renderDrawer(); return; }
+  if (e.target.id === "clearBtn") { state.q = ""; $("#q").value = ""; state.grade = ""; state.motif = ""; renderHero(); renderArchive(); renderMotifs(); return; }
+  if (e.target.id === "drawerClose" || e.target.id === "drawerOverlay") { state.sel = null; renderDrawer(); return; }
+});
+
+document.addEventListener("keydown", (e) => {
+  const tag = e.target?.tagName ?? "";
+  if (tag === "INPUT" || tag === "TEXTAREA") return;
+  if (e.key === "m" || e.key === "M") toggleMandela();
+  if (e.key === "Escape" && state.sel) { state.sel = null; renderDrawer(); }
+});
+
+// -------------------------------------------------------------------- boot
+try {
+  await loadData();
+} catch (err) {
+  $("#resultCount").textContent = "COULDN'T LOAD THE CORPUS JSON";
+  $("#reportsGrid").innerHTML = `<div class="mono" style="font-size: 12px; color: #e0795f; line-height: 1.7;">fetch failed (${esc(err.message)}).<br>Serve this folder over HTTP — e.g. <code>npx serve site</code> — or visit <a href="https://timeline-pulse.vercel.app" style="color:#5fd0e4">timeline-pulse.vercel.app</a>.</div>`;
+  throw err;
+}
+
+renderAll();
+renderAgents();
+renderTerm();
+
+// stats count-up
+const st = performance.now();
+(function cu() {
+  const p = Math.min(1, (performance.now() - st) / 1400);
+  state.statT = 1 - Math.pow(1 - p, 3);
+  renderStats();
+  if (p < 1) setTimeout(cu, 40);
+})();
+
+// terminal loop
+setInterval(() => {
+  state.termN = state.termN >= TERM_SCRIPT.length + 10 ? 2 : state.termN + 1;
+  if (state.termN <= TERM_SCRIPT.length) renderTerm();
+}, 420);
+
+// canvas loop + events
+requestAnimationFrame(function loop(t) { drawCanvas(t); requestAnimationFrame(loop); });
+const cv = $("#cv");
+cv.addEventListener("mousemove", (e) => { const r = cv.getBoundingClientRect(); cvState.mx = e.clientX - r.left; cvState.my = e.clientY - r.top; });
+cv.addEventListener("mouseleave", () => { cvState.mx = -999; cvState.my = -999; });
+cv.addEventListener("click", () => { if (cvState.hover) setMotif(cvState.hover); });
+
+// search
+$("#q").addEventListener("input", (e) => { state.q = e.target.value; renderArchive(); });
+
+// header buttons
+$("#glyphBtn").addEventListener("click", (e) => {
+  e.preventDefault();
+  for (let i = 0; i < DATA.edges.length; i++) cvState.pulses.push({ e: i, t: 0, sp: 0.008 + Math.random() * 0.006 });
+});
+$("#mandelaBtn").addEventListener("click", toggleMandela);
+$("#installBtnTop").addEventListener("click", (e) => copy("npx -y timeline-pulse", e.target, "COPIED ✓"));
+$("#installBtnMini").addEventListener("click", (e) => copy("npx -y timeline-pulse", e.target, "✓"));
+$("#copyCfgBtn").addEventListener("click", (e) => copy('{\n  "mcpServers": {\n    "timeline-pulse": {\n      "command": "npx",\n      "args": ["-y", "timeline-pulse"]\n    }\n  }\n}', e.target, "COPIED ✓"));
+</script>
+</body>
+</html>

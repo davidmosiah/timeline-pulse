@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "name": "timeline-pulse mandela catalog",
+    "version": "0.1.0",
+    "note": "Memory-variant catalog. `community_notes` records why communities link the item to timeline lore; `mainstream_notes` records the memory-science explanation. Neither field endorses the other. `source_links` is intentionally sparse in seed v0.1 — sourcing each item is an open contributor task.",
+    "counts": { "items": 6 }
+  },
+  "items": [
+    {
+      "id": "berenstain-bears",
+      "title": "Berenstain Bears",
+      "category": "pop-culture",
+      "remembered_variant": "\"The Berenstein Bears\" — with an E",
+      "current_variant": "\"The Berenstain Bears\" — with an A, in every printing",
+      "community_notes": "Filed by communities as the flagship residue case: the -ein spelling is remembered vividly and collectively, so it is read as bleed-through from a nearby branch.",
+      "mainstream_notes": "-ein is a far more common surname ending; memory reconstructs toward the familiar.",
+      "motifs": ["childhood-anchor", "mandela-residue", "collective-memory"],
+      "source_links": [],
+      "related_report_ids": ["tp-003"],
+      "status": "classic"
+    },
+    {
+      "id": "fruit-of-the-loom-cornucopia",
+      "title": "Fruit of the Loom cornucopia",
+      "category": "brand",
+      "remembered_variant": "A cornucopia behind the fruit",
+      "current_variant": "Fruit only — no cornucopia in any registered logo",
+      "community_notes": "The remembered horn of plenty is treated as residue; collectors hunt vintage physical artifacts for it.",
+      "mainstream_notes": "Cornucopias co-occur with fruit imagery everywhere else; schema fills the gap.",
+      "motifs": ["mandela-residue", "collective-memory"],
+      "source_links": [],
+      "related_report_ids": ["tp-004"],
+      "status": "classic"
+    },
+    {
+      "id": "monopoly-monocle",
+      "title": "The Monopoly Man",
+      "category": "brand",
+      "remembered_variant": "Rich Uncle Pennybags wears a monocle",
+      "current_variant": "No monocle — top hat and cane only",
+      "community_notes": "Confident collective memory of a detail that never existed is read as a branch artifact.",
+      "mainstream_notes": "Blends with Mr. Peanut, a similar mascot who does wear one.",
+      "motifs": ["mandela-residue", "collective-memory"],
+      "source_links": [],
+      "related_report_ids": ["tp-011"],
+      "status": "classic"
+    },
+    {
+      "id": "pikachu-tail",
+      "title": "Pikachu",
+      "category": "pop-culture",
+      "remembered_variant": "A black tip at the end of the tail",
+      "current_variant": "Solid yellow tail, brown only at the base",
+      "community_notes": "Childhood drawings with the black tip circulate as claimed residue.",
+      "mainstream_notes": "The ears are black-tipped; the pattern migrates in memory.",
+      "motifs": ["childhood-anchor", "mandela-residue"],
+      "source_links": [],
+      "related_report_ids": ["tp-012"],
+      "status": "classic"
+    },
+    {
+      "id": "vader-line",
+      "title": "The Vader line",
+      "category": "film",
+      "remembered_variant": "\"Luke, I am your father\"",
+      "current_variant": "\"No, I am your father\"",
+      "community_notes": "The universally quoted variant differs from the film; disputed \"proof\" tapes circulate as residue lore.",
+      "mainstream_notes": "The name makes the quote quotable out of context; the paraphrase became canon.",
+      "motifs": ["mandela-residue", "childhood-anchor"],
+      "source_links": [],
+      "related_report_ids": ["tp-018"],
+      "status": "classic"
+    },
+    {
+      "id": "we-are-the-champions",
+      "title": "We Are the Champions",
+      "category": "music",
+      "remembered_variant": "Ends on a final \"…of the world\"",
+      "current_variant": "The studio version ends without it",
+      "community_notes": "Crowds keep singing an ending the studio track never resolves; the persistence is read as audio residue.",
+      "mainstream_notes": "Live versions and the mid-song chorus train the expectation.",
+      "motifs": ["collective-memory", "mandela-residue"],
+      "source_links": [],
+      "related_report_ids": ["tp-017"],
+      "status": "classic"
+    }
+  ]
+}

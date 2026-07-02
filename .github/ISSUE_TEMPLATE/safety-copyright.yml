@@ -1,0 +1,32 @@
+name: "⚑ Safety / copyright / policy concern"
+description: Report content that violates the source policy — overclaimed facts, personal data, copyrighted text, harassment, or the omitted-teacher rule.
+title: "[policy] "
+labels: ["policy", "priority"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Type of concern
+      options:
+        - Something is stated as fact that shouldn't be
+        - Personal data / privacy problem
+        - Copyright — excerpt too long or unlicensed material
+        - Harassment or targeting of a person/institution
+        - Omitted-teacher rule violation
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where?
+      placeholder: "URL, file path, or report id"
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: If this involves personal data, don't repeat the data here — describe where it is.
+    validations:
+      required: true

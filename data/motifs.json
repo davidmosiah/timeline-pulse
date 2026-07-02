@@ -1,0 +1,198 @@
+{
+  "meta": {
+    "name": "timeline-pulse motifs",
+    "version": "0.1.0",
+    "note": "Recurring symbols in the corpus. `x`,`y` are constellation layout hints (0–1), `freq` is corpus frequency, `edges` are co-occurrence links [a, b, weight]. Motifs describe symbols, never physics.",
+    "families": {
+      "machine": "#5fd0e4",
+      "memory": "#e6b153",
+      "light": "#f0ead8",
+      "time": "#a58fe8",
+      "body": "#dd8fc0",
+      "simulation": "#83cf9e"
+    }
+  },
+  "motifs": [
+    {
+      "id": "machine-silence",
+      "label": "Machine silence",
+      "short_definition": "A shutdown or pause read as a window rather than an absence.",
+      "family": "machine",
+      "aliases": ["quiet machine", "silence window", "the pause"],
+      "recommended_visuals": ["dimmed accelerator ring", "flatlined waveform"],
+      "x": 0.42, "y": 0.38, "freq": 7
+    },
+    {
+      "id": "calibration",
+      "label": "Calibration",
+      "short_definition": "Tuning the inner field — practice language, not physics.",
+      "family": "machine",
+      "aliases": ["inner tuning", "attunement"],
+      "recommended_visuals": ["tuning dial", "concentric rings settling"],
+      "x": 0.35, "y": 0.55, "freq": 6
+    },
+    {
+      "id": "threshold",
+      "label": "Threshold",
+      "short_definition": "A milestone treated as a door between states.",
+      "family": "machine",
+      "aliases": ["door", "gate", "liminal point"],
+      "recommended_visuals": ["doorframe of light"],
+      "x": 0.52, "y": 0.22, "freq": 5
+    },
+    {
+      "id": "machine-mirror",
+      "label": "Machine mirror",
+      "short_definition": "The external machine as mirror of an inner process.",
+      "family": "machine",
+      "aliases": ["outer instrument"],
+      "recommended_visuals": ["reflection of a person in polished steel"],
+      "x": 0.30, "y": 0.30, "freq": 3
+    },
+    {
+      "id": "heart-collider",
+      "label": "Heart collider",
+      "short_definition": "Consciousness as the nonviolent inner collider.",
+      "family": "body",
+      "aliases": ["inner collider", "inner accelerator"],
+      "recommended_visuals": ["heart at the center of a ring"],
+      "x": 0.52, "y": 0.55, "freq": 5
+    },
+    {
+      "id": "rainbow-bridge",
+      "label": "Rainbow bridge",
+      "short_definition": "The restored connection between matter, spirit, color, and dimension.",
+      "family": "light",
+      "aliases": ["bridge of light", "spectrum bridge"],
+      "recommended_visuals": ["arc of seven colors, one dimmed"],
+      "x": 0.63, "y": 0.16, "freq": 4
+    },
+    {
+      "id": "spectrum",
+      "label": "Spectrum",
+      "short_definition": "Wholeness of light; what is present and what is missing.",
+      "family": "light",
+      "aliases": ["full spectrum", "missing color"],
+      "recommended_visuals": ["prism dispersion"],
+      "x": 0.52, "y": 0.08, "freq": 2
+    },
+    {
+      "id": "lost-ion",
+      "label": "Lost ion",
+      "short_definition": "A missing particle of light blamed, symbolically, for fragmentation.",
+      "family": "light",
+      "aliases": ["lost particle", "missing angle of light"],
+      "recommended_visuals": ["single mote leaving a beam"],
+      "caution": "Symbolic image only — not a physics claim.",
+      "x": 0.72, "y": 0.24, "freq": 2
+    },
+    {
+      "id": "mandela-residue",
+      "label": "Mandela residue",
+      "short_definition": "Artifacts and memories kept as traces of another branch.",
+      "family": "memory",
+      "aliases": ["residue", "branch trace"],
+      "recommended_visuals": ["faded logo held next to its current version"],
+      "x": 0.78, "y": 0.45, "freq": 8
+    },
+    {
+      "id": "collective-memory",
+      "label": "Collective memory",
+      "short_definition": "The same \"wrong\" detail remembered by thousands.",
+      "family": "memory",
+      "aliases": ["shared misremembering", "collective recall"],
+      "recommended_visuals": ["crowd of identical thought bubbles"],
+      "x": 0.88, "y": 0.33, "freq": 5
+    },
+    {
+      "id": "childhood-anchor",
+      "label": "Childhood anchor",
+      "short_definition": "A memory rooted in early life, resistant to correction.",
+      "family": "memory",
+      "aliases": ["early anchor"],
+      "recommended_visuals": ["child's drawing pinned to a corkboard"],
+      "x": 0.85, "y": 0.60, "freq": 4
+    },
+    {
+      "id": "timeline-bleed",
+      "label": "Timeline bleed",
+      "short_definition": "Overlap between remembered and current versions of reality.",
+      "family": "time",
+      "aliases": ["bleed-through", "branch overlap"],
+      "recommended_visuals": ["two translucent photographs misaligned"],
+      "x": 0.66, "y": 0.62, "freq": 5
+    },
+    {
+      "id": "serpent-time",
+      "label": "Serpent time",
+      "short_definition": "Time as serpent — loop, wound, and chaos force.",
+      "family": "time",
+      "aliases": ["ouroboros", "time serpent"],
+      "recommended_visuals": ["serpent circling a clock face"],
+      "x": 0.50, "y": 0.76, "freq": 3
+    },
+    {
+      "id": "apophis-window",
+      "label": "Apophis window",
+      "short_definition": "The 2029 close approach as serpent/chaos anchor. Needs sourcing.",
+      "family": "time",
+      "aliases": ["2029 window"],
+      "recommended_visuals": ["small body crossing a calendar page"],
+      "caution": "Astronomical details must come from official sources before expansion.",
+      "x": 0.36, "y": 0.85, "freq": 2
+    },
+    {
+      "id": "poison-remedy",
+      "label": "Poison → remedy",
+      "short_definition": "A harmful force transmuted into medicine.",
+      "family": "time",
+      "aliases": ["pharmakon", "transmutation"],
+      "recommended_visuals": ["dark vial pouring into a bright one"],
+      "x": 0.60, "y": 0.88, "freq": 3
+    },
+    {
+      "id": "simulation-glitch",
+      "label": "Simulation glitch",
+      "short_definition": "Reality experienced as rendered, patched, or overwritten.",
+      "family": "simulation",
+      "aliases": ["glitch", "patch", "render error"],
+      "recommended_visuals": ["scanline artifact over a street scene"],
+      "x": 0.76, "y": 0.76, "freq": 4
+    },
+    {
+      "id": "silicon-mirror",
+      "label": "Silicon mirror",
+      "short_definition": "Mineral and computation as a consciousness mirror.",
+      "family": "simulation",
+      "aliases": ["thinking stone"],
+      "recommended_visuals": ["chip die reflecting a face"],
+      "x": 0.90, "y": 0.84, "freq": 2
+    }
+  ],
+  "edges": [
+    ["machine-silence", "calibration", 5],
+    ["machine-silence", "heart-collider", 3],
+    ["machine-silence", "threshold", 3],
+    ["machine-silence", "machine-mirror", 2],
+    ["rainbow-bridge", "lost-ion", 3],
+    ["rainbow-bridge", "spectrum", 2],
+    ["rainbow-bridge", "threshold", 1],
+    ["lost-ion", "poison-remedy", 1],
+    ["spectrum", "lost-ion", 1],
+    ["serpent-time", "timeline-bleed", 2],
+    ["serpent-time", "apophis-window", 2],
+    ["serpent-time", "poison-remedy", 2],
+    ["apophis-window", "poison-remedy", 1],
+    ["mandela-residue", "collective-memory", 4],
+    ["mandela-residue", "childhood-anchor", 3],
+    ["mandela-residue", "timeline-bleed", 2],
+    ["collective-memory", "childhood-anchor", 2],
+    ["simulation-glitch", "timeline-bleed", 3],
+    ["simulation-glitch", "silicon-mirror", 2],
+    ["simulation-glitch", "threshold", 2],
+    ["heart-collider", "calibration", 3],
+    ["heart-collider", "machine-mirror", 2],
+    ["heart-collider", "timeline-bleed", 1],
+    ["silicon-mirror", "machine-mirror", 1]
+  ]
+}

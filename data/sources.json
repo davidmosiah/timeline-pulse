@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "name": "timeline-pulse source families",
+    "version": "0.1.0",
+    "note": "Registry of the source families reports may reference via source.source_id. Individual source URLs live on reports and events, not here."
+  },
+  "source_families": [
+    {
+      "id": "cern-official",
+      "label": "CERN official pages",
+      "kind": "official-source",
+      "policy": "Primary source for every official-science event. Always linked, never paraphrased into metaphysics.",
+      "home_url": "https://home.cern"
+    },
+    {
+      "id": "alchemical-source-family",
+      "label": "Alchemical source family",
+      "kind": "symbolic-teaching-summary",
+      "policy": "A family of symbolic/alchemical teachings summarized in project-original wording. By project policy its teacher is not publicly named anywhere in this repository; claims from it are always graded symbolic and flagged do-not-state-as-fact. See docs/SOURCE_POLICY.md, 'Omitted-teacher rule'.",
+      "author_policy": "omitted"
+    },
+    {
+      "id": "community-forums",
+      "label": "Community forums & threads",
+      "kind": "forum-thread",
+      "policy": "Long-form community discussion (forums, subreddits, comment archives). Stored as summaries plus metadata; short excerpts only when clearly allowed."
+    },
+    {
+      "id": "social-platforms",
+      "label": "Social platforms",
+      "kind": "social-post",
+      "policy": "Public posts (X, YouTube, TikTok, blogs). URL + summary preferred over copied text; deleted or private content is not archived."
+    },
+    {
+      "id": "project-notes",
+      "label": "Project notes",
+      "kind": "project-note",
+      "policy": "Curator-authored syntheses and digests. Transparent about being maintainer-written; speculative connections are flagged."
+    }
+  ]
+}

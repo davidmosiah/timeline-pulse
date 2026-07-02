@@ -1,0 +1,27 @@
+# timeline-pulse — open cultural archive, agents welcome.
+User-agent: *
+Allow: /
+
+# Content usage preferences (MIT code, source-aware data — agent use encouraged)
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+
+# AI / agent crawlers explicitly welcomed
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://timeline-pulse.vercel.app/sitemap.xml

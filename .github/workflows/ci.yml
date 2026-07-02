@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Policy guard (omitted-teacher + claim language)
+        run: node scripts/check-policy.mjs
+      - name: Build (typecheck)
+        run: npm run build
+      - name: Validate corpus + metadata
+        run: node scripts/validate-data.mjs
+      - name: Site data in sync with corpus
+        run: node scripts/sync-site-data.mjs --check
+      - name: MCP smoke test (all 10 tools over stdio)
+        run: node tests/smoke.test.mjs

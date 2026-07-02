@@ -1,0 +1,46 @@
+{
+  "name": "timeline-pulse",
+  "description": "MCP server + public atlas of timeline-shift folklore, Mandela Effect reports, and collider-era myth — every claim labeled, every source graded. A cultural archive, not a proof engine.",
+  "version": "0.1.0",
+  "homepage": "https://timeline-pulse.vercel.app",
+  "repository": "https://github.com/davidmosiah/timeline-pulse",
+  "license": "MIT",
+  "data_license": "Original summaries and metadata; official facts link to their institutional sources. See docs/SOURCE_POLICY.md.",
+  "install": {
+    "npm": "timeline-pulse",
+    "command": "npx -y timeline-pulse",
+    "transport": "stdio"
+  },
+  "tools": [
+    { "name": "timeline_search_reports", "description": "Search reports by text, motif, phenomenon, source type, date, stance, or evidence grade." },
+    { "name": "timeline_get_report", "description": "One full report: claims, anchors, motifs, related reports, safety labels, phrasing guide." },
+    { "name": "timeline_mandela_catalog", "description": "Memory variants with community and mainstream notes side by side." },
+    { "name": "timeline_motif_map", "description": "Motif nodes and weighted co-occurrence edges — the constellation as JSON." },
+    { "name": "timeline_story_threads", "description": "Curated arcs in belief / neutral / skeptical frames." },
+    { "name": "timeline_events", "description": "Official science and community-symbolic timeline layers, never blended." },
+    { "name": "timeline_compare_sources", "description": "Three framings of one topic plus officially-sourced shared facts." },
+    { "name": "timeline_deepen_story", "description": "Research prompts and follow-up angles — never fabricated sources." },
+    { "name": "timeline_stats", "description": "Corpus totals and needs-source items." },
+    { "name": "timeline_agent_manifest", "description": "Corpus rules, safe language, citation policy, first calls." }
+  ],
+  "dataset": {
+    "reports": 20,
+    "motifs": 17,
+    "mandela_items": 6,
+    "story_threads": 8,
+    "events": 9,
+    "official_anchors": 5,
+    "official_sources": "CERN public pages (home.cern)"
+  },
+  "positioning": "Documents how timeline-shift stories are told. Does not claim they are physically true.",
+  "endpoints": {
+    "reports": "https://timeline-pulse.vercel.app/reports.json",
+    "motifs": "https://timeline-pulse.vercel.app/motifs.json",
+    "events": "https://timeline-pulse.vercel.app/events.json",
+    "mandela_items": "https://timeline-pulse.vercel.app/mandela-items.json",
+    "story_threads": "https://timeline-pulse.vercel.app/story-threads.json",
+    "sources": "https://timeline-pulse.vercel.app/sources.json",
+    "llms": "https://timeline-pulse.vercel.app/llms.txt",
+    "openapi": "https://timeline-pulse.vercel.app/openapi.json"
+  }
+}
