@@ -1,6 +1,7 @@
 {
   "name": "timeline-pulse",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "mcpName": "io.github.davidmosiah/timeline-pulse",
   "description": "MCP server + public atlas of timeline-shift folklore, Mandela Effect reports, and collider-era myth — every claim labeled, every source graded. A cultural archive, not a proof engine. Built while the LHC sleeps (LS3, 2026–2030).",
   "type": "module",
   "bin": {
